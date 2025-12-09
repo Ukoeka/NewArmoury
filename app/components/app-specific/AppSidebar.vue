@@ -55,7 +55,7 @@ const data = {
       url: null,
       icon: FileText,
       items: [
-        { title: "Reports", url: "/admin/audit/report" },
+        // { title: "Reports", url: "/admin/audit/report" },
         { title: "Logs", url: "/admin/audit/logs" },
       ],
     },
