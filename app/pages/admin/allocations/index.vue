@@ -1,17 +1,13 @@
 <script setup lang="ts">
 definePageMeta({ title: 'Allocations', layout: 'admin-layout' })
 import AllocationsTable from "@/components/app-specific/datatable/AllocationsTable.vue"
-import AllocationForm from "@/components/app-specific/forms/AllocationForm.vue"
+
 import type { Allocation } from "@/components/app-specific/datatable/AllocationsTable.vue"
-import { Plus } from 'lucide-vue-next';
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet'
+import { Plus, RecycleIcon } from 'lucide-vue-next';
+import CreateIssuanceForm from "~/components/app-specific/forms/CreateIssuanceForm.vue";
+import FirearmReturnDialog from "~/components/app-specific/forms/FirearmReturnDialog.vue";
+import { toast } from 'vue-sonner'
+
 
 const allocations: Allocation[] = [
   {
@@ -289,6 +285,29 @@ const filteredAllocations = computed(() => {
   )
 })
 
+const openCreateIssuanceForm = ref(false)
+
+const handleRequestOTP = () => {
+  console.log("request new otp")
+}
+
+const handleCreateIssuanceFormClose = () => {
+  openCreateIssuanceForm.value = false
+}
+
+const handleCreateFormSubmission = (otp: string) => {
+  console.log("otp confirmed => ", otp)
+}
+
+
+const open = ref(false)
+
+const firearm = {
+  serial: "XG-84K2-1138",
+  model: "Glock 19 Gen5",
+  officer: "Officer Jane Doe"
+}
+
 
 </script>
 
@@ -298,53 +317,23 @@ const filteredAllocations = computed(() => {
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
         <Input placeholder="search by serial number" type="text" v-model="searchQuery"></Input>
-        <!-- <DropdownMenu>
-          <DropdownMenuTrigger as-child>
-            <Button variant="outline" size="sm">
-              <Columns />
-              <span class="hidden lg:inline">View</span>
-              <span class="lg:hidden">Columns</span>
-              <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" class="w-56">
-            <template
-              v-for="column in table.getAllColumns().filter((column) => typeof column.accessorFn !== 'undefined' && column.getCanHide())"
-              :key="column.id">
-              <DropdownMenuCheckboxItem class="capitalize" :model-value="column.getIsVisible()" @update:model-value="(value) => {
-
-                column.toggleVisibility(!!value)
-              }">
-                {{ column.id }}
-              </DropdownMenuCheckboxItem>
-            </template>
-            </DropdownMenuContent>
-        </DropdownMenu> -->
       </div>
       <div class="flex items-center gap-2">
-        <Sheet>
-          <SheetTrigger>
-            <Button variant="default" size="sm" class="bg-green-600 text-white">
-              <Plus />
-              <span class="hidden lg:inline">Add Allocation</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Fill the form to create allocation</SheetTitle>
-              <SheetDescription>
-                Create a allocation to allocate firearms, ammunition, or kits to users or units.
-              </SheetDescription>
-            </SheetHeader>
-            
-              <!-- Allocation form goes here -->
-            <AllocationForm />
-          </SheetContent>
-        </Sheet>
+        <Button variant="outline" size="sm" class="text-white" @click="open = true">
+          <RecycleIcon />
+          <span class="hidden lg:inline">Return</span>
+        </Button>
+        <Button variant="default" size="sm" class="bg-blue-600 text-white" @click="openCreateIssuanceForm = true">
+          <Plus />
+          <span class="hidden lg:inline">Create Issuance</span>
+        </Button>
       </div>
+
     </div>
+    <CreateIssuanceForm v-model:open-dialog="openCreateIssuanceForm" v-on:close="handleCreateIssuanceFormClose"
+      v-on:request-otp="handleRequestOTP" v-on:confirm-request="handleCreateFormSubmission" />
+
+    <FirearmReturnDialog v-model:open="open" :firearm="firearm" @confirm="null" />
     <AllocationsTable :data="filteredAllocations" />
   </div>
-
-
 </template>

@@ -25,27 +25,6 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 
 const route = useRoute()
 
-// Read breadcrumb data defined in page meta
-// / Type-safe computed for breadcrumb items
-const breadcrumbItems = computed(() => {
-  // Cast the meta data to the correct type
-  const metaBreadcrumbs = (route.meta.breadcrumbs || []) as BreadcrumbItem[]
-  
-  // Ensure we always have at least one item
-  if (metaBreadcrumbs.length > 0) {
-    // Make sure the last item is marked as current page
-    return metaBreadcrumbs.map((item, index) => ({
-      ...item,
-      isCurrentPage: index === metaBreadcrumbs.length - 1
-    }))
-  }
-  
-  // Default breadcrumb
-  return [
-    { label: "Dashboard", href: "/admin/dashboard" },
-    { label: route.meta.title || "Dashboard", isCurrentPage: true }
-  ]
-})
 </script>
 
 <template>
@@ -58,7 +37,7 @@ const breadcrumbItems = computed(() => {
           <SidebarTrigger />
           <Separator orientation="vertical" class="mr-2 h-4" />
 
-          <Breadcrumb>
+          <!-- <Breadcrumb>
             <BreadcrumbList class="flex flex-row items-center space-x-1">
               <BreadcrumbItem
                 v-for="(item, index) in breadcrumbItems"
@@ -83,12 +62,12 @@ const breadcrumbItems = computed(() => {
                 />
               </BreadcrumbItem>
             </BreadcrumbList>
-          </Breadcrumb>
+          </Breadcrumb> -->
         </div>
       </header>
 
       <div class="flex flex-1 flex-col gap-4 p-4">
-        <slot />
+        <slot ></slot>
       </div>
     </SidebarInset>
   </SidebarProvider>

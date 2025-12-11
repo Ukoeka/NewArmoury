@@ -1,11 +1,5 @@
 <script setup lang="ts">
-definePageMeta(
-  {
-    title: 'Inventory',
-    layout: 'admin-layout',
-    
-  }
-)
+definePageMeta({ title: 'Inventory', layout: 'admin-layout'})
 
 import Firearms from "@/components/app-specific/partial-page/firearms.vue"
 import Ammunitions from "@/components/app-specific/partial-page/ammunitions.vue"
@@ -21,7 +15,7 @@ import {
 <template>
   <Tabs default-value="firearms" class="w-full flex-col justify-start gap-6">
     <!-- Tab Header -->
-    <TabsList>
+  <TabsList>
       <TabsTrigger value="firearms">
         Firearms
       </TabsTrigger>
@@ -32,6 +26,7 @@ import {
         Kits
       </TabsTrigger>
     </TabsList>
+
 
     <!-- Tab Content -->
     <TabsContent value="firearms" class="flex flex-col  lg:px-6">
@@ -44,8 +39,4 @@ import {
       <Kits />
     </TabsContent>
   </Tabs>
-
-
-
-  <!-- <FirearmsDataTable :data="firearms" /> -->
 </template>

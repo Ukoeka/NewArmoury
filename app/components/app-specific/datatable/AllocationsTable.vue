@@ -130,22 +130,27 @@ const columns: ColumnDef<Allocation>[] = [
         : "N/A"
   },
 
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => {
-      const s = row.original.status
-      const color = {
-        Active: "bg-emerald-800",
-        Returned: "bg-blue-700",
-        Overdue: "bg-amber-700",
-        Lost: "bg-red-800",
-        Damaged: "bg-rose-900",
-      }[s]
-      return h(Badge, { class: color }, s)
-    }
-  },
+{
+  accessorKey: "status",
+  header: "Status",
+  cell: ({ row }) => {
+    const status = row.original.status
 
+    const color = {
+      Active: "bg-emerald-800",
+      Returned: "bg-blue-700",
+      Overdue: "bg-amber-700",
+      Lost: "bg-red-800",
+      Damaged: "bg-rose-900",
+    }[status] ?? "bg-slate-600"
+
+    return h(
+     Badge,
+        { variant: "outline", class: `px-3 ${color}` },
+        () => status.toUpperCase()
+    )
+  }
+},
   {
     id: "actions",
     cell: () =>

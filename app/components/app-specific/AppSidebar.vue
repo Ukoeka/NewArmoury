@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { SidebarProps } from "@/components/ui/sidebar"
-
+import { GalleryVerticalEnd } from "lucide-vue-next"
 import {
   LayoutDashboard,
   Image,
   SendHorizontal,
   FileText,
   Users,
+  ChartColumn,
 } from "lucide-vue-next"
 import {
   Sidebar,
@@ -23,7 +24,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import NavUser from "@/components/app-specific/NavUser.vue"
-import { NuxtLink } from "#components"
+import { NuxtLink, Title } from "#components"
+import { url } from "zod"
 
 const props = defineProps<SidebarProps>()
 
@@ -38,26 +40,52 @@ const data = {
     },
     {
       title: "Inventory",
-      url: "/admin/inventory",
+      url: "",
       icon: Image,
       items: [
-
+        {
+          title: "Inventory",
+          url: "/admin/inventory"
+        },
+        {
+          title: "Requests",
+          url: "#"
+        },
       ],
     },
     {
       title: "Allocations",
-      url: "/admin/allocations",
+      url: "",
       icon: SendHorizontal,
-      items: [],
+      items: [
+        {
+          title: "Handover/Issuance",
+          url: "/admin/allocations"
+        },
+        {
+          title: "Locations",
+          url: "#"
+        },
+        {
+          title: "Shifts",
+          url: "#"
+        }
+      ],
     },
     {
-      title: "Audit",
-      url: null,
+      title: "Logs",
+      url: "/admin/audit/logs",
       icon: FileText,
       items: [
-        // { title: "Reports", url: "/admin/audit/report" },
-        { title: "Logs", url: "/admin/audit/logs" },
-      ],
+      
+      ]
+    },
+    {
+      title: "Report",
+      url: "/admin/audit/report",
+      icon: ChartColumn,
+      items: [
+      ]
     },
     {
       title: "Personnel",
@@ -86,7 +114,7 @@ const data = {
             <NuxtLink to="/" class="flex items-center gap-3">
               <div
                 class="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <Image class="w-5 h-5" />
+                <GalleryVerticalEnd />
               </div>
               <div class="flex flex-col gap-0.5 leading-none">
                 <span class="font-medium">ArmoryCore</span>

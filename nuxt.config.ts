@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     '@nuxt/icon',
+    '@pinia/nuxt',
   ],
   shadcn: {
     /**
@@ -26,5 +27,8 @@ export default defineNuxtConfig({
   colorMode: {
     classSuffix: '',
     preference: 'dark',
-  }
+  },
+  pinia: {
+    storesDirs: ['./stores/**', './custom-folder/stores/**'],
+  },
 })

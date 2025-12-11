@@ -138,7 +138,7 @@ const columns: ColumnDef<User>[] = [
   {
     accessorKey: "role",
     header: "Role",
-    cell: ({ row }) => h(Badge, { variant: "outline" }, String(row.original.role)),
+    cell: ({ row }) => h(Badge, { variant: "outline" }, () => row.original.role),
     enableHiding: false,
   },
 
@@ -157,7 +157,7 @@ const columns: ColumnDef<User>[] = [
 
       const dotClass = statusColorMap[status] ?? "bg-gray-400"
 
-      return h(Badge, { variant: "outline", class: `flex items-center gap-2 ${dotClass}` }, status)
+      return h(Badge, { variant: "outline", class: `flex items-center gap-2 ${dotClass}` }, () => status)
     }
   },
   {

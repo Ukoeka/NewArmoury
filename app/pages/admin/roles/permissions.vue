@@ -75,8 +75,10 @@ const groups = ref([
         <SelectContent>
           <SelectGroup>
             <SelectItem value="administrator">Administrator</SelectItem>
-            <SelectItem value="range_officer">Range Officer</SelectItem>
-            <SelectItem value="member">Member</SelectItem>
+            <SelectItem value="biso">BISO</SelectItem>
+            <SelectItem value="supervisor">Supervisor</SelectItem>
+            <SelectItem value="armory_officer">Armory Officer</SelectItem>
+            <SelectItem value="security_officer">Security Officer</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
@@ -130,7 +132,7 @@ const groups = ref([
 
       <CardFooter class="flex justify-end gap-3">
         <Button variant="outline" class="bg-white/10 text-white border-white/20">Cancel</Button>
-        <Button variant="secondary" >Save Changes</Button>
+        <Button variant="secondary" class="bg-blue-700">Save Changes</Button>
       </CardFooter>
     </Card>
 

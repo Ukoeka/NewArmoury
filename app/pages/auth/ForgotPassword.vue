@@ -32,7 +32,7 @@
                   </Button>
                   <FieldDescription class="text-center">
                     Remember your password?
-                    <a href="/login">
+                    <a href="/auth/login">
                       Login
                     </a>
                   </FieldDescription>

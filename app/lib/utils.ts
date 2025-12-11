@@ -14,7 +14,7 @@ export function cn(...inputs: ClassValue[]) {
  */
 export function formatDate(date: Date | string): string {
   const d = new Date(date)
-  return d.toLocaleDateString("en-US", {
+  return d.toLocaleDateString("en-GB", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -75,4 +75,16 @@ export function getInitials(name: string): string {
     .map((part) => part.charAt(0).toUpperCase())
     .join("")
     .slice(0, 2)
+}
+
+
+export function statusToColor(status: "available" | "lost" | 'decommissioned' | 'maintenance' | 'damaged'): string {
+  const statusColorMap: Record<string, string> = {
+    "available": "bg-emerald-700",
+    "damaged": "bg-red-700",
+    "lost": "bg-rose-900",
+    "maintenance": "bg-amber-700",
+    "decommissioned": "bg-gray-700",
+  }
+  return statusColorMap[status] || "bg-gray-500"
 }

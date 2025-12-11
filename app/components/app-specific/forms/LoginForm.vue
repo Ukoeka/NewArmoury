@@ -8,12 +8,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { useLogin } from "~/composables/auth/useLogin";
 
-const { email, password, isLoading, login } = useLogin()
+const { username, password, isLoading, login } = useLogin()
 
-// function handleSubmit(e: Event) {
-//   e.preventDefault();
-//   login();
-// }
+
 </script>
 
 <template>
@@ -28,17 +25,17 @@ const { email, password, isLoading, login } = useLogin()
         </p>
       </div>
       <Field>
-        <FieldLabel for="email">
-          Email
+        <FieldLabel for="username">
+          Username
         </FieldLabel>
-        <Input id="email" type="email" placeholder="m@example.com" required v-model="email"/>
+        <Input id="username" type="text" placeholder="delta-alpha" required v-model="username"/>
       </Field>
       <Field>
         <div class="flex items-center">
           <FieldLabel for="password">
             Password
           </FieldLabel>
-          <a href="/forgot-password" class="ml-auto text-sm underline-offset-4 hover:underline">
+          <a href="/auth/forgotpassword" class="ml-auto text-sm underline-offset-4 hover:underline">
             Forgot your password?
           </a>
         </div>

@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 import { toast } from 'vue-sonner'
 
 export function useLogin() {
-  const email = ref('')
+  const username = ref('')
   const password = ref('')
   const isLoading = ref(false)
   const router = useRouter()
@@ -16,7 +16,7 @@ export function useLogin() {
       await fetch('/api/login', {
         method: 'POST',
         body: JSON.stringify({ 
-          email: email.value, 
+          email: username.value, 
           password: password.value 
         })
       })
@@ -34,7 +34,7 @@ export function useLogin() {
   }
 
   return {
-    email,
+    username,
     password,
     isLoading,
     login

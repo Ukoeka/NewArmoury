@@ -3,7 +3,7 @@ import {
   BadgeCheck,
   Bell,
   ChevronsUpDown,
-  CreditCard,
+  Settings,
   LogOut,
   Sparkles,
 } from "lucide-vue-next"
@@ -96,6 +96,12 @@ const { isMobile } = useSidebar()
               <Bell />
               Notifications
             </DropdownMenuItem>
+
+            <DropdownMenuItem>
+              <Settings />
+              Settings
+            </DropdownMenuItem>
+
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem>

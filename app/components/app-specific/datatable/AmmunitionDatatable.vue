@@ -1,40 +1,3 @@
-<script lang="ts">
-import { z } from "zod"
-import DraggableRow from "@/components/app-specific/DraggableRow.vue"
-import DragHandle from "@/components/app-specific/DragHandle.vue"
-
-
-export const schema = z.object({
-  id:z.number(),
-  lotNumber: z.string(),
-  caliber: z.string(),
-  roundsPerBox: z.number().optional(),
-  boxes: z.number(),
-  totalRounds: z.number(),
-  manufacturer: z.string().optional(),
-  acquisitionDate: z.string(), // ISO date
-  expiryDate: z.string().optional(), // ISO date
-  status: z.enum(["In Stock", "Issued", "Quarantined", "Expired", "Decommissioned"]),
-  location: z.string(),
-  notes: z.string().optional().nullable(),
-});
-
-export interface Ammunition {
-  id: number
-  lotNumber: string
-  caliber: string
-  roundsPerBox: number
-  boxes: number
-  totalRounds: number
-  manufacturer: string
-  acquisitionDate: string // ISO
-  expiryDate?: string // ISO (if applicable)
-  status: "In Stock" | "Issued" | "Quarantined" | "Expired" | "Decommissioned"
-  location: string
-  notes?: string | null
-}
-</script>
-
 <script setup lang="ts">
 import type {
   ColumnDef,
@@ -44,15 +7,11 @@ import type {
 } from "@tanstack/vue-table"
 import { RestrictToVerticalAxis } from "@dnd-kit/abstract/modifiers"
 import {
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
-  EyeOff,
   MoreVertical,
-  Columns,
-  Plus,
 } from "lucide-vue-next"
 import {
   FlexRender,
@@ -69,7 +28,6 @@ import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
@@ -93,8 +51,16 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import DraggableRow from "@/components/app-specific/DraggableRow.vue"
+import DragHandle from "@/components/app-specific/DragHandle.vue"
+import type { Ammunition } from '~/lib/models/Ammunition'
+import { formatDate, statusToColor } from "~/lib/utils"
+
 const props = defineProps<{
-  data: Ammunition[]
+  data: Ammunition[],
+  onDelete: (ammunition: Ammunition) => void,
+  onView: (ammunition: Ammunition) => void,
+  onEdit: (ammunition: Ammunition) => void,
 }>()
 
 const sorting = ref<SortingState>([])
@@ -156,44 +122,34 @@ const columns: ColumnDef<Ammunition>[] = [
   {
     accessorKey: "manufacturer",
     header: "Manufacturer",
-    cell: ({ row }) => h(Badge,{ variant: "outline" }, String(row.original.manufacturer)),
+    cell: ({ row }) => h(Badge,{ variant: "outline" }, () => row.original.manufacturer),
     enableHiding: false,
   },
   {
     accessorKey: "acquisitionDate",
     header: "Acquisition Date",
-    cell: ({ row }) => h("div", String(row.original.acquisitionDate)),
+    cell: ({ row }) => h("div", formatDate(row.original.createdAt)),
     enableHiding: true,
   },
   {
     accessorKey: "expiryDate",
     header: "Expiry Date",
-    cell: ({ row }) => h("div", String(row.original.expiryDate)),
+    cell: ({ row }) => h("div", formatDate(row.original.expiryDate)),
     enableHiding: true,
   },
  {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      const status = row.getValue("status") as string
-
-      const statusColorMap: Record<string, string> = {
-        "In Stock": "bg-emerald-800",
-        "Issued": "bg-emerald-800",
-        "Quarantined": "bg-amber-800",
-        "Expired": "bg-red-600",
-        "Decommissioned": "bg-red-900",
-      }
-
-      const dotClass = statusColorMap[status] ?? "bg-gray-400"
-
-      return h(Badge, { variant: "outline", class: `flex items-center gap-2 ${dotClass}` }, status)
+      const status = row.original.status
+      const statusColor = statusToColor(status)
+      return h(Badge, { variant: "outline", class: `flex items-center gap-2 ${statusColor}` }, () => status.toUpperCase())
     }
   },
 
   {
     id: "actions",
-    cell: () => h(DropdownMenu, {}, {
+    cell: ({row}) => h(DropdownMenu, {}, {
       default: () => [
         h(DropdownMenuTrigger, { asChild: true }, {
           default: () => h(Button, {
@@ -208,10 +164,10 @@ const columns: ColumnDef<Ammunition>[] = [
         }),
         h(DropdownMenuContent, { align: "end" }, {
           default: () => [
-            h(DropdownMenuItem, {}, () => "View"),
-            h(DropdownMenuItem, {}, () => "Edit"),
+            h(DropdownMenuItem, {onClick: () => props.onView(row.original)}, () => "View"),
+            h(DropdownMenuItem, {onClick: () => props.onEdit(row.original)}, () => "Edit"),
             h(DropdownMenuSeparator, {}),
-            h(DropdownMenuItem, {class: "text-red-600"}, () => "Delete"),
+            h(DropdownMenuItem, {onClick: () => props.onDelete(row.original), class: "text-red-600"}, () => "Delete"),
           ],
         }),
       ],
