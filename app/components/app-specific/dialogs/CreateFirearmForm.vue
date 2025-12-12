@@ -91,7 +91,7 @@ const onSubmit = handleSubmit(values => {
   <Dialog v-model:open="localOpen" >
     <DialogContent class="overflow-x-auto max-h-[90vh]">
       <DialogHeader>
-        <DialogTitle> {{ props.initial == null ? "Create Firearm" : "Edit Fiream" }}</DialogTitle>
+        <DialogTitle> {{ props.initial == null ? "Register a new Fiream" : "Edit Fiream" }}</DialogTitle>
       </DialogHeader>
       <div
         class="w-full sm:max-w-2xl mx-auto p-4 flex flex-col gap-4  rounded-lg bg-card-light dark:bg-card-dark shadow-sm ">
@@ -224,7 +224,7 @@ const onSubmit = handleSubmit(values => {
             <Button type="button" variant="outline">Close</Button>
           </DialogClose>
           <Button type="submit" form="firearm-form" class="bg-green-600 text-amber-100">
-            {{ props.initial == null ? "Create Firearm" : "Save Changes" }}
+            {{ props.initial == null ? "Register Firearm" : "Save Changes" }}
           </Button>
         </div>
       </DialogFooter>

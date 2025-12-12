@@ -49,7 +49,7 @@ const data = {
         },
         {
           title: "Requests",
-          url: "#"
+          url: "/admin/inventory/requests"
         },
       ],
     },

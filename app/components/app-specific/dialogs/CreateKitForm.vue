@@ -94,7 +94,7 @@ const onSubmit = handleSubmit(values => {
   <Dialog v-model:open="localOpen" >
     <DialogContent>
       <DialogHeader>
-        <DialogTitle> Create a Kit</DialogTitle>
+        <DialogTitle>{{ props.initial == null ? "Register a new Kit" : "Edit Kit" }}</DialogTitle>
       </DialogHeader>
 
       <div
@@ -180,11 +180,9 @@ const onSubmit = handleSubmit(values => {
           <DialogClose>
           <Button type="button" variant="outline">Close</Button>  
           </DialogClose>
-          <Button type="submit" form="kit-form" class="bg-green-600 text-amber-100">{{props.initial == null ? "Create Kit" : "Save Changes"}}</Button>
+          <Button type="submit" form="kit-form" class="bg-green-600 text-amber-100">{{props.initial == null ? "Register Kit" : "Save Changes"}}</Button>
         </div>
       </DialogFooter>
-
-
     </DialogContent>
   </Dialog>
 

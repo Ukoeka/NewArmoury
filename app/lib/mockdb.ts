@@ -3,6 +3,7 @@ import type { Role } from "./models/Roles";
 import type { Kit } from "./models/Kit";
 import type { Ammunition } from "./models/Ammunition";
 import type { Firearm } from "./models/Firearm";
+import type { Request } from "./models/Request";
 
 
 export const roleDB: Role[] = [
@@ -105,3 +106,286 @@ export const firearmDb: Firearm[] = [
   { id: "f1011d0a-3d5b-4e0b-87f8-1b2d0e9f7a19", serialNumber: "TZ-FA-0031", make: "Colt", model: "M4 Carbine", category: "rifle", caliber: "5.56×45mm", manufacturer: "Colt", acquisitionDate: "2023-08-05", createdAt: "2023-08-05", status: "maintenance", location: "Depot - Shelf 19", notes: "Routine inspection required" },
   { id: "f1011d0a-3d5b-4e0b-87f8-1b2d0e9f7a20", serialNumber: "TZ-FA-0032", make: "CZ", model: "75", category: "pistol", caliber: "9×19mm", manufacturer: "Česká zbrojovka", acquisitionDate: "2023-09-12", createdAt: "2023-09-12", status: "decommissioned", location: "Depot - Shelf 20", notes: "No notes" }
 ];
+
+
+export const requestDb: Request[] = [
+  {
+    id: "TFS-001",
+    assetType: "firearm",
+    assetName: "M4A1 Carbine",
+    quantity: 5,
+    requestedBy: "Officer J. Smith",
+    requestDate: "2025-11-15",
+    status: "pending",
+    notes: "For tactical training exercise"
+  },
+  {
+    id: "TFS-002",
+    assetType: "ammunition",
+    assetName: "5.56x45mm NATO Rounds",
+    quantity: 1000,
+    requestedBy: "Sgt. M. Johnson",
+    requestDate: "2025-11-20",
+    status: "approved",
+    approvedBy: "Capt. R. Davis",
+    approvedDate: "2025-11-22",
+    notes: "Standard issue for range practice"
+  },
+  {
+    id: "TFS-003",
+    assetType: "kit",
+    assetName: "Field Survival Pack",
+    quantity: 10,
+    requestedBy: "Lt. K. Williams",
+    requestDate: "2025-10-30",
+    status: "fulfilled",
+    approvedBy: "Maj. T. Brown",
+    approvedDate: "2025-11-01",
+    fulfilledDate: "2025-11-05",
+    notes: "For extended field operations"
+  },
+  {
+    id: "TFS-004",
+    assetType: "firearm",
+    assetName: "Glock 19 Pistol",
+    quantity: 8,
+    requestedBy: "Officer S. Miller",
+    requestDate: "2025-12-01",
+    status: "denied",
+    approvedBy: "Capt. E. Wilson",
+    approvedDate: "2025-12-03",
+    notes: "Request denied due to inventory shortage"
+  },
+  {
+    id: "TFS-005",
+    assetType: "ammunition",
+    assetName: "9mm Parabellum Rounds",
+    quantity: 500,
+    requestedBy: "Sgt. A. Moore",
+    requestDate: "2025-11-25",
+    status: "cancelled",
+    notes: "Cancelled due to change in training schedule"
+  },
+  {
+    id: "TFS-006",
+    assetType: "kit",
+    assetName: "Maintenance Tool Kit",
+    quantity: 15,
+    requestedBy: "Tech. Specialist D. Taylor",
+    requestDate: "2025-10-15",
+    status: "fulfilled",
+    approvedBy: "Lt. Col. F. Anderson",
+    approvedDate: "2025-10-17",
+    fulfilledDate: "2025-10-20",
+    notes: "For weapon maintenance workshop"
+  },
+  {
+    id: "TFS-007",
+    assetType: "firearm",
+    assetName: "Remington 870 Shotgun",
+    quantity: 3,
+    requestedBy: "Officer L. Thomas",
+    requestDate: "2025-12-05",
+    status: "pending",
+    notes: "For crowd control training"
+  },
+  {
+    id: "TFS-008",
+    assetType: "ammunition",
+    assetName: "12 Gauge Shells",
+    quantity: 200,
+    requestedBy: "Sgt. P. Jackson",
+    requestDate: "2025-11-10",
+    status: "approved",
+    approvedBy: "Capt. H. White",
+    approvedDate: "2025-11-12",
+    notes: "Buckshot and slug mix"
+  },
+  {
+    id: "TFS-009",
+    assetType: "kit",
+    assetName: "Medical First Aid Kit",
+    quantity: 20,
+    requestedBy: "Medic R. Harris",
+    requestDate: "2025-11-18",
+    status: "fulfilled",
+    approvedBy: "Maj. C. Martin",
+    approvedDate: "2025-11-19",
+    fulfilledDate: "2025-11-21",
+    notes: "Replenishment for field medics"
+  },
+  {
+    id: "TFS-010",
+    assetType: "firearm",
+    assetName: "HK MP5 Submachine Gun",
+    quantity: 4,
+    requestedBy: "SWAT Team Lead G. Thompson",
+    requestDate: "2025-12-08",
+    status: "pending",
+    notes: "For close-quarters battle training"
+  },
+  {
+    id: "TFS-011",
+    assetType: "ammunition",
+    assetName: ".45 ACP Rounds",
+    quantity: 300,
+    requestedBy: "Officer B. Clark",
+    requestDate: "2025-10-25",
+    status: "denied",
+    approvedBy: "Capt. N. Rodriguez",
+    approvedDate: "2025-10-27",
+    notes: "Denied - alternative caliber recommended"
+  },
+  {
+    id: "TFS-012",
+    assetType: "kit",
+    assetName: "Night Vision Equipment Kit",
+    quantity: 6,
+    requestedBy: "Recon Unit V. Lewis",
+    requestDate: "2025-11-28",
+    status: "approved",
+    approvedBy: "Lt. W. Walker",
+    approvedDate: "2025-11-30",
+    notes: "For nocturnal operations"
+  },
+  {
+    id: "TFS-013",
+    assetType: "firearm",
+    assetName: "Barrett M82 Sniper Rifle",
+    quantity: 2,
+    requestedBy: "Sniper J. Hall",
+    requestDate: "2025-12-02",
+    status: "cancelled",
+    notes: "Cancelled due to mission postponement"
+  },
+  {
+    id: "TFS-014",
+    assetType: "ammunition",
+    assetName: ".50 BMG Rounds",
+    quantity: 100,
+    requestedBy: "Sgt. Q. Allen",
+    requestDate: "2025-11-05",
+    status: "fulfilled",
+    approvedBy: "Maj. Z. Young",
+    approvedDate: "2025-11-07",
+    fulfilledDate: "2025-11-09",
+    notes: "Armor-piercing variant"
+  },
+  {
+    id: "TFS-015",
+    assetType: "kit",
+    assetName: "Explosive Ordnance Disposal Kit",
+    quantity: 3,
+    requestedBy: "EOD Specialist X. King",
+    requestDate: "2025-12-10",
+    status: "pending",
+    notes: "Urgent request for bomb squad"
+  },
+  {
+    id: "TFS-016",
+    assetType: "firearm",
+    assetName: "AK-47 Assault Rifle",
+    quantity: 10,
+    requestedBy: "Training Coordinator U. Wright",
+    requestDate: "2025-10-10",
+    status: "fulfilled",
+    approvedBy: "Col. I. Lopez",
+    approvedDate: "2025-10-12",
+    fulfilledDate: "2025-10-15",
+    notes: "For adversary simulation training"
+  },
+  {
+    id: "TFS-017",
+    assetType: "ammunition",
+    assetName: "7.62x39mm Rounds",
+    quantity: 2000,
+    requestedBy: "Logistics O. Hill",
+    requestDate: "2025-11-15",
+    status: "approved",
+    approvedBy: "Gen. P. Scott",
+    approvedDate: "2025-11-17",
+    notes: "Bulk order for extended exercises"
+  },
+  {
+    id: "TFS-018",
+    assetType: "kit",
+    assetName: "Communication Radio Kit",
+    quantity: 12,
+    requestedBy: "Comm Officer Y. Green",
+    requestDate: "2025-12-04",
+    status: "denied",
+    approvedBy: "Adm. T. Adams",
+    approvedDate: "2025-12-06",
+    notes: "Denied - use existing inventory"
+  },
+  {
+    id: "TFS-019",
+    assetType: "firearm",
+    assetName: "M249 Light Machine Gun",
+    quantity: 3,
+    requestedBy: "Infantry Lead R. Baker",
+    requestDate: "2025-11-22",
+    status: "cancelled",
+    notes: "Cancelled after equipment audit"
+  },
+  {
+    id: "TFS-020",
+    assetType: "ammunition",
+    assetName: "5.56x45mm Linked Ammo",
+    quantity: 1500,
+    requestedBy: "Support Unit E. Gonzalez",
+    requestDate: "2025-10-20",
+    status: "fulfilled",
+    approvedBy: "Brig. Gen. W. Hernandez",
+    approvedDate: "2025-10-22",
+    fulfilledDate: "2025-10-25",
+    notes: "For sustained fire drills"
+  },
+  {
+    id: "TFS-021",
+    assetType: "kit",
+    assetName: "Drone Surveillance Kit",
+    quantity: 4,
+    requestedBy: "Intel Analyst S. Mitchell",
+    requestDate: "2025-12-09",
+    status: "pending",
+    notes: "For aerial reconnaissance training"
+  },
+  {
+    id: "TFS-022",
+    assetType: "firearm",
+    assetName: "Sig Sauer P320 Pistol",
+    quantity: 15,
+    requestedBy: "Sidearm Specialist D. Turner",
+    requestDate: "2025-11-08",
+    status: "approved",
+    approvedBy: "Cmdr. F. Phillips",
+    approvedDate: "2025-11-10",
+    notes: "Modular handgun system"
+  },
+  {
+    id: "TFS-023",
+    assetType: "ammunition",
+    assetName: ".40 S&W Rounds",
+    quantity: 800,
+    requestedBy: "Range Master G. Campbell",
+    requestDate: "2025-12-07",
+    status: "denied",
+    approvedBy: "Gen. H. Parker",
+    approvedDate: "2025-12-09",
+    notes: "Denied - phase out of caliber"
+  },
+  {
+    id: "TFS-024",
+    assetType: "kit",
+    assetName: "Ballistic Armor Kit",
+    quantity: 25,
+    requestedBy: "Protective Gear Coord. J. Evans",
+    requestDate: "2025-10-28",
+    status: "fulfilled",
+    approvedBy: "Lt. Gen. K. Collins",
+    approvedDate: "2025-10-30",
+    fulfilledDate: "2025-11-02",
+    notes: "Level IV plates included"
+  }
+]

@@ -59,16 +59,16 @@ watch(
     if (newVal) {
       console.log("new value", newVal)
       setValues({
-      lotNumber: newVal.lotNumber,
-      caliber: newVal.caliber,
-      roundsPerBox: newVal.roundsPerBox ?? 0,
-      boxes: newVal.boxes,
-      totalRounds: newVal.totalRounds,
-      manufacturer: newVal.manufacturer ?? "",
-      expiryDate: newVal.expiryDate ?? new Date().toISOString(), 
-      status: newVal.status,
-      location: newVal.location,
-      notes: newVal.notes ?? null,
+        lotNumber: newVal.lotNumber,
+        caliber: newVal.caliber,
+        roundsPerBox: newVal.roundsPerBox ?? 0,
+        boxes: newVal.boxes,
+        totalRounds: newVal.totalRounds,
+        manufacturer: newVal.manufacturer ?? "",
+        expiryDate: newVal.expiryDate ?? new Date().toISOString(),
+        status: newVal.status,
+        location: newVal.location,
+        notes: newVal.notes ?? null,
       })
     } else {
       resetForm()
@@ -77,10 +77,10 @@ watch(
   { immediate: true }
 )
 
-const {submitAmmunitionForm} = useAmmunition()
+const { submitAmmunitionForm } = useAmmunition()
 
 const onSubmit = handleSubmit(values => {
-   const ammunition = submitAmmunitionForm(values, props.initial ?? null)
+  const ammunition = submitAmmunitionForm(values, props.initial ?? null)
   emits('confirm', ammunition)
   localOpen.value = false
 })
@@ -90,56 +90,64 @@ const onSubmit = handleSubmit(values => {
 
 <template>
 
-  <Dialog v-model:open="localOpen" >
+  <Dialog v-model:open="localOpen">
     <DialogContent>
       <DialogHeader>
-        <DialogTitle> Create a Kit</DialogTitle>
+        <DialogTitle>{{ props.initial == null ? "Register a new Ammunition" : "Edit Ammunition" }}</DialogTitle>
       </DialogHeader>
 
       <div
         class="w-full sm:max-w-2xl mx-auto p-4 flex flex-col gap-4  rounded-lg bg-card-light dark:bg-card-dark shadow-sm">
         <form id="ammunition-form" @submit="onSubmit">
           <FieldGroup class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <!-- Item Name -->
-            <VeeField v-slot="{ field, errors }" name="itemName">
+
+            <!-- Lot Number  -->
+            <VeeField v-slot="{ field, errors }" name="lotNumber">
               <Field :data-invalid="!!errors.length">
-                <FieldLabel>Kit Name</FieldLabel>
-                <Input v-bind="field" :model-value="field.value" placeholder="REF-00123" />
+                <FieldLabel>Lot Number</FieldLabel>
+                <Input v-bind="field" :model-value="field.value" placeholder="AM-2025-100" type="text" />
                 <FieldError :errors="errors" />
               </Field>
             </VeeField>
 
-            <!-- Item Type -->
-            <VeeField v-slot="{ field, errors }" name="itemType">
+            <!-- Caliber  -->
+            <VeeField v-slot="{ field, errors }" name="caliber">
               <Field :data-invalid="!!errors.length">
-                <FieldLabel>Kit Type</FieldLabel>
-                <Select v-bind="field" :model-value="field.value" @update:model-value="field.onChange">
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="maintenance">Maintainance Kit</SelectItem>
-                      <SelectItem value="survival">Survival Kit</SelectItem>
-                      <SelectItem value="cleaning">Cleaning Kit</SelectItem>
-                      <SelectItem value="custom">Custom Kit</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                <FieldLabel>Caliber</FieldLabel>
+                <Input v-bind="field" :model-value="field.value" placeholder="5.556x45mm" type="text" />
                 <FieldError :errors="errors" />
               </Field>
             </VeeField>
 
-            <!-- Quantity -->
-            <VeeField v-slot="{ field, errors }" name="quantity">
+            <!-- Rounds per Box  -->
+            <VeeField v-slot="{ field, errors }" name="roundsPerBox">
               <Field :data-invalid="!!errors.length">
-                <FieldLabel>Quantity</FieldLabel>
-                <Input v-bind="field" :model-value="field.value" type="number" min="1" />
+                <FieldLabel>Rounds Per Box</FieldLabel>
+                <Input v-bind="field" :model-value="field.value" placeholder="0" type="number" />
                 <FieldError :errors="errors" />
               </Field>
             </VeeField>
 
-            <!-- Status -->
+            <!-- Rounds per Box  -->
+            <VeeField v-slot="{ field, errors }" name="boxes">
+              <Field :data-invalid="!!errors.length">
+                <FieldLabel>Boxes</FieldLabel>
+                <Input v-bind="field" :model-value="field.value" placeholder="0" type="number" />
+                <FieldError :errors="errors" />
+              </Field>
+            </VeeField>
+
+            <!-- Rounds per Box  -->
+            <VeeField v-slot="{ field, errors }" name="totalRounds">
+              <Field :data-invalid="!!errors.length">
+                <FieldLabel>Total Rounds</FieldLabel>
+                <Input v-bind="field" :model-value="field.value" placeholder="0" type="number" />
+                <FieldError :errors="errors" />
+              </Field>
+            </VeeField>
+
+
+
             <!-- Status -->
             <VeeField v-slot="{ field, errors }" name="status">
               <Field :data-invalid="!!errors.length">
@@ -163,6 +171,27 @@ const onSubmit = handleSubmit(values => {
             </VeeField>
           </FieldGroup>
 
+            <!-- Aquisition -->
+            <VeeField v-slot="{ field, errors }" name="acquisitionDate">
+              <Field :data-invalid="!!errors.length">
+                <FieldLabel>Aquisition Date</FieldLabel>
+                <Input v-bind="field" :model-value="field.value" type="date" />
+                <FieldError :errors="errors" />
+              </Field>
+            </VeeField>
+
+
+            <!-- expiry Date -->
+            <VeeField v-slot="{ field, errors }" name="expiryDate" >
+              <Field :data-invalid="!!errors.length">
+                <FieldLabel>Expiry Date</FieldLabel>
+                <Input v-bind="field" :model-value="field.value" type="date" />
+                <FieldError :errors="errors" />
+              </Field>
+            </VeeField>
+
+
+
           <!-- Notes (Full Width) -->
           <div class="mt-6">
             <VeeField v-slot="{ field, errors }" name="notes">
@@ -178,9 +207,10 @@ const onSubmit = handleSubmit(values => {
       <DialogFooter>
         <div class="mt-6 flex justify-start gap-4">
           <DialogClose>
-          <Button type="button" variant="outline">Close</Button>  
+            <Button type="button" variant="outline">Close</Button>
           </DialogClose>
-          <Button type="submit" form="ammunition-form" class="bg-green-600 text-amber-100">{{props.initial == null ? "Create Ammunition" : "Save Changes"}}</Button>
+          <Button type="submit" form="ammunition-form" class="bg-green-600 text-amber-100">{{ props.initial == null ?
+            "Register Ammunition" : "Save Changes" }}</Button>
         </div>
       </DialogFooter>
 
