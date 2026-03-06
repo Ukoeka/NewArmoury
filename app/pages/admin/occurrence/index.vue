@@ -325,9 +325,7 @@ function inspTypeBadgeClass(type: string) {
   display: flex; flex-direction: column; gap: 8px;
 }
 .occ-card--emergency {
-  border-left-color: #ef4444;
-  background: #1a1216;
-  border-color: #ef444433;
+  border-left: 3px solid #ef4444;
 }
 .occ-card-top {
   display: flex; align-items: center; justify-content: space-between;
@@ -346,7 +344,7 @@ function inspTypeBadgeClass(type: string) {
 
 /* BISO Response */
 .biso-response {
-  background: #0a1f0e; border: 1px solid #166534;
+  background: #0D542B33; border: 1px solid #166534;
   border-radius: 7px; padding: 10px 12px;
   display: flex; flex-direction: column; gap: 3px;
 }
@@ -354,9 +352,9 @@ function inspTypeBadgeClass(type: string) {
 .biso-response-text  { font-size: 12.5px; color: #86efac; line-height: 1.4; }
 
 .add-biso-btn {
-  background: transparent; border: none; color: #60a5fa;
+  background: #2B7FFF1A; border: none; color: #60a5fa;
   font-size: 12.5px; font-weight: 600; cursor: pointer;
-  padding: 4px 0; font-family: inherit; text-align: left;
+  padding: 10px 10px; font-family: inherit; text-align: left;
   transition: color 0.15s; width: fit-content;
 }
 .add-biso-btn:hover { color: #93c5fd; }
@@ -368,7 +366,7 @@ function inspTypeBadgeClass(type: string) {
   display: flex; flex-direction: column; gap: 8px;
 }
 .insp-not-ok {
-  background: #1a1216; border-color: #ef444433;
+   border-color: #ef444433;
 }
 .insp-card-top {
   display: flex; align-items: center; justify-content: space-between;
