@@ -332,31 +332,34 @@ const filteredArms = computed(() => {
 
 /* Tabs */
 .tabs-row {
-  display: flex;
+  display: inline-flex;
+  background: #161b27;
+  border: 1px solid #1e2535;
+  border-radius: 10px;
+  padding: 4px;
   gap: 4px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #1e2535;
-  padding-bottom: 0;
+  margin-bottom: 24px;
 }
 .tab-btn {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 18px;
+  padding: 8px 24px;
   background: transparent;
   border: none;
-  border-bottom: 2px solid transparent;
+  border-radius: 7px;
   color: #64748b;
   font-size: 13.5px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s;
-  margin-bottom: -1px;
+  font-family: 'DM Sans', sans-serif;
 }
 .tab-btn:hover { color: #94a3b8; }
 .tab-btn.active {
+  background: #1e2535;
   color: #f1f5f9;
-  border-bottom-color: #3b82f6;
+  font-weight: 600;
 }
 .tab-badge {
   background: #ef4444;

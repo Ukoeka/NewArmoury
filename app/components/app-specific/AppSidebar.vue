@@ -135,6 +135,7 @@ const user = {
   background: #0f1117 !important;
   border-right: 1px solid #1e2535 !important;
   width: 260px;
+  overflow-x: hidden;
 }
 
 /* Header */
@@ -188,6 +189,7 @@ const user = {
 /* Content */
 .sidebar-content {
   padding: 4px 8px;
+  overflow-x: hidden;
 }
 
 /* Groups */
@@ -227,14 +229,18 @@ const user = {
 }
 .nav-item.router-link-active,
 .nav-item.router-link-exact-active {
-  background: #1e3a5f;
-  color: #e2e8f0;
+  background: #2B7FFF1A !important;
+  color: #3b82f6;
 }
 .nav-icon {
   width: 17px;
   height: 17px;
   flex-shrink: 0;
   stroke-width: 1.8;
+}
+.nav-item.router-link-active .nav-icon,
+.nav-item.router-link-exact-active .nav-icon {
+  color: #3b82f6;
 }
 .nav-label {
   font-size: 13.5px;
