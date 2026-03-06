@@ -52,9 +52,9 @@ const navGroups = [
   {
     label: "OPERATIONS",
     items: [
-      { title: "Firearm Handover", url: "/admin/allocations", icon: ClipboardList },
+      { title: "Firearm Handover", url: "/admin/firearms-allocation", icon: ClipboardList },
       { title: "SP Deployment", url: "/admin/deployment", icon: CalendarDays },
-      { title: "Ammo Requests", url: "/admin/inventory/requests", icon: TrendingUp },
+      { title: "Ammo Requests", url: "/admin/requests", icon: TrendingUp },
       { title: "Occurrence Book", url: "/admin/occurrence", icon: TriangleAlert },
     ],
   },
