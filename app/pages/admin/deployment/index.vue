@@ -1,164 +1,182 @@
 <template>
-  <div class="deployment-page">
+  <div class="p-8 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
     <!-- Page Header -->
-    <div class="page-header">
+    <div class="flex items-start justify-between mb-6">
       <div>
-        <h1 class="page-title">Security Personnel Deployment</h1>
-        <p class="page-subtitle">Plan and manage security personnel duty rosters</p>
+        <h1 class="text-2xl font-bold text-slate-100 -tracking-[0.3px] mb-1">Security Personnel Deployment</h1>
+        <p class="text-sm text-slate-500">Plan and manage security personnel duty rosters</p>
       </div>
-      <button class="btn-primary">
+      <button class="flex items-center gap-1.5 bg-blue-600 text-white border-none rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer hover:bg-blue-700 transition-colors whitespace-nowrap">
         <Plus :size="14" />
         Schedule Deployment
       </button>
     </div>
 
     <!-- Stats -->
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-info">
-          <span class="stat-label">Total Deployments</span>
-          <span class="stat-value">{{ totalDeployments }}</span>
+    <div class="grid grid-cols-4 gap-4 mb-5">
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs text-slate-500 font-medium">Total Deployments</span>
+          <span class="text-[28px] font-bold text-slate-100 leading-none">{{ totalDeployments }}</span>
         </div>
-        <div class="stat-icon blue">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-blue-950/40 text-blue-500 border border-blue-500/25">
           <CalendarDays :size="22" />
         </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-info">
-          <span class="stat-label">Scheduled</span>
-          <span class="stat-value">{{ scheduledCount }}</span>
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs text-slate-500 font-medium">Scheduled</span>
+          <span class="text-[28px] font-bold text-slate-100 leading-none">{{ scheduledCount }}</span>
         </div>
-        <div class="stat-icon orange">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-950/40 text-orange-500 border border-orange-500/25">
           <Clock :size="22" />
         </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-info">
-          <span class="stat-label">Active Now</span>
-          <span class="stat-value">{{ activeCount }}</span>
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs text-slate-500 font-medium">Active Now</span>
+          <span class="text-[28px] font-bold text-slate-100 leading-none">{{ activeCount }}</span>
         </div>
-        <div class="stat-icon green">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-emerald-950/40 text-emerald-500 border border-emerald-500/25">
           <ShieldCheck :size="22" />
         </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-info">
-          <span class="stat-label">Completed</span>
-          <span class="stat-value">{{ completedCount }}</span>
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs text-slate-500 font-medium">Completed</span>
+          <span class="text-[28px] font-bold text-slate-100 leading-none">{{ completedCount }}</span>
         </div>
-        <div class="stat-icon grey">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-slate-800/60 text-slate-500 border border-slate-700/40">
           <CircleCheck :size="22" />
         </div>
       </div>
     </div>
 
     <!-- Filter Bar -->
-    <div class="filter-bar">
-      <div class="search-wrap">
-        <Search :size="14" class="search-icon" />
+    <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-4 py-3 flex gap-3 items-center mb-4">
+      <div class="relative flex-1">
+        <Search :size="14" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 pointer-events-none" />
         <input
           v-model="searchQuery"
           type="text"
           placeholder="Search by SP name or file number..."
-          class="search-input"
+          class="w-full bg-[#0A0E1A] border border-[#1e2535] rounded-lg pl-9 pr-3 py-2 text-[13px] text-slate-200 placeholder-slate-600 outline-none focus:border-blue-500 transition-colors"
         />
       </div>
-      <select v-model="selectedStatus" class="filter-select">
+      <select v-model="selectedStatus" class="flex-1 min-w-[150px] bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-[13px] text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors appearance-none">
         <option value="">All Statuses</option>
         <option value="ACTIVE">Active</option>
         <option value="SCHEDULED">Scheduled</option>
         <option value="COMPLETED">Completed</option>
       </select>
-      <select v-model="selectedBranch" class="filter-select">
+      <select v-model="selectedBranch" class="flex-1 min-w-[150px] bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-[13px] text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors appearance-none">
         <option value="">All Branches</option>
         <option v-for="b in branches" :key="b" :value="b">{{ b }}</option>
       </select>
     </div>
 
     <!-- View Filter Tabs -->
-    <div class="view-tabs">
+    <div class="flex gap-2 mb-4">
       <button
         v-for="vt in viewTabs"
         :key="vt.id"
-        class="view-tab"
-        :class="{ active: activeView === vt.id }"
         @click="activeView = vt.id"
+        class="flex items-center gap-1.5 px-4 py-2 border rounded-lg text-[13px] font-medium cursor-pointer transition-all whitespace-nowrap"
+        :class="{
+          'bg-[#1e2535] border-blue-500/60 text-slate-200 font-semibold': activeView === vt.id,
+          'bg-[#161b27] border-[#1e2535] text-slate-500 hover:text-slate-300 hover:border-slate-600': activeView !== vt.id
+        }"
       >
         <component :is="vt.icon" :size="13" />
         {{ vt.label }}
       </button>
     </div>
 
-    <!-- Deployments List -->
-    <div class="deployments-list">
-      <div
-        v-for="(dep, index) in filteredDeployments"
-        :key="dep.id"
-        class="deployment-row"
-        :class="{ 'no-border': index === filteredDeployments.length - 1 }"
-      >
-        <!-- Security Personnel -->
-        <div class="dep-field" style="flex: 1.1">
-          <span class="field-label">Security Personnel</span>
-          <span class="dep-name">{{ dep.personnel }}</span>
+    <!-- Deployments List — outer container + spaced inner cards -->
+    <div class="bg-[#161b27] border border-[#1e2535] rounded-xl">
+      <div class="p-3 flex flex-col gap-2">
+
+        <div
+          v-for="dep in filteredDeployments"
+          :key="dep.id"
+          class="flex items-center gap-4 px-5 py-4 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors"
+        >
+          <!-- Security Personnel -->
+          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.1">
+            <span class="text-[11px] text-slate-500 font-medium">Security Personnel</span>
+            <span class="text-[14px] font-bold text-slate-100">{{ dep.personnel }}</span>
+          </div>
+
+          <!-- Duty -->
+          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.2">
+            <span class="text-[11px] text-slate-500 font-medium">Duty</span>
+            <span class="text-[13px] text-slate-400">{{ dep.duty }}</span>
+          </div>
+
+          <!-- Scheduled Start -->
+          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.2">
+            <span class="text-[11px] text-slate-500 font-medium">Scheduled Start</span>
+            <span class="text-[13px] text-slate-400">{{ dep.start }}</span>
+          </div>
+
+          <!-- Scheduled End -->
+          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.2">
+            <span class="text-[11px] text-slate-500 font-medium">Scheduled End</span>
+            <span class="text-[13px] text-slate-400">{{ dep.end }}</span>
+          </div>
+
+          <!-- Status -->
+          <div class="flex flex-col gap-1" style="flex: 0.7">
+            <span class="text-[11px] text-slate-500 font-medium">Status</span>
+            <span
+              class="inline-flex self-start items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide mt-0.5"
+              :class="{
+                'bg-emerald-950/70 text-emerald-400 border border-emerald-700/50': dep.status === 'ACTIVE',
+                'bg-blue-950/70 text-blue-400 border border-blue-700/50': dep.status === 'SCHEDULED',
+                'bg-[#1e2535] text-slate-500 border border-slate-700/60': dep.status === 'COMPLETED'
+              }"
+            >{{ dep.status }}</span>
+          </div>
+
+          <!-- Branch -->
+          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.1">
+            <span class="text-[11px] text-slate-500 font-medium">Branch</span>
+            <span class="text-[13px] font-semibold text-slate-200">{{ dep.branch }}</span>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-center gap-2 ml-auto flex-shrink-0">
+            <!-- ACTIVE: Complete button -->
+            <template v-if="dep.status === 'ACTIVE'">
+              <button class="flex items-center gap-1.5 bg-transparent border-none text-slate-400 text-[13px] font-medium cursor-pointer px-1 py-1.5 rounded-md hover:text-slate-200 hover:bg-[#1e2535] transition-all">
+                <CircleCheck :size="14" />
+                Complete
+              </button>
+            </template>
+            <!-- SCHEDULED: Start + icons -->
+            <template v-if="dep.status === 'SCHEDULED'">
+              <button class="flex items-center gap-1.5 bg-transparent border-none text-slate-400 text-[13px] font-medium cursor-pointer px-1 py-1.5 rounded-md hover:text-slate-200 hover:bg-[#1e2535] transition-all">
+                <CirclePlay :size="14" />
+                Start
+              </button>
+              <button title="Edit" class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer">
+                <PenSquare :size="14" />
+              </button>
+              <button title="Reassign" class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer">
+                <UserPlus :size="14" />
+              </button>
+              <button title="Cancel" class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-red-400 hover:bg-red-950/30 transition-all cursor-pointer">
+                <CircleX :size="14" />
+              </button>
+            </template>
+          </div>
         </div>
 
-        <!-- Duty -->
-        <div class="dep-field" style="flex: 1.2">
-          <span class="field-label">Duty</span>
-          <span class="field-value">{{ dep.duty }}</span>
+        <div v-if="filteredDeployments.length === 0" class="py-12 text-center text-slate-600 text-sm">
+          No deployments found.
         </div>
 
-        <!-- Scheduled Start -->
-        <div class="dep-field" style="flex: 1.2">
-          <span class="field-label">Scheduled Start</span>
-          <span class="field-value">{{ dep.start }}</span>
-        </div>
-
-        <!-- Scheduled End -->
-        <div class="dep-field" style="flex: 1.2">
-          <span class="field-label">Scheduled End</span>
-          <span class="field-value">{{ dep.end }}</span>
-        </div>
-
-        <!-- Status -->
-        <div class="dep-field" style="flex: 0.7">
-          <span class="field-label">Status</span>
-          <span class="status-badge" :class="statusClass(dep.status)">{{ dep.status }}</span>
-        </div>
-
-        <!-- Branch -->
-        <div class="dep-field" style="flex: 1.1">
-          <span class="field-label">Branch</span>
-          <span class="field-value fw">{{ dep.branch }}</span>
-        </div>
-
-        <!-- Actions -->
-        <div class="dep-actions">
-          <!-- ACTIVE row: Complete button only -->
-          <template v-if="dep.status === 'ACTIVE'">
-            <button class="complete-btn">
-              <CircleCheck :size="14" />
-              Complete
-            </button>
-          </template>
-          <!-- SCHEDULED row: Start + Edit + Assign + Cancel icons -->
-          <template v-if="dep.status === 'SCHEDULED'">
-            <button class="start-btn">
-              <CirclePlay :size="14" />
-              Start
-            </button>
-            <button class="icon-btn" title="Edit"><PenSquare :size="14" /></button>
-            <button class="icon-btn" title="Reassign"><UserPlus :size="14" /></button>
-            <button class="icon-btn danger" title="Cancel"><CircleX :size="14" /></button>
-          </template>
-          <!-- COMPLETED row: no actions -->
-        </div>
-      </div>
-
-      <div v-if="filteredDeployments.length === 0" class="empty-state">
-        No deployments found.
       </div>
     </div>
 
@@ -166,9 +184,8 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  layout: 'admin-layout',
-})
+definePageMeta({ layout: 'admin-layout' })
+
 import { ref, computed } from 'vue'
 import {
   Plus, Search, CalendarDays, Clock, ShieldCheck, CircleCheck,
@@ -185,10 +202,10 @@ interface Deployment {
   branch: string
 }
 
-const searchQuery = ref('')
+const searchQuery    = ref('')
 const selectedStatus = ref('')
 const selectedBranch = ref('')
-const activeView = ref('all')
+const activeView     = ref('all')
 
 const branches = ['Dar es Salaam Sub-HQ', 'Dodoma HQ', 'Zanzibar Sub-HQ', 'Mwanza Branch']
 
@@ -214,7 +231,7 @@ const filteredDeployments = computed(() => {
     const matchBranch = !selectedBranch.value || d.branch === selectedBranch.value
     const matchView =
       activeView.value === 'all' ||
-      (activeView.value === 'active' && d.status === 'ACTIVE') ||
+      (activeView.value === 'active'   && d.status === 'ACTIVE') ||
       (activeView.value === 'upcoming' && d.status === 'SCHEDULED')
     return matchSearch && matchStatus && matchBranch && matchView
   })
@@ -224,152 +241,4 @@ const totalDeployments = computed(() => deployments.value.length)
 const scheduledCount   = computed(() => deployments.value.filter(d => d.status === 'SCHEDULED').length)
 const activeCount      = computed(() => deployments.value.filter(d => d.status === 'ACTIVE').length)
 const completedCount   = computed(() => deployments.value.filter(d => d.status === 'COMPLETED').length)
-
-function statusClass(status: string) {
-  if (status === 'ACTIVE')    return 'badge-active'
-  if (status === 'SCHEDULED') return 'badge-scheduled'
-  if (status === 'COMPLETED') return 'badge-completed'
-  return ''
-}
 </script>
-
-<style scoped>
-.deployment-page {
-  padding: 24px 32px;
-  background: #0A0E1A;
-  min-height: 100vh;
-  font-family: 'DM Sans', 'IBM Plex Sans', sans-serif;
-  color: #e2e8f0;
-}
-
-/* Header */
-.page-header {
-  display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px;
-}
-.page-title { font-size: 22px; font-weight: 700; color: #f1f5f9; letter-spacing: -0.3px; margin: 0 0 4px; }
-.page-subtitle { font-size: 13px; color: #64748b; margin: 0; }
-.btn-primary {
-  display: flex; align-items: center; gap: 6px;
-  background: #3b82f6; color: #fff; border: none; border-radius: 8px;
-  padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
-  transition: background 0.15s; font-family: inherit; white-space: nowrap;
-}
-.btn-primary:hover { background: #2563eb; }
-
-/* Stats */
-.stats-row {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;
-}
-.stat-card {
-  background: #161b27; border: 1px solid #1e2535; border-radius: 12px;
-  padding: 20px 22px; display: flex; align-items: center; justify-content: space-between;
-}
-.stat-info { display: flex; flex-direction: column; gap: 6px; }
-.stat-label { font-size: 12px; color: #64748b; font-weight: 500; }
-.stat-value { font-size: 28px; font-weight: 700; color: #f1f5f9; line-height: 1; }
-.stat-icon {
-  width: 48px; height: 48px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.stat-icon.blue   { background: #1e3a5f33; color: #3b82f6; border: 1.5px solid #3b82f644; }
-.stat-icon.orange { background: #7c2d1233; color: #f97316; border: 1.5px solid #f9731644; }
-.stat-icon.green  { background: #14532d33; color: #22c55e; border: 1.5px solid #16a34a44; }
-.stat-icon.grey   { background: #1e253533; color: #64748b; border: 1.5px solid #2d374844; }
-
-/* Filter Bar */
-.filter-bar {
-  background: #161b27; border: 1px solid #1e2535; border-radius: 12px;
-  padding: 14px 18px; display: flex; gap: 12px; align-items: center; margin-bottom: 16px;
-}
-.search-wrap { position: relative; flex: 1; }
-.search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #475569; }
-.search-input {
-  width: 100%; background: #0A0E1A; border: 1px solid #1e2535; border-radius: 8px;
-  padding: 8px 12px 8px 34px; font-size: 13px; color: #e2e8f0; outline: none;
-  transition: border-color 0.15s; box-sizing: border-box; font-family: inherit;
-}
-.search-input::placeholder { color: #475569; }
-.search-input:focus { border-color: #3b82f6; }
-.filter-select {
-  flex: 1; background: #0A0E1A; border: 1px solid #1e2535; border-radius: 8px;
-  padding: 8px 32px 8px 12px; font-size: 13px; color: #e2e8f0; outline: none; cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 10px center;
-  font-family: inherit; min-width: 150px;
-}
-.filter-select:focus { border-color: #3b82f6; }
-
-/* View Tabs */
-.view-tabs {
-  display: flex; gap: 8px; margin-bottom: 16px;
-}
-.view-tab {
-  display: flex; align-items: center; gap: 7px;
-  padding: 8px 16px; background: #161b27; border: 1px solid #1e2535;
-  border-radius: 8px; color: #64748b; font-size: 13px; font-weight: 500;
-  cursor: pointer; transition: all 0.15s; font-family: inherit; white-space: nowrap;
-}
-.view-tab:hover { color: #94a3b8; border-color: #2d3748; }
-.view-tab.active { background: #1e2535; border-color: #3b82f6; color: #e2e8f0; font-weight: 600; }
-
-/* Deployments List */
-.deployments-list {
-  background: #161b27; border: 1px solid #1e2535; border-radius: 12px; overflow: hidden;
-}
-.deployment-row {
-  display: flex; align-items: center; gap: 16px;
-  padding: 18px 22px; border-bottom: 1px solid #1a2030; transition: background 0.1s;
-}
-.deployment-row:hover { background: #1a2030; }
-.deployment-row.no-border { border-bottom: none; }
-
-.dep-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.field-label { font-size: 11px; color: #475569; font-weight: 500; }
-.field-value { font-size: 13px; color: #94a3b8; }
-.field-value.fw { font-weight: 600; color: #e2e8f0; }
-.dep-name { font-size: 14px; font-weight: 700; color: #f1f5f9; }
-
-/* Status Badges */
-.status-badge {
-  display: inline-flex; align-items: center; padding: 4px 10px;
-  border-radius: 6px; font-size: 11px; font-weight: 700;
-  letter-spacing: 0.4px; width: fit-content;
-}
-.badge-active    { background: #14532d; color: #4ade80; border: 1px solid #166534; }
-.badge-scheduled { background: #1e3a5f; color: #60a5fa; border: 1px solid #1d4ed8; }
-.badge-completed { background: #1e2535; color: #64748b; border: 1px solid #2d3748; }
-
-/* Actions */
-.dep-actions {
-  display: flex; align-items: center; gap: 8px;
-  margin-left: auto; flex-shrink: 0;
-}
-.complete-btn {
-  display: flex; align-items: center; gap: 6px;
-  background: transparent; border: none; color: #94a3b8;
-  font-size: 13px; font-weight: 500; cursor: pointer;
-  padding: 6px 4px; border-radius: 6px; transition: all 0.15s; font-family: inherit;
-}
-.complete-btn:hover { color: #e2e8f0; background: #1e2535; padding: 6px 10px; }
-
-.start-btn {
-  display: flex; align-items: center; gap: 6px;
-  background: transparent; border: none; color: #94a3b8;
-  font-size: 13px; font-weight: 500; cursor: pointer;
-  padding: 6px 4px; border-radius: 6px; transition: all 0.15s; font-family: inherit;
-}
-.start-btn:hover { color: #e2e8f0; background: #1e2535; padding: 6px 10px; }
-
-.icon-btn {
-  display: flex; align-items: center; justify-content: center;
-  background: transparent; border: none; border-radius: 6px;
-  padding: 6px; cursor: pointer; color: #64748b; transition: all 0.15s;
-}
-.icon-btn:hover { background: #1e2535; color: #94a3b8; }
-.icon-btn.danger:hover { background: #7f1d1d22; color: #f87171; }
-
-.empty-state {
-  padding: 48px; text-align: center; color: #475569; font-size: 13px;
-}
-</style>

@@ -77,83 +77,80 @@
     </div>
 
     <!-- Devices List -->
-    <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
+    <div class="bg-[#161b27] border border-[#1e2535] rounded-xl">
       <h3 class="text-sm font-semibold text-slate-100 px-6 py-4 border-b border-[#1e2535] m-0">
         Security Devices ({{ filteredDevices.length }})
       </h3>
 
-      <div
-        v-for="(device, index) in filteredDevices"
-        :key="device.id"
-        class="flex items-center gap-4 px-6 py-4 border-b border-[#1a2030] hover:bg-[#1a2030] transition-colors last:border-b-0"
-      >
-        <!-- Device Name + ID -->
-        <div class="flex flex-col gap-1 min-w-0" style="flex: 1.4">
-          <span class="text-[11px] text-slate-500 font-medium">Device Name</span>
-          <span class="text-[14px] font-bold text-slate-100 leading-snug">{{ device.name }}</span>
-          <span class="text-[11px] text-slate-600 font-mono tracking-wide">{{ device.id }}</span>
+      <div class="p-3 flex flex-col gap-3">
+
+        <div
+          v-for="device in filteredDevices"
+          :key="device.id"
+          class="flex items-start gap-6 px-5 py-5 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors"
+        >
+          <!-- Device Name + ID -->
+          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.4">
+            <span class="text-[11px] text-slate-500 font-medium uppercase tracking-wide">Device Name</span>
+            <span class="text-[14px] font-bold text-slate-100 leading-snug mt-0.5">{{ device.name }}</span>
+            <span class="text-[11px] text-slate-600 font-mono mt-0.5">{{ device.id }}</span>
+          </div>
+
+          <!-- Type -->
+          <div class="flex flex-col gap-1 min-w-0" style="flex: 1">
+            <span class="text-[11px] text-slate-500 font-medium uppercase tracking-wide">Type</span>
+            <span class="text-[13px] text-slate-300 font-medium mt-0.5">{{ device.type }}</span>
+          </div>
+
+          <!-- Use -->
+          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.2">
+            <span class="text-[11px] text-slate-500 font-medium uppercase tracking-wide">Use</span>
+            <span class="text-[13px] text-slate-400 mt-0.5">{{ device.use }}</span>
+          </div>
+
+          <!-- Branch -->
+          <div class="flex flex-col gap-1 min-w-0" style="flex: 1">
+            <span class="text-[11px] text-slate-500 font-medium uppercase tracking-wide">Branch</span>
+            <span class="text-[13px] font-semibold text-slate-200 mt-0.5">{{ device.branch }}</span>
+          </div>
+
+          <!-- Status -->
+          <div class="flex flex-col gap-1" style="flex: 0.7">
+            <span class="text-[11px] text-slate-500 font-medium uppercase tracking-wide">Status</span>
+            <span
+              class="inline-flex self-start items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide mt-1"
+              :class="{
+                'bg-emerald-950/70 text-emerald-400 border border-emerald-700/50': device.status === 'GOOD',
+                'bg-red-950/70 text-red-400 border border-red-700/50': device.status === 'MALFUNCTION',
+                'bg-amber-950/70 text-amber-400 border border-amber-700/50': device.status === 'MAINTENANCE'
+              }"
+            >{{ device.status }}</span>
+          </div>
+
+          <!-- Next Inspection -->
+          <div class="flex flex-col gap-1" style="flex: 1">
+            <span class="text-[11px] text-slate-500 font-medium uppercase tracking-wide">Next Inspection</span>
+            <span class="text-[13.5px] font-semibold text-slate-200 mt-0.5">{{ device.nextInspection }}</span>
+            <span class="inline-flex self-start items-center text-[11px] font-semibold rounded-md px-2.5 py-1 mt-1 bg-orange-950/60 text-orange-400 border border-orange-700/50">
+              Due in {{ device.daysUntil }} days
+            </span>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-center gap-3 flex-shrink-0 self-center ml-auto">
+            <button title="Edit" class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-500 hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer">
+              <PenSquare :size="15" />
+            </button>
+            <button class="bg-transparent border-none text-slate-400 text-[13px] font-medium cursor-pointer py-1 hover:text-slate-200 transition-colors whitespace-nowrap">
+              Record Inspection
+            </button>
+          </div>
         </div>
 
-        <!-- Type -->
-        <div class="flex flex-col gap-1 min-w-0" style="flex: 1">
-          <span class="text-[11px] text-slate-500 font-medium">Type</span>
-          <span class="inline-flex self-start text-[12px] text-slate-400 bg-[#1e2535] border border-slate-700 rounded-md px-2.5 py-1 mt-0.5 whitespace-nowrap">
-            {{ device.type }}
-          </span>
+        <div v-if="filteredDevices.length === 0" class="py-12 text-center text-slate-600 text-sm">
+          No devices found.
         </div>
 
-        <!-- Use -->
-        <div class="flex flex-col gap-1 min-w-0" style="flex: 1.2">
-          <span class="text-[11px] text-slate-500 font-medium">Use</span>
-          <span class="text-[13px] text-slate-400">{{ device.use }}</span>
-        </div>
-
-        <!-- Branch -->
-        <div class="flex flex-col gap-1 min-w-0" style="flex: 1">
-          <span class="text-[11px] text-slate-500 font-medium">Branch</span>
-          <span class="text-[13px] font-semibold text-slate-200">{{ device.branch }}</span>
-        </div>
-
-        <!-- Status -->
-        <div class="flex flex-col gap-1" style="flex: 0.7">
-          <span class="text-[11px] text-slate-500 font-medium">Status</span>
-          <span
-            class="inline-flex self-start items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide mt-0.5"
-            :class="{
-              'bg-emerald-950/70 text-emerald-400 border border-emerald-700/50': device.status === 'GOOD',
-              'bg-red-950/70 text-red-400 border border-red-700/50': device.status === 'MALFUNCTION',
-              'bg-amber-950/70 text-amber-400 border border-amber-700/50': device.status === 'MAINTENANCE'
-            }"
-          >{{ device.status }}</span>
-        </div>
-
-        <!-- Next Inspection -->
-        <div class="flex flex-col gap-1" style="flex: 1">
-          <span class="text-[11px] text-slate-500 font-medium">Next Inspection</span>
-          <span class="text-[13.5px] font-semibold text-slate-200">{{ device.nextInspection }}</span>
-          <span
-            class="inline-flex self-start items-center text-[11px] font-semibold rounded-md px-2 py-0.5 mt-0.5"
-            :class="{
-              'bg-orange-950/50 text-orange-400 border border-orange-700/50': device.daysUntil < -180,
-              'bg-amber-950/50 text-amber-400 border border-amber-700/50': device.daysUntil >= -180 && device.daysUntil < 0,
-              'bg-emerald-950/50 text-emerald-400 border border-emerald-700/50': device.daysUntil >= 0
-            }"
-          >Due in {{ device.daysUntil }} days</span>
-        </div>
-
-        <!-- Actions -->
-        <div class="flex items-center gap-2.5 flex-shrink-0 ml-auto">
-          <button title="Edit" class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-slate-300 hover:bg-[#1e2535] transition-all cursor-pointer">
-            <PenSquare :size="15" />
-          </button>
-          <button class="bg-transparent border-none text-slate-400 text-[13px] font-medium cursor-pointer py-1.5 hover:text-slate-200 transition-colors whitespace-nowrap">
-            Record Inspection
-          </button>
-        </div>
-      </div>
-
-      <div v-if="filteredDevices.length === 0" class="py-12 text-center text-slate-600 text-sm">
-        No devices found.
       </div>
     </div>
 

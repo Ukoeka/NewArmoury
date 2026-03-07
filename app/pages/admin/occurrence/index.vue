@@ -1,18 +1,18 @@
 <template>
-  <div class="occurrence-page">
+  <div class="p-8 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
     <!-- Page Header -->
-    <div class="page-header">
+    <div class="flex items-start justify-between mb-6">
       <div>
-        <h1 class="page-title">Occurrence Book & Inspections</h1>
-        <p class="page-subtitle">Log security incidents and guard post inspections</p>
+        <h1 class="text-2xl font-bold text-slate-100 -tracking-[0.3px] mb-1">Occurrence Book & Inspections</h1>
+        <p class="text-sm text-slate-500">Log security incidents and guard post inspections</p>
       </div>
-      <div class="header-btns">
-        <button class="btn-secondary">
+      <div class="flex gap-2.5">
+        <button class="flex items-center gap-1.5 bg-transparent text-slate-400 border border-slate-700 rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer hover:border-blue-500 hover:text-slate-200 transition-all whitespace-nowrap">
           <Plus :size="14" />
           Add Occurrence
         </button>
-        <button class="btn-primary">
+        <button class="flex items-center gap-1.5 bg-blue-600 text-white border-none rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer hover:bg-blue-700 transition-colors whitespace-nowrap">
           <Plus :size="14" />
           Add Inspection
         </button>
@@ -20,118 +20,156 @@
     </div>
 
     <!-- Stats -->
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-info">
-          <span class="stat-label">Total Occurrences</span>
-          <span class="stat-value">{{ occurrences.length }}</span>
+    <div class="grid grid-cols-4 gap-4 mb-5">
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs text-slate-500 font-medium">Total Occurrences</span>
+          <span class="text-[28px] font-bold text-slate-100 leading-none">{{ occurrences.length }}</span>
         </div>
-        <div class="stat-icon orange">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-orange-950/40 text-orange-500 border border-orange-500/25">
           <TriangleAlert :size="22" />
         </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-info">
-          <span class="stat-label">Security Issues</span>
-          <span class="stat-value">{{ securityIssues }}</span>
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs text-slate-500 font-medium">Security Issues</span>
+          <span class="text-[28px] font-bold text-slate-100 leading-none">{{ securityIssues }}</span>
         </div>
-        <div class="stat-icon red">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-red-950/40 text-red-500 border border-red-500/25">
           <TriangleAlert :size="22" />
         </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-info">
-          <span class="stat-label">Total Inspections</span>
-          <span class="stat-value">{{ inspections.length }}</span>
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs text-slate-500 font-medium">Total Inspections</span>
+          <span class="text-[28px] font-bold text-slate-100 leading-none">{{ inspections.length }}</span>
         </div>
-        <div class="stat-icon blue">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-blue-950/40 text-blue-500 border border-blue-500/25">
           <CircleCheck :size="22" />
         </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-info">
-          <span class="stat-label">OK Status</span>
-          <span class="stat-value">{{ okInspections }}</span>
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
+        <div class="flex flex-col gap-1.5">
+          <span class="text-xs text-slate-500 font-medium">OK Status</span>
+          <span class="text-[28px] font-bold text-slate-100 leading-none">{{ okInspections }}</span>
         </div>
-        <div class="stat-icon green">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 bg-emerald-950/40 text-emerald-500 border border-emerald-500/25">
           <CircleCheck :size="22" />
         </div>
       </div>
     </div>
 
     <!-- Two-column layout -->
-    <div class="two-col">
+    <div class="grid grid-cols-2 gap-4">
 
       <!-- LEFT: Recent Occurrences -->
-      <div class="col-card">
-        <h3 class="col-title">Recent Occurrences ({{ occurrences.length }})</h3>
-        <div class="scroll-list">
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden flex flex-col">
+        <h3 class="text-[14px] font-semibold text-slate-100 px-5 py-4 border-b border-[#1e2535] m-0 flex-shrink-0">
+          Recent Occurrences ({{ occurrences.length }})
+        </h3>
+        <div class="p-3.5 flex flex-col gap-3 overflow-y-auto max-h-[620px]">
+
           <div
             v-for="occ in occurrences"
             :key="occ.id"
-            class="occ-card"
-            :class="typeCardClass(occ.type)"
+            class="bg-[#1a2030] border border-[#1e2535] rounded-[10px] px-4 py-3.5 flex flex-col gap-2"
+            :class="{
+              'border-l-[3px] border-l-red-500': occ.type === 'EMERGENCY',
+              'border-l-[3px] border-l-blue-500': occ.type !== 'EMERGENCY'
+            }"
           >
-            <div class="occ-card-top">
-              <span class="occ-type-badge" :class="typeBadgeClass(occ.type)">{{ occ.type }}</span>
-              <span class="occ-time">{{ occ.time }}</span>
+            <!-- Top row -->
+            <div class="flex items-center justify-between">
+              <span
+                class="inline-flex items-center text-[10.5px] font-bold tracking-wide"
+                :class="{
+                  'px-2.5 py-1 rounded-md bg-blue-950/70 text-blue-400 border border-blue-700/50': occ.type === 'PLANNED_SHIFT',
+                  'text-red-500 text-[12px] p-0': occ.type === 'EMERGENCY',
+                  'px-2.5 py-1 rounded-md bg-amber-950/70 text-amber-400 border border-amber-700/50': occ.type === 'UNPLANNED'
+                }"
+              >{{ occ.type }}</span>
+              <span class="text-[11.5px] text-slate-600">{{ occ.time }}</span>
             </div>
-            <div class="occ-category">{{ occ.category }}</div>
-            <p class="occ-desc">{{ occ.description }}</p>
-            <div class="occ-meta">Reported by: {{ occ.reportedBy }} | {{ occ.reportedAt }}</div>
 
-            <!-- BISO Response (if present) -->
-            <div v-if="occ.bisoResponse" class="biso-response">
-              <span class="biso-response-label">BISO Response:</span>
-              <span class="biso-response-text">{{ occ.bisoResponse }}</span>
+            <span class="text-[12px] font-bold text-slate-400 uppercase tracking-wide">{{ occ.category }}</span>
+            <p class="text-[13px] text-slate-200 leading-relaxed m-0">{{ occ.description }}</p>
+            <span class="text-[11.5px] text-slate-600">Reported by: {{ occ.reportedBy }} | {{ occ.reportedAt }}</span>
+
+            <!-- BISO Response -->
+            <div v-if="occ.bisoResponse" class="bg-emerald-950/20 border border-emerald-700/40 rounded-lg px-3 py-2.5 flex flex-col gap-1">
+              <span class="text-[11.5px] font-bold text-emerald-400">BISO Response:</span>
+              <span class="text-[12.5px] text-emerald-300/80 leading-snug">{{ occ.bisoResponse }}</span>
             </div>
 
-            <button class="add-biso-btn">Add BISO Response</button>
+            <button class="self-start bg-blue-500/10 border-none text-blue-400 text-[12.5px] font-semibold cursor-pointer px-2.5 py-2 rounded-md hover:text-blue-300 transition-colors text-left">
+              Add BISO Response
+            </button>
           </div>
+
         </div>
       </div>
 
       <!-- RIGHT: Inspection Reports -->
-      <div class="col-card">
-        <h3 class="col-title">Inspection Reports ({{ inspections.length }})</h3>
-        <div class="scroll-list">
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden flex flex-col">
+        <h3 class="text-[14px] font-semibold text-slate-100 px-5 py-4 border-b border-[#1e2535] m-0 flex-shrink-0">
+          Inspection Reports ({{ inspections.length }})
+        </h3>
+        <div class="p-3.5 flex flex-col gap-3 overflow-y-auto max-h-[620px]">
+
           <div
             v-for="insp in inspections"
             :key="insp.id"
-            class="insp-card"
-            :class="insp.status === 'NOT_OK' ? 'insp-not-ok' : ''"
+            class="bg-[#1a2030] border border-[#1e2535] rounded-[10px] px-4 py-3.5 flex flex-col gap-2"
+            :class="{ 'border-red-500/20': insp.status === 'NOT_OK' }"
           >
-            <div class="insp-card-top">
-              <span class="insp-type-badge" :class="inspTypeBadgeClass(insp.type)">{{ insp.type }}</span>
-              <span class="occ-time">{{ insp.date }}</span>
-            </div>
-            <span class="insp-status-badge" :class="insp.status === 'OK' ? 'status-ok' : 'status-not-ok'">
-              Status: {{ insp.status }}
-            </span>
-
-            <div class="insp-section">
-              <span class="insp-section-label">Findings:</span>
-              <span class="insp-section-text">{{ insp.findings }}</span>
-            </div>
-            <div class="insp-section">
-              <span class="insp-section-label">Recommendations:</span>
-              <span class="insp-section-text">{{ insp.recommendations }}</span>
+            <!-- Top row -->
+            <div class="flex items-center justify-between">
+              <span
+                class="inline-flex items-center px-2.5 py-1 rounded-md text-[10.5px] font-bold tracking-wide"
+                :class="{
+                  'bg-emerald-950/70 text-emerald-400 border border-emerald-700/50': insp.type === 'ROUTINE' || insp.type === 'QUARTERLY',
+                  'bg-red-950/70 text-red-400 border border-red-700/50': insp.type === 'SURPRISE'
+                }"
+              >{{ insp.type }}</span>
+              <span class="text-[11.5px] text-slate-600">{{ insp.date }}</span>
             </div>
 
-            <div class="insp-meta">Inspected by: {{ insp.inspectedBy }}</div>
+            <!-- Status badge -->
+            <span
+              class="inline-flex self-start items-center px-2.5 py-1 rounded-md text-[11px] font-bold"
+              :class="{
+                'bg-emerald-950/70 text-emerald-400 border border-emerald-700/50': insp.status === 'OK',
+                'bg-red-950/70 text-red-400 border border-red-700/50': insp.status === 'NOT_OK'
+              }"
+            >Status: {{ insp.status }}</span>
 
-            <!-- BISO Instructions (if present) -->
-            <div v-if="insp.bisoInstructions" class="biso-instructions">
-              <span class="biso-instr-label">BISO Instructions:</span>
-              <span class="biso-instr-text">{{ insp.bisoInstructions }}</span>
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[12.5px] font-bold text-slate-200">Findings:</span>
+              <span class="text-[12.5px] text-slate-400 leading-snug">{{ insp.findings }}</span>
+            </div>
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[12.5px] font-bold text-slate-200">Recommendations:</span>
+              <span class="text-[12.5px] text-slate-400 leading-snug">{{ insp.recommendations }}</span>
             </div>
 
-            <button class="add-biso-btn">Add BISO Instructions</button>
+            <span class="text-[11.5px] text-slate-600">Inspected by: {{ insp.inspectedBy }}</span>
+
+            <!-- BISO Instructions -->
+            <div v-if="insp.bisoInstructions" class="bg-[#0f1829] border border-blue-700/50 rounded-lg px-3 py-2.5 flex flex-col gap-1">
+              <span class="text-[11.5px] font-bold text-blue-400">BISO Instructions:</span>
+              <span class="text-[12.5px] text-blue-300/80 leading-snug">{{ insp.bisoInstructions }}</span>
+            </div>
+
+            <button class="self-start bg-blue-500/10 border-none text-blue-400 text-[12.5px] font-semibold cursor-pointer px-2.5 py-2 rounded-md hover:text-blue-300 transition-colors text-left">
+              Add BISO Instructions
+            </button>
           </div>
+
         </div>
       </div>
 
     </div>
+
   </div>
 </template>
 
@@ -139,7 +177,7 @@
 definePageMeta({
   title: 'Role Permissions',
   layout: 'admin-layout',
-});
+})
 
 import { ref, computed } from 'vue'
 import { Plus, TriangleAlert, CircleCheck } from 'lucide-vue-next'
@@ -230,173 +268,4 @@ const inspections = ref<Inspection[]>([
 
 const securityIssues = computed(() => occurrences.value.filter(o => o.category === 'SECURITY ISSUE').length)
 const okInspections  = computed(() => inspections.value.filter(i => i.status === 'OK').length)
-
-function typeCardClass(type: string) {
-  if (type === 'EMERGENCY') return 'occ-card--emergency'
-  return ''
-}
-function typeBadgeClass(type: string) {
-  if (type === 'PLANNED_SHIFT') return 'badge-planned'
-  if (type === 'EMERGENCY')     return 'badge-emergency'
-  return 'badge-unplanned'
-}
-function inspTypeBadgeClass(type: string) {
-  if (type === 'ROUTINE')   return 'insp-badge-routine'
-  if (type === 'SURPRISE')  return 'insp-badge-surprise'
-  if (type === 'QUARTERLY') return 'insp-badge-quarterly'
-  return ''
-}
 </script>
-
-<style scoped>
-.occurrence-page {
-  padding: 24px 32px;
-  background: #0A0E1A;
-  min-height: 100vh;
-  font-family: 'DM Sans', 'IBM Plex Sans', sans-serif;
-  color: #e2e8f0;
-}
-
-/* Header */
-.page-header {
-  display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px;
-}
-.page-title { font-size: 22px; font-weight: 700; color: #f1f5f9; letter-spacing: -0.3px; margin: 0 0 4px; }
-.page-subtitle { font-size: 13px; color: #64748b; margin: 0; }
-.header-btns { display: flex; gap: 10px; }
-.btn-primary {
-  display: flex; align-items: center; gap: 6px;
-  background: #3b82f6; color: #fff; border: none; border-radius: 8px;
-  padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
-  transition: background 0.15s; font-family: inherit;
-}
-.btn-primary:hover { background: #2563eb; }
-.btn-secondary {
-  display: flex; align-items: center; gap: 6px;
-  background: transparent; color: #94a3b8; border: 1px solid #2d3748;
-  border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600;
-  cursor: pointer; transition: all 0.15s; font-family: inherit;
-}
-.btn-secondary:hover { border-color: #3b82f6; color: #e2e8f0; }
-
-/* Stats */
-.stats-row {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;
-}
-.stat-card {
-  background: #161b27; border: 1px solid #1e2535; border-radius: 12px;
-  padding: 20px 22px; display: flex; align-items: center; justify-content: space-between;
-}
-.stat-info { display: flex; flex-direction: column; gap: 6px; }
-.stat-label { font-size: 12px; color: #64748b; font-weight: 500; }
-.stat-value { font-size: 28px; font-weight: 700; color: #f1f5f9; line-height: 1; }
-.stat-icon {
-  width: 48px; height: 48px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.stat-icon.orange { background: #7c2d1233; color: #f97316; border: 1.5px solid #f9731644; }
-.stat-icon.red    { background: #7f1d1d33; color: #ef4444; border: 1.5px solid #ef444444; }
-.stat-icon.blue   { background: #1e3a5f33; color: #3b82f6; border: 1.5px solid #3b82f644; }
-.stat-icon.green  { background: #14532d33; color: #22c55e; border: 1.5px solid #16a34a44; }
-
-/* Two-col */
-.two-col {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
-}
-.col-card {
-  background: #161b27; border: 1px solid #1e2535;
-  border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
-}
-.col-title {
-  font-size: 14px; font-weight: 600; color: #f1f5f9;
-  padding: 16px 20px; margin: 0; border-bottom: 1px solid #1e2535; flex-shrink: 0;
-}
-.scroll-list {
-  padding: 14px 14px; overflow-y: auto;
-  display: flex; flex-direction: column; gap: 12px;
-  max-height: 620px;
-}
-
-/* Occurrence Cards */
-.occ-card {
-  background: #1a2030; border: 1px solid #1e2535;
-  border-left: 3px solid #3b82f6;
-  border-radius: 10px; padding: 14px 16px;
-  display: flex; flex-direction: column; gap: 8px;
-}
-.occ-card--emergency {
-  border-left: 3px solid #ef4444;
-}
-.occ-card-top {
-  display: flex; align-items: center; justify-content: space-between;
-}
-.occ-type-badge {
-  display: inline-flex; align-items: center; padding: 3px 9px;
-  border-radius: 5px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.4px;
-}
-.badge-planned   { background: #1e3a5f; color: #60a5fa; border: 1px solid #1d4ed8; }
-.badge-emergency { background: transparent; color: #ef4444; border: none; font-size: 12px; padding: 0; }
-.badge-unplanned { background: #713f12; color: #fb923c; border: 1px solid #92400e; }
-.occ-time { font-size: 11.5px; color: #475569; }
-.occ-category { font-size: 12px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.4px; }
-.occ-desc { font-size: 13px; color: #e2e8f0; line-height: 1.5; margin: 0; }
-.occ-meta { font-size: 11.5px; color: #475569; }
-
-/* BISO Response */
-.biso-response {
-  background: #0D542B33; border: 1px solid #166534;
-  border-radius: 7px; padding: 10px 12px;
-  display: flex; flex-direction: column; gap: 3px;
-}
-.biso-response-label { font-size: 11.5px; font-weight: 700; color: #4ade80; }
-.biso-response-text  { font-size: 12.5px; color: #86efac; line-height: 1.4; }
-
-.add-biso-btn {
-  background: #2B7FFF1A; border: none; color: #60a5fa;
-  font-size: 12.5px; font-weight: 600; cursor: pointer;
-  padding: 10px 10px; font-family: inherit; text-align: left;
-  transition: color 0.15s; width: fit-content;
-}
-.add-biso-btn:hover { color: #93c5fd; }
-
-/* Inspection Cards */
-.insp-card {
-  background: #1a2030; border: 1px solid #1e2535;
-  border-radius: 10px; padding: 14px 16px;
-  display: flex; flex-direction: column; gap: 8px;
-}
-.insp-not-ok {
-   border-color: #ef444433;
-}
-.insp-card-top {
-  display: flex; align-items: center; justify-content: space-between;
-}
-.insp-type-badge {
-  display: inline-flex; align-items: center; padding: 3px 9px;
-  border-radius: 5px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.4px;
-}
-.insp-badge-routine   { background: #14532d; color: #4ade80; border: 1px solid #166534; }
-.insp-badge-surprise  { background: #7f1d1d; color: #fca5a5; border: 1px solid #991b1b; }
-.insp-badge-quarterly { background: #14532d; color: #4ade80; border: 1px solid #166534; }
-
-.insp-status-badge {
-  display: inline-flex; align-items: center; padding: 3px 10px;
-  border-radius: 5px; font-size: 11px; font-weight: 700; width: fit-content;
-}
-.status-ok     { background: #14532d; color: #4ade80; border: 1px solid #166534; }
-.status-not-ok { background: #7f1d1d; color: #fca5a5; border: 1px solid #991b1b; }
-
-.insp-section { display: flex; flex-direction: column; gap: 2px; }
-.insp-section-label { font-size: 12.5px; font-weight: 700; color: #e2e8f0; }
-.insp-section-text  { font-size: 12.5px; color: #94a3b8; line-height: 1.45; }
-.insp-meta { font-size: 11.5px; color: #475569; }
-
-/* BISO Instructions */
-.biso-instructions {
-  background: #0f1829; border: 1px solid #1d4ed8;
-  border-radius: 7px; padding: 10px 12px;
-  display: flex; flex-direction: column; gap: 3px;
-}
-.biso-instr-label { font-size: 11.5px; font-weight: 700; color: #60a5fa; }
-.biso-instr-text  { font-size: 12.5px; color: #93c5fd; line-height: 1.4; }
-</style>
