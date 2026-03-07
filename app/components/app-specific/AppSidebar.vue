@@ -42,20 +42,20 @@ const navGroups = [
   {
     label: "MASTER DATA",
     items: [
-      { title: "Use Locations", url: "/admin/locations", icon: MapPin },
-      { title: "Arms Register", url: "/admin/arms-register", icon: Shield },
-      { title: "Ammunition", url: "/admin/ammunition", icon: Package },
+      { title: "Use Locations",    url: "/admin/locations",        icon: MapPin },
+      { title: "Arms Register",    url: "/admin/arms-register",    icon: Shield },
+      { title: "Ammunition",       url: "/admin/ammunition",       icon: Package },
       { title: "Security Devices", url: "/admin/security-devices", icon: Lock },
-      { title: "Users & Roles", url: "/admin/users", icon: Users },
+      { title: "Users & Roles",    url: "/admin/users",            icon: Users },
     ],
   },
   {
     label: "OPERATIONS",
     items: [
       { title: "Firearm Handover", url: "/admin/firearms-allocation", icon: ClipboardList },
-      { title: "SP Deployment", url: "/admin/deployment", icon: CalendarDays },
-      { title: "Ammo Requests", url: "/admin/requests", icon: TrendingUp },
-      { title: "Occurrence Book", url: "/admin/occurrence", icon: TriangleAlert },
+      { title: "SP Deployment",    url: "/admin/deployment",          icon: CalendarDays },
+      { title: "Ammo Requests",    url: "/admin/requests",            icon: TrendingUp },
+      { title: "Occurrence Book",  url: "/admin/occurrence",          icon: TriangleAlert },
     ],
   },
   {
@@ -80,19 +80,23 @@ const user = {
 </script>
 
 <template>
-  <Sidebar v-bind="props" collapsible="offcanvas" class="armory-sidebar">
+  <Sidebar
+    v-bind="props"
+    collapsible="icon"
+    class="[&>[data-sidebar=sidebar]]:bg-[#0A0E1A] [&>[data-sidebar=sidebar]]:border-r [&>[data-sidebar=sidebar]]:border-[#1e2535] [&>[data-sidebar=sidebar]]:w-[260px] [&>[data-sidebar=sidebar]]:overflow-x-hidden"
+  >
     <!-- Header / Logo -->
-    <SidebarHeader class="sidebar-header">
+    <SidebarHeader class="px-3 pt-4 pb-3">
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton size="lg" as-child>
-            <NuxtLink to="/" class="logo-link">
-              <div class="logo-icon">
-                <span class="logo-letter">A</span>
+            <NuxtLink to="/" class="flex items-center gap-3 no-underline">
+              <div class="w-9 h-9 rounded-[10px] bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <span class="text-base font-extrabold text-white">A</span>
               </div>
-              <div class="logo-text">
-                <span class="logo-name">Armoury System</span>
-                <span class="logo-sub">Comprehensive Management Pla...</span>
+              <div class="flex flex-col gap-px overflow-hidden group-data-[collapsible=icon]/sidebar-wrapper:hidden">
+                <span class="text-[14px] font-bold text-slate-100 whitespace-nowrap">Armoury System</span>
+                <span class="text-[11px] text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">Comprehensive Management Pla...</span>
               </div>
             </NuxtLink>
           </SidebarMenuButton>
@@ -101,22 +105,46 @@ const user = {
     </SidebarHeader>
 
     <!-- Nav Groups -->
-    <SidebarContent class="sidebar-content">
+    <SidebarContent class="px-2 py-1 overflow-x-hidden">
       <template v-for="(group, gi) in navGroups" :key="group.label">
-        <SidebarGroup class="nav-group">
-          <SidebarGroupLabel class="group-label">{{ group.label }}</SidebarGroupLabel>
+
+        <SidebarGroup class="py-2 px-0">
+          <SidebarGroupLabel
+            class="!text-[10.5px] !font-bold !tracking-[0.8px] !text-slate-500 !uppercase px-2 pb-1.5 group-data-[collapsible=icon]/sidebar-wrapper:hidden"
+          >
+            {{ group.label }}
+          </SidebarGroupLabel>
+
           <SidebarMenu>
             <SidebarMenuItem v-for="item in group.items" :key="item.title">
-              <SidebarMenuButton as-child>
-                <NuxtLink :to="item.url" class="nav-item">
-                  <component :is="item.icon" class="nav-icon" />
-                  <span class="nav-label">{{ item.title }}</span>
+              <SidebarMenuButton
+                as-child
+                class="!p-0 !h-auto !bg-transparent px-3 py-3 hover:!bg-[#161b27]  border-[#1e2535] focus:!bg-transparent"
+              >
+                <NuxtLink
+                  :to="item.url"
+                  class="flex items-center gap-3 px-4 h-[35px] pl-3 min-h-[35px] w-full
+                        rounded-sm no-underline text-slate-400
+                        hover:bg-[#1a2030] hover:text-slate-200"
+                  active-class="!bg-[#2B7FFF1A] !text-blue-500"
+                >
+                  <component
+                    :is="item.icon"
+                    class="w-[17px] h-[17px] flex-shrink-0 ml-[5px]"
+                    style="stroke-width: 1.8"
+                  />
+                  <span class="text-sm font-medium group-data-[collapsible=icon]/sidebar-wrapper:hidden">{{ item.title }}</span>
                 </NuxtLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroup>
-        <SidebarSeparator v-if="gi < navGroups.length - 1" class="group-sep" />
+
+        <SidebarSeparator
+          v-if="gi < navGroups.length - 1"
+          class="!bg-[#1e2535] !mx-2 group-data-[collapsible=icon]/sidebar-wrapper:hidden"
+        />
+
       </template>
     </SidebarContent>
 
@@ -127,133 +155,3 @@ const user = {
     <SidebarRail />
   </Sidebar>
 </template>
-
-<style scoped>
-/* Sidebar shell */
-:deep(.armory-sidebar),
-:deep([data-sidebar="sidebar"]) {
-  background: #0A0E1A !important;
-  border-right: 1px solid #1e2535 !important;
-  width: 260px;
-  overflow-x: hidden;
-}
-
-/* Header */
-.sidebar-header {
-  padding: 16px 12px 12px;
-}
-.logo-link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-}
-.logo-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: #3b82f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.logo-letter {
-  font-size: 16px;
-  font-weight: 800;
-  color: #fff;
-  font-family: 'DM Sans', sans-serif;
-}
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  overflow: hidden;
-}
-.logo-name {
-  font-size: 14px;
-  font-weight: 700;
-  color: #f1f5f9;
-  white-space: nowrap;
-  font-family: 'DM Sans', sans-serif;
-}
-.logo-sub {
-  font-size: 11px;
-  color: #475569;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-family: 'DM Sans', sans-serif;
-}
-
-/* Content */
-.sidebar-content {
-  padding: 4px 8px;
-  overflow-x: hidden;
-}
-
-/* Groups */
-.nav-group {
-  padding: 8px 0 4px;
-}
-.group-label {
-  font-size: 10.5px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.8px !important;
-  color: #475569 !important;
-  text-transform: uppercase;
-  padding: 0 8px 6px !important;
-  font-family: 'DM Sans', sans-serif;
-}
-.group-sep {
-  background: #1e2535 !important;
-  margin: 2px 8px !important;
-}
-
-/* Nav items */
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-  border-radius: 8px;
-  text-decoration: none;
-  color: #94a3b8;
-  transition: all 0.15s;
-  font-family: 'DM Sans', sans-serif;
-  width: 100%;
-}
-.nav-item:hover {
-  background: #1a2030;
-  color: #e2e8f0;
-}
-.nav-item.router-link-active,
-.nav-item.router-link-exact-active {
-  background: #2B7FFF1A !important;
-  color: #3b82f6;
-}
-.nav-icon {
-  width: 17px;
-  height: 17px;
-  flex-shrink: 0;
-  stroke-width: 1.8;
-}
-.nav-item.router-link-active .nav-icon,
-.nav-item.router-link-exact-active .nav-icon {
-  color: #3b82f6;
-}
-.nav-label {
-  font-size: 13.5px;
-  font-weight: 500;
-}
-
-/* Override shadcn button wrapper */
-:deep([data-sidebar="menu-button"]) {
-  padding: 8px !important;
-  height: auto !important;
-  background: transparent !important;
-}
-:deep([data-sidebar="menu-button"]:hover) {
-  background: #2B7FFF1A !important;
-}
-</style>
