@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 import type { SidebarProps } from "@/components/ui/sidebar"
 import {
   LayoutDashboard,
@@ -96,7 +99,7 @@ const user = {
               </div>
               <div class="flex flex-col gap-px overflow-hidden group-data-[collapsible=icon]/sidebar-wrapper:hidden">
                 <span class="text-[14px] font-bold text-slate-100 whitespace-nowrap">Armoury System</span>
-                <span class="text-[11px] text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">Comprehensive Management Pla...</span>
+                <!-- <span class="text-[11px] text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">Comprehensive Management Pla...</span> -->
               </div>
             </NuxtLink>
           </SidebarMenuButton>
@@ -118,15 +121,16 @@ const user = {
           <SidebarMenu>
             <SidebarMenuItem v-for="item in group.items" :key="item.title">
               <SidebarMenuButton
-                as-child
-                class="!p-0 !h-auto !bg-transparent px-3 py-3 hover:!bg-[#161b27]  border-[#1e2535] focus:!bg-transparent"
-              >
-                <NuxtLink
+                  as-child
+                  :class="route.path.startsWith(item.url) ? '!bg-[#2B7FFF1A] text-blue-500'  : ''"
+                  class="!p-0 !h-auto px-3 py-3 hover:!bg-[#161b27] border-[#1e2535]"
+                >
+               <NuxtLink
                   :to="item.url"
-                  class="flex items-center gap-3 px-4 h-[35px] pl-3 min-h-[35px] w-full
-                        rounded-sm no-underline text-slate-400
-                        hover:bg-[#1a2030] hover:text-slate-200"
-                  active-class="!bg-[#2B7FFF1A] !text-blue-500"
+                  :class="[
+                    'flex items-center gap-3 px-4 h-[40px] min-h-[40px] w-full rounded-sm no-underline hover:text-slate-200',
+                    route.path.startsWith(item.url) ? 'text-blue-500' : 'text-slate-400'
+                  ]"
                 >
                   <component
                     :is="item.icon"
@@ -148,9 +152,9 @@ const user = {
       </template>
     </SidebarContent>
 
-    <SidebarFooter>
+    <!-- <SidebarFooter>
       <NavUser :user="user" />
-    </SidebarFooter>
+    </SidebarFooter> -->
 
     <SidebarRail />
   </Sidebar>
