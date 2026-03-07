@@ -4,7 +4,7 @@
     <!-- Page Header -->
     <div>
       <h1 class="text-2xl font-bold text-slate-100 -tracking-[0.3px] mb-1">Dashboard</h1>
-      <p class="text-[12px] text-slate-500 leading-relaxed">Organization-wide overview and monitoring · Branch-level operations and alerts · Armoury operations and maintenance tracking</p>
+      <p class="text-[20px] text-slate-500 leading-relaxed">Organization-wide overview and monitoring · Branch-level operations and alerts · Armoury operations and maintenance tracking</p>
     </div>
 
     <!-- Top Stats Row -->
@@ -21,7 +21,7 @@
         <div class="flex flex-col gap-1.5">
           <span class="text-[12px] text-slate-500 font-medium">Malfunctioning Arms</span>
           <span class="text-[28px] font-bold text-red-500 leading-none">1</span>
-          <a href="#" class="text-[12px] font-semibold text-red-500 no-underline hover:text-red-400">View Details →</a>
+          <NuxtLink to="/admin/arms-register" class="text-[12px] font-semibold text-red-500 no-underline hover:text-red-400">View Details →</NuxtLink>
         </div>
         <TriangleAlert :size="32" class="text-red-500 flex-shrink-0" />
       </div>
