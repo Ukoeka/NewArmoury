@@ -251,7 +251,7 @@ function inspTypeBadgeClass(type: string) {
 <style scoped>
 .occurrence-page {
   padding: 24px 32px;
-  background: #0f1117;
+  background: #0A0E1A;
   min-height: 100vh;
   font-family: 'DM Sans', 'IBM Plex Sans', sans-serif;
   color: #e2e8f0;

@@ -236,7 +236,7 @@ function statusClass(status: string) {
 <style scoped>
 .deployment-page {
   padding: 24px 32px;
-  background: #0f1117;
+  background: #0A0E1A;
   min-height: 100vh;
   font-family: 'DM Sans', 'IBM Plex Sans', sans-serif;
   color: #e2e8f0;
@@ -284,14 +284,14 @@ function statusClass(status: string) {
 .search-wrap { position: relative; flex: 1; }
 .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #475569; }
 .search-input {
-  width: 100%; background: #0f1117; border: 1px solid #1e2535; border-radius: 8px;
+  width: 100%; background: #0A0E1A; border: 1px solid #1e2535; border-radius: 8px;
   padding: 8px 12px 8px 34px; font-size: 13px; color: #e2e8f0; outline: none;
   transition: border-color 0.15s; box-sizing: border-box; font-family: inherit;
 }
 .search-input::placeholder { color: #475569; }
 .search-input:focus { border-color: #3b82f6; }
 .filter-select {
-  flex: 1; background: #0f1117; border: 1px solid #1e2535; border-radius: 8px;
+  flex: 1; background: #0A0E1A; border: 1px solid #1e2535; border-radius: 8px;
   padding: 8px 32px 8px 12px; font-size: 13px; color: #e2e8f0; outline: none; cursor: pointer;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");

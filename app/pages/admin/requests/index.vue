@@ -222,7 +222,7 @@ function statusClass(status: string) {
 <style scoped>
 .ammo-requests {
   padding: 24px 32px;
-  background: #0f1117;
+  background: #0A0E1A;
   min-height: 100vh;
   font-family: 'DM Sans', 'IBM Plex Sans', sans-serif;
   color: #e2e8f0;
@@ -292,7 +292,7 @@ function statusClass(status: string) {
   padding: 14px 18px; display: flex; gap: 12px; margin-bottom: 16px;
 }
 .filter-select {
-  flex: 1; background: #0f1117; border: 1px solid #1e2535; border-radius: 8px;
+  flex: 1; background: #0A0E1A; border: 1px solid #1e2535; border-radius: 8px;
   padding: 8px 32px 8px 12px; font-size: 13px; color: #e2e8f0; outline: none; cursor: pointer;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");

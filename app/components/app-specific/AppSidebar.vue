@@ -61,7 +61,7 @@ const navGroups = [
   {
     label: "REPORTS",
     items: [
-      { title: "All Reports", url: "/admin/audit/report", icon: FileText },
+      { title: "All Reports", url: "/admin/reports", icon: FileText },
     ],
   },
   {
@@ -132,7 +132,7 @@ const user = {
 /* Sidebar shell */
 :deep(.armory-sidebar),
 :deep([data-sidebar="sidebar"]) {
-  background: #0f1117 !important;
+  background: #0A0E1A !important;
   border-right: 1px solid #1e2535 !important;
   width: 260px;
   overflow-x: hidden;

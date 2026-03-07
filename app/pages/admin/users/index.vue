@@ -244,7 +244,7 @@ const securityCount = computed(() => users.value.filter(u => u.role === 'SP').le
 <style scoped>
 .users-roles {
   padding: 24px 32px;
-  background: #0f1117;
+  background: #0A0E1A;
   min-height: 100vh;
   font-family: 'DM Sans', 'IBM Plex Sans', sans-serif;
   color: #e2e8f0;
@@ -329,7 +329,7 @@ const securityCount = computed(() => users.value.filter(u => u.role === 'SP').le
 .search-wrap { position: relative; flex: 1; }
 .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #475569; }
 .search-input {
-  width: 100%; background: #0f1117; border: 1px solid #1e2535;
+  width: 100%; background: #0A0E1A; border: 1px solid #1e2535;
   border-radius: 8px; padding: 8px 12px 8px 34px;
   font-size: 13px; color: #e2e8f0; outline: none;
   transition: border-color 0.15s; box-sizing: border-box; font-family: inherit;
@@ -337,7 +337,7 @@ const securityCount = computed(() => users.value.filter(u => u.role === 'SP').le
 .search-input::placeholder { color: #475569; }
 .search-input:focus { border-color: #3b82f6; }
 .filter-select {
-  flex: 1; background: #0f1117; border: 1px solid #1e2535;
+  flex: 1; background: #0A0E1A; border: 1px solid #1e2535;
   border-radius: 8px; padding: 8px 32px 8px 12px;
   font-size: 13px; color: #e2e8f0; outline: none; cursor: pointer;
   appearance: none;
