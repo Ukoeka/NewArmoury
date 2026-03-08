@@ -6,7 +6,7 @@ import type { SidebarProps } from "@/components/ui/sidebar"
 import {
   LayoutDashboard,
   MapPin,
-  Shield,
+  ShieldCheck,
   Package,
   Lock,
   Users,
@@ -46,7 +46,7 @@ const navGroups = [
     label: "MASTER DATA",
     items: [
       { title: "Use Locations",    url: "/admin/locations",        icon: MapPin },
-      { title: "Arms Register",    url: "/admin/arms-register",    icon: Shield },
+      { title: "Arms Register",    url: "/admin/arms-register",    icon: ShieldCheck },
       { title: "Ammunition",       url: "/admin/ammunition",       icon: Package },
       { title: "Security Devices", url: "/admin/security-devices", icon: Lock },
       { title: "Users & Roles",    url: "/admin/users",            icon: Users },

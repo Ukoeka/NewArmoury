@@ -20,7 +20,7 @@ const currentUser = {
     <SidebarInset class="bg-[#0A0E1A]">
 
       <!-- Header -->
-      <header class="flex  shrink-0 items-center justify-between bg-[#0A0E1A] border-b border-[#1e2535] px-5 py-5">
+      <header class="flex  shrink-0 items-center justify-between bg-[#0A0E1A] border-b border-[#1e2535] px-3 py-3">
 
         <!-- Left: trigger + logo -->
         <div class="flex items-center gap-">
@@ -47,13 +47,13 @@ const currentUser = {
               <User :size="14" class="text-blue-400" />
             </div>
             <div class="flex flex-col gap-px">
-              <span class="text-[13px] font-semibold text-slate-100 leading-none">{{ currentUser.name }}</span>
+              <span class="text-[14px] font-semibold text-slate-100 mb-2 leading-none">{{ currentUser.name }}</span>
               <span class="text-[10.5px] text-slate-500 leading-none">{{ currentUser.role }}</span>
             </div>
           </div>
 
           <!-- Sign out button -->
-          <button class="flex items-center gap-2 bg-transparent border border-[#1e2535] text-slate-400 hover:text-slate-200 hover:border-slate-600 rounded-xl px-3 py-2 text-[13px] font-medium cursor-pointer transition-all whitespace-nowrap">
+          <button class="flex items-center gap-2 bg-transparent text-slate-400 hover:text-slate-200 hover:border-slate-600 hover:bg-[#161b27] rounded-xl px-3 py-2 text-[13px] font-medium cursor-pointer transition-all whitespace-nowrap">
             <LogOut :size="14" />
             Sign Out
           </button>

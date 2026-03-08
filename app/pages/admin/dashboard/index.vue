@@ -1,50 +1,51 @@
 <template>
-  <div class="p-8 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans flex flex-col gap-4">
+  <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans flex flex-col gap-4">
 
     <!-- Page Header -->
     <div>
       <h1 class="text-2xl font-bold text-slate-100 -tracking-[0.3px] mb-1">Dashboard</h1>
-      <p class="text-[20px] text-slate-500 leading-relaxed">Organization-wide overview and monitoring · Branch-level operations and alerts · Armoury operations and maintenance tracking</p>
+      <p class="text-[16px] text-slate-500 leading-relaxed">Organization-wide overview and monitoring · Branch-level operations and alerts · Armoury operations and maintenance tracking</p>
+      
     </div>
 
     <!-- Top Stats Row -->
-    <div class="grid grid-cols-4 gap-3.5">
-      <div class="bg-[#0f1829] border border-[#1e3a5f] rounded-xl px-5 py-5 flex items-center justify-between">
+    <div class="grid grid-cols-4 gap-5">
+      <div class="bg-[#0f1829] border border-[#1e3a5f] rounded-xl px-7 py-7 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
-          <span class="text-[12px] text-slate-500 font-medium">Total Firearms</span>
-          <span class="text-[28px] font-bold text-slate-100 leading-none">10</span>
-          <span class="text-[11.5px] text-slate-500">Good: 9 · Malfunction: 1</span>
+          <span class="text-[14px] text-slate-500 font-medium">Total Firearms</span>
+          <span class="text-[28px] text-blue-500 font-bold  leading-none">10</span>
+          <span class="text-[12px] text-slate-500">Good: 9 · Malfunction: 1</span>
         </div>
         <ShieldCheck :size="32" class="text-blue-500 flex-shrink-0" />
       </div>
-      <div class="bg-[#1a0d0d] border border-red-900/35 rounded-xl px-5 py-5 flex items-center justify-between">
+      <div class="bg-[#1a0d0d] border border-red-900/35 rounded-xl px-7 py-7 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
-          <span class="text-[12px] text-slate-500 font-medium">Malfunctioning Arms</span>
+          <span class="text-[14px] text-slate-500 font-medium">Malfunctioning Arms</span>
           <span class="text-[28px] font-bold text-red-500 leading-none">1</span>
           <NuxtLink to="/admin/arms-register" class="text-[12px] font-semibold text-red-500 no-underline hover:text-red-400">View Details →</NuxtLink>
         </div>
         <TriangleAlert :size="32" class="text-red-500 flex-shrink-0" />
       </div>
-      <div class="bg-[#130d1f] border border-purple-900/35 rounded-xl px-5 py-5 flex items-center justify-between">
+      <div class="bg-[#130d1f] border border-purple-900/35 rounded-xl px-7 py-7 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
-          <span class="text-[12px] text-slate-500 font-medium">Active Deployments</span>
+          <span class="text-[14px] text-slate-500 font-medium">Active Deployments</span>
           <span class="text-[28px] font-bold text-purple-400 leading-none">3</span>
-          <span class="text-[11.5px] text-slate-500">Personnel on duty</span>
+          <span class="text-[12px] text-slate-500">Personnel on duty</span>
         </div>
         <MapPin :size="32" class="text-purple-400 flex-shrink-0" />
       </div>
-      <div class="bg-[#1a0e08] border border-orange-900/35 rounded-xl px-5 py-5 flex items-center justify-between">
+      <div class="bg-[#1a0e08] border border-orange-900/35 rounded-xl px-7 py-7 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
-          <span class="text-[12px] text-slate-500 font-medium">Ammo Variance Alerts</span>
+          <span class="text-[14px] text-slate-500 font-medium">Ammo Variance Alerts</span>
           <span class="text-[28px] font-bold text-orange-500 leading-none">2</span>
-          <span class="text-[11.5px] text-slate-500">Items in transit</span>
+          <span class="text-[12px] text-slate-500">Items in transit</span>
         </div>
         <Package :size="32" class="text-orange-500 flex-shrink-0" />
       </div>
     </div>
 
     <!-- Risk Heat Indicators -->
-    <div class="bg-[#161b27] border border-amber-500/20 rounded-xl px-5 py-4">
+    <div class="bg-[#161b27] border border-amber-500/20 rounded-xl px-5 py-7">
       <div class="flex items-center gap-2 mb-3.5">
         <TriangleAlert :size="16" class="text-amber-500" />
         <span class="text-[14px] font-semibold text-slate-100">Risk Heat Indicators</span>
@@ -57,7 +58,7 @@
               <span class="text-[13.5px] font-bold text-slate-100">Low Ammunition Stock</span>
               <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-950/70 text-amber-400 border border-amber-700/50 tracking-wide">WARNING</span>
             </div>
-            <span class="text-[12px] text-slate-400">7 ammunition type(s) below minimum threshold</span>
+            <span class="text-[13px] text-slate-400">7 ammunition type(s) below minimum threshold</span>
           </div>
         </div>
         <div class="flex items-start gap-3 bg-[#1a0d0d] border border-red-500/25 rounded-[10px] px-4 py-3.5">
@@ -67,7 +68,7 @@
               <span class="text-[13.5px] font-bold text-slate-100">Maintenance Overdue</span>
               <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-red-950/70 text-red-400 border border-red-700/50 tracking-wide">CRITICAL</span>
             </div>
-            <span class="text-[12px] text-slate-400">10 firearm(s) require immediate maintenance</span>
+            <span class="text-[13px] text-slate-400">10 firearm(s) require immediate maintenance</span>
           </div>
         </div>
       </div>
@@ -76,12 +77,12 @@
     <!-- Branch Map + Out-of-Office -->
     <div class="grid grid-cols-2 gap-4">
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
-        <div class="flex items-center gap-2 px-5 py-4 border-b border-[#1e2535]">
+        <div class="flex items-center gap-2 px-5 py-4 ">
           <MapPin :size="15" class="text-slate-500" />
           <span class="text-[14px] font-semibold text-slate-100">Branch Locations & Risk Map</span>
         </div>
         <div class="p-3 flex flex-col gap-2.5">
-          <div v-for="branch in branches" :key="branch.name" class="bg-[#1a2030] border border-[#1e2535] rounded-[10px] px-4 py-3.5">
+          <div v-for="branch in branches" :key="branch.name" class="bg-[#1D293D] border border-[#1e2535] rounded-[10px] px-4 py-5">
             <div class="flex items-start justify-between mb-3">
               <div class="flex items-start gap-2.5">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 mt-1 flex-shrink-0" style="box-shadow:0 0 6px #22c55e66"></span>
@@ -90,24 +91,24 @@
                   <div class="text-[11px] text-slate-500">Branch</div>
                 </div>
               </div>
-              <span class="text-[12px] text-slate-500 font-medium whitespace-nowrap">{{ branch.active }} Active</span>
+              <span class="text-[14px] font-medium whitespace-nowrap">{{ branch.active }} Active</span>
             </div>
             <div class="grid grid-cols-4 gap-2">
-              <div class="bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-2.5 py-2 flex flex-col items-center gap-1">
+              <div class="bg-[#0F172B] border border-[#1e2535] rounded-lg px-2.5 py-2 flex flex-col items-center gap-1">
                 <span class="text-[10.5px] text-slate-500 font-medium">Total</span>
                 <span class="text-[18px] font-bold text-blue-400 leading-none">{{ branch.total }}</span>
               </div>
-              <div class="bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-2.5 py-2 flex flex-col items-center gap-1">
+              <div class="bg-[#0F172B] border border-[#1e2535] rounded-lg px-2.5 py-2 flex flex-col items-center gap-1">
                 <span class="text-[10.5px] text-slate-500 font-medium">Available</span>
                 <span class="text-[18px] font-bold text-emerald-400 leading-none">{{ branch.available }}</span>
               </div>
-              <div class="bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-2.5 py-2 flex flex-col items-center gap-1">
+              <div class="bg-[#0F172B] border border-[#1e2535] rounded-lg px-2.5 py-2 flex flex-col items-center gap-1">
                 <span class="text-[10.5px] text-slate-500 font-medium">On Duty</span>
                 <span class="text-[18px] font-bold text-purple-400 leading-none">{{ branch.onDuty }}</span>
               </div>
-              <div class="bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-2.5 py-2 flex flex-col items-center gap-1">
+              <div class="bg-[#0F172B] border border-[#1e2535] rounded-lg px-2.5 py-2 flex flex-col items-center gap-1">
                 <span class="text-[10.5px] text-slate-500 font-medium">Issues</span>
-                <span class="text-[18px] font-bold leading-none" :class="branch.issues > 0 ? 'text-red-400' : 'text-emerald-400'">{{ branch.issues }}</span>
+                <span class="text-[18px] font-bold leading-none text-red-400">{{ branch.issues }}</span>
               </div>
             </div>
           </div>
@@ -115,12 +116,12 @@
       </div>
 
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
-        <div class="flex items-center gap-2 px-5 py-4 border-b border-[#1e2535]">
+        <div class="flex items-center gap-2 px-5 py-4">
           <Users :size="15" class="text-slate-500" />
           <span class="text-[14px] font-semibold text-slate-100">Out-of-Office Deployments</span>
         </div>
-        <div class="p-3 flex flex-col gap-2">
-          <div v-for="dep in outOfOffice" :key="dep.name" class="flex items-center justify-between bg-[#1a2030] border border-[#1e2535] rounded-lg px-4 py-3">
+        <div class="p-3 flex flex-col gap-3">
+          <div v-for="dep in outOfOffice" :key="dep.name" class="flex items-center justify-between bg-[#1D293D] border border-[#1e2535] rounded-lg px-4 py-3">
             <div class="flex items-center gap-2.5">
               <span class="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0"></span>
               <div>
@@ -140,12 +141,12 @@
     <!-- Charts Row -->
     <div class="grid grid-cols-2 gap-4">
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
-        <div class="flex items-center gap-2 px-5 py-4 border-b border-[#1e2535]">
-          <TrendingUp :size="15" class="text-slate-500" />
+        <div class="flex items-center gap-2 px-6 py-6">
+          <TrendingUp :size="20" />
           <span class="text-[14px] font-semibold text-slate-100">Daily Activity Trends (Last 7 Days)</span>
         </div>
         <div class="px-5 pt-4 pb-3">
-          <apexchart type="line" height="160" :options="activityChartOptions" :series="activitySeries" />
+          <apexchart type="line" height="200" :options="activityChartOptions" :series="activitySeries" />
           <div class="flex gap-5 justify-center mt-1">
             <span class="flex items-center gap-1.5 text-[12px] text-slate-500"><span class="w-2.5 h-2.5 rounded-sm inline-block" style="background:#60a5fa"></span>Handovers</span>
             <span class="flex items-center gap-1.5 text-[12px] text-slate-500"><span class="w-2.5 h-2.5 rounded-sm inline-block" style="background:#4ade80"></span>Ammo Requests</span>
@@ -154,12 +155,12 @@
         </div>
       </div>
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
-        <div class="flex items-center gap-2 px-5 py-4 border-b border-[#1e2535]">
-          <Activity :size="15" class="text-slate-500" />
+        <div class="flex items-center gap-2 px-6 py-6">
+          <Activity :size="20" />
           <span class="text-[14px] font-semibold text-slate-100">Ammunition Usage Trend (4 Weeks)</span>
         </div>
         <div class="px-5 pt-4 pb-3">
-          <apexchart type="line" height="160" :options="ammoChartOptions" :series="ammoSeries" />
+          <apexchart type="line" height="200" :options="ammoChartOptions" :series="ammoSeries" />
           <div class="flex gap-5 justify-center mt-1">
             <span class="flex items-center gap-1.5 text-[12px] text-slate-500"><span class="w-2.5 h-2.5 rounded-sm inline-block" style="background:#3b82f6"></span>Issued</span>
             <span class="flex items-center gap-1.5 text-[12px] text-slate-500"><span class="w-2.5 h-2.5 rounded-sm inline-block" style="background:#22c55e"></span>Returned</span>
@@ -174,7 +175,7 @@
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
         <div class="text-[14px] font-semibold text-slate-100 px-5 py-4 border-b border-[#1e2535]">Firearms Status Distribution</div>
         <div class="px-5 py-4 flex items-center justify-center gap-8">
-          <apexchart type="donut" width="190" :options="donutOptions" :series="donutSeries" />
+          <apexchart type="donut" width="250" :options="donutOptions" :series="donutSeries" />
           <div class="flex flex-col gap-3">
             <div class="flex items-center gap-2">
               <span class="w-3 h-3 rounded-full bg-emerald-500 flex-shrink-0"></span>
@@ -189,10 +190,10 @@
       </div>
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
         <div class="text-[14px] font-semibold text-slate-100 px-5 py-4 border-b border-[#1e2535]">Firearms by Availability Status</div>
-        <div class="grid grid-cols-3 gap-2.5 p-3.5">
+        <div class="grid grid-cols-3 gap-2.5 p-5">
           <div
             v-for="av in availability" :key="av.label"
-            class="rounded-lg px-4 py-3.5 flex flex-col gap-1.5 border"
+            class="rounded-lg px-4 py-5 flex flex-col gap-2 border"
             :class="{
               'bg-emerald-950/25 border-emerald-900/25': av.color === 'green',
               'bg-blue-950/25 border-blue-900/25': av.color === 'blue',
@@ -258,7 +259,7 @@
     <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-5 py-4">
       <h3 class="text-[14px] font-semibold text-slate-100 mb-4 m-0">Branch Firearms Availability</h3>
       <div class="flex flex-col gap-2.5">
-        <div v-for="ba in branchAvailability" :key="ba.name" class="flex items-center justify-between gap-4 bg-[#1a2030] border border-[#1e2535] rounded-lg px-4 py-3">
+        <div v-for="ba in branchAvailability" :key="ba.name" class="flex items-center justify-between gap-4 bg-[#1D293D] border border-[#1e2535] rounded-lg px-4 py-3">
           <div class="flex flex-col gap-0.5 min-w-[180px]">
             <span class="text-[13.5px] font-semibold text-slate-100">{{ ba.name }}</span>
             <span class="text-[11.5px] text-slate-500">{{ ba.available }} available / {{ ba.total }} total</span>
@@ -275,37 +276,37 @@
 
     <!-- Alert Cards Row 2 -->
     <div class="grid grid-cols-4 gap-3.5">
-      <div class="bg-[#0f1829] border border-blue-900/35 rounded-xl px-5 py-4 flex items-center justify-between">
+      <div class="bg-[#0f1829] border border-blue-900/35 rounded-xl px-5 py-6 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
           <span class="text-[12px] text-slate-500 font-medium">Pending OTP Handovers</span>
           <span class="text-[28px] font-bold text-blue-400 leading-none">0</span>
           <a href="#" class="text-[12px] font-semibold text-blue-400 no-underline hover:text-blue-300">Process Now →</a>
         </div>
-        <Clock :size="30" class="text-blue-400 flex-shrink-0" />
+        <Clock :size="45" class="text-blue-400 flex-shrink-0" />
       </div>
-      <div class="bg-[#1a0e08] border border-orange-900/35 rounded-xl px-5 py-4 flex items-center justify-between">
+      <div class="bg-[#1a0e08] border border-orange-900/35 rounded-xl px-5 py-6 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
           <span class="text-[12px] text-slate-500 font-medium">Returns Due Today</span>
           <span class="text-[28px] font-bold text-orange-500 leading-none">0</span>
           <span class="text-[11.5px] text-slate-500">Expected returns</span>
         </div>
-        <TrendingUp :size="30" class="text-orange-500 flex-shrink-0" />
+        <TrendingUp :size="45" class="text-orange-500 flex-shrink-0" />
       </div>
-      <div class="bg-[#1a0d0d] border border-red-900/35 rounded-xl px-5 py-4 flex items-center justify-between">
+      <div class="bg-[#1a0d0d] border border-red-900/35 rounded-xl px-5 py-6 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
           <span class="text-[12px] text-slate-500 font-medium">Maintenance Due</span>
           <span class="text-[28px] font-bold text-red-500 leading-none">10</span>
           <a href="#" class="text-[12px] font-semibold text-red-500 no-underline hover:text-red-400">View Firearms →</a>
         </div>
-        <Wrench :size="30" class="text-red-500 flex-shrink-0" />
+        <Wrench :size="45" class="text-red-500 flex-shrink-0" />
       </div>
-      <div class="bg-[#0a1208] border border-emerald-900/35 rounded-xl px-5 py-4 flex items-center justify-between">
+      <div class="bg-[#0a1208] border border-emerald-900/35 rounded-xl px-5 py-6 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
           <span class="text-[12px] text-slate-500 font-medium">In Armoury</span>
           <span class="text-[28px] font-bold text-emerald-400 leading-none">9</span>
           <span class="text-[11.5px] text-slate-500">Available firearms</span>
         </div>
-        <ShieldCheck :size="30" class="text-emerald-400 flex-shrink-0" />
+        <ShieldCheck :size="45" class="text-emerald-400 flex-shrink-0" />
       </div>
     </div>
 
@@ -326,7 +327,7 @@
               <div class="text-[12px] text-slate-400">{{ item.desc }}</div>
             </div>
           </div>
-          <button class="bg-transparent border-none text-slate-400 text-[13px] font-semibold cursor-pointer hover:text-slate-200 transition-colors px-2.5 py-1.5">Check</button>
+          <NuxtLink to="/admin/arms-register" class="bg-[#161b27] border border-[#1e2535] rounded border-none text-slate-400 text-[13px] font-semibold cursor-pointer hover:text-slate-200 transition-colors px-2.5 py-1.5">Check</NuxtLink>
         </div>
       </div>
     </div>
