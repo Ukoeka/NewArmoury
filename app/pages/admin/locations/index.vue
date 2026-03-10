@@ -7,7 +7,10 @@
         <h1 class="text-2xl font-bold text-slate-100 -tracking-[0.3px] mb-1">Use Locations</h1>
         <p class="text-sm text-slate-500">Manage in-office and out-of-office locations for firearm deployment</p>
       </div>
-      <button class="flex items-center gap-1.5 bg-blue-600 text-white border-none rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer hover:bg-blue-700 transition-colors whitespace-nowrap">
+      <button
+        @click="openAddModal"
+        class="flex items-center gap-1.5 bg-blue-600 text-white border-none rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer hover:bg-blue-700 transition-colors whitespace-nowrap"
+      >
         <Plus :size="14" />
         Add Location
       </button>
@@ -48,7 +51,7 @@
       </div>
     </div>
 
-    <!-- Filter Tabs — same pill container pattern as Arms Register -->
+    <!-- Filter Tabs -->
     <div class="inline-flex bg-[#161b27] border border-[#1e2535] rounded-[10px] p-1 gap-1 mb-4">
       <button
         v-for="tab in filterTabs"
@@ -65,9 +68,8 @@
       </button>
     </div>
 
-    <!-- Locations List — outer container with inner row cards -->
+    <!-- Locations List -->
     <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-3 flex flex-col gap-2">
-
       <div
         v-for="loc in filteredLocations"
         :key="loc.id"
@@ -83,12 +85,14 @@
 
         <div class="flex items-center gap-1">
           <button
+            @click="openEditModal(loc)"
             title="Edit"
             class="flex items-center justify-center p-2 rounded-lg bg-transparent border-none text-slate-500 hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer"
           >
             <PenSquare :size="15" />
           </button>
           <button
+            @click="deleteLocation(loc.id)"
             title="Delete"
             class="flex items-center justify-center p-2 rounded-lg bg-transparent border-none text-red-500 hover:text-red-400 hover:bg-red-950/40 transition-all cursor-pointer"
           >
@@ -100,8 +104,22 @@
       <div v-if="filteredLocations.length === 0" class="py-14 text-center text-slate-600 text-sm">
         No locations found.
       </div>
-
     </div>
+
+    <!-- Add Location Modal -->
+    <LocationModal
+      v-model:open="showAddModal"
+      mode="add"
+      @submit="handleAddLocation"
+    />
+
+    <!-- Edit Location Modal -->
+    <LocationModal
+      v-model:open="showEditModal"
+      mode="edit"
+      :initial-data="editingLocation ?? undefined"
+      @submit="handleEditLocation"
+    />
 
   </div>
 </template>
@@ -111,6 +129,7 @@ definePageMeta({ layout: 'admin-layout' })
 
 import { ref, computed } from 'vue'
 import { Plus, MapPin, PenSquare, XCircle } from 'lucide-vue-next'
+import LocationModal from '@/components/app-specific/dialogs/LocationModal.vue'
 
 interface Location {
   id: number
@@ -118,6 +137,12 @@ interface Location {
   area: string
   addedDate: string
   type: 'in-office' | 'out-of-office'
+}
+
+interface LocationForm {
+  locationType: string
+  branch: string
+  specificArea: string
 }
 
 const searchQuery  = ref('')
@@ -136,6 +161,54 @@ const locations = ref<Location[]>([
   { id: 5, branch: 'Mwanza Branch',        area: 'Patrol Zone 3',  addedDate: '1/1/2024', type: 'out-of-office' },
 ])
 
+// ── Modal state ──
+const showAddModal    = ref(false)
+const showEditModal   = ref(false)
+const editingLocation = ref<Partial<LocationForm> & { id?: number } | null>(null)
+
+function openAddModal() {
+  showAddModal.value = true
+}
+
+function openEditModal(loc: Location) {
+  editingLocation.value = {
+    id:           loc.id,
+    locationType: loc.type === 'in-office' ? 'In-Office' : 'Out-of-Office',
+    branch:       loc.branch,
+    specificArea: loc.area,
+  }
+  showEditModal.value = true
+}
+
+function handleAddLocation(data: LocationForm) {
+  const newId = Math.max(0, ...locations.value.map(l => l.id)) + 1
+  locations.value.push({
+    id:        newId,
+    branch:    data.branch,
+    area:      data.specificArea,
+    addedDate: new Date().toLocaleDateString(),
+    type:      data.locationType === 'In-Office' ? 'in-office' : 'out-of-office',
+  })
+}
+
+function handleEditLocation(data: LocationForm) {
+  const id = editingLocation.value?.id
+  if (!id) return
+  const idx = locations.value.findIndex(l => l.id === id)
+  if (idx === -1) return
+  locations.value[idx] = {
+    ...locations.value[idx],
+    branch: data.branch,
+    area:   data.specificArea,
+    type:   data.locationType === 'In-Office' ? 'in-office' : 'out-of-office',
+  }
+}
+
+function deleteLocation(id: number) {
+  locations.value = locations.value.filter(l => l.id !== id)
+}
+
+// ── Computed ──
 const filteredLocations = computed(() => {
   const q = searchQuery.value.toLowerCase()
   return locations.value.filter(loc => {
