@@ -6,7 +6,7 @@
         <div class="flex items-start justify-between">
           <div>
             <DialogTitle class="text-[17px] font-bold text-slate-100 mb-1">User Details</DialogTitle>
-            <DialogDescription class="text-[13px] text-slate-500 m-0">View comprehensive information about this user</DialogDescription>
+            <DialogDescription class="text-[14px] text-slate-500 m-0">View comprehensive information about this user</DialogDescription>
           </div>
           <button @click="$emit('update:open', false)"
             class="text-slate-500 hover:text-slate-200 bg-transparent border-none cursor-pointer p-1 rounded-md hover:bg-[#1e2535] transition-colors">
@@ -22,8 +22,8 @@
             <UserRound :size="26" class="text-blue-400" />
           </div>
           <div class="flex flex-col gap-0.5">
-            <span class="text-[17px] font-bold text-slate-100 leading-snug">{{ user.name }}</span>
-            <span class="text-[13px] text-slate-400">{{ roleLabelFor(user.role) }}</span>
+            <span class="text-[19px] font-bold text-slate-100 leading-snug">{{ user.name }}</span>
+            <span class="text-[14px] text-slate-400">{{ roleLabelFor(user.role) }}</span>
             <div class="flex items-center gap-2 mt-1.5">
               <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold border"
                 :style="getRoleStyle(user.role)">{{ roleLabelFor(user.role) }}</span>
@@ -40,36 +40,36 @@
         <!-- Details grid -->
         <div class="grid grid-cols-2 gap-x-10 gap-y-4">
           <div class="flex flex-col gap-1">
-            <span class="text-[11.5px] text-slate-500 font-medium">File Number</span>
-            <span class="text-[14px] font-bold text-slate-100">{{ user.fileNum }}</span>
+            <span class="text-[12px] text-slate-500 font-medium">File Number</span>
+            <span class="text-[16px] font-bold text-slate-100">{{ user.fileNum }}</span>
           </div>
           <div class="flex flex-col gap-1">
-            <span class="text-[11.5px] text-slate-500 font-medium">Name</span>
-            <span class="text-[14px] font-bold text-slate-100">{{ user.initial }} {{ user.firstName }} {{ user.surname }}</span>
+            <span class="text-[12px] text-slate-500 font-medium">Name</span>
+            <span class="text-[16px] font-bold text-slate-100">{{ user.initial }} {{ user.firstName }} {{ user.surname }}</span>
           </div>
           <div class="flex flex-col gap-1">
-            <span class="text-[11.5px] text-slate-500 font-medium">Email</span>
-            <span class="text-[14px] font-bold text-slate-100">{{ user.email }}</span>
+            <span class="text-[12px] text-slate-500 font-medium">Email</span>
+            <span class="text-[16px] font-bold text-slate-100">{{ user.email }}</span>
           </div>
           <div class="flex flex-col gap-1">
-            <span class="text-[11.5px] text-slate-500 font-medium">Phone Number</span>
-            <span class="text-[14px] font-bold text-slate-100">{{ user.phone }}</span>
+            <span class="text-[12px] text-slate-500 font-medium">Phone Number</span>
+            <span class="text-[16px] font-bold text-slate-100">{{ user.phone }}</span>
           </div>
           <div class="flex flex-col gap-1">
-            <span class="text-[11.5px] text-slate-500 font-medium">Directorate</span>
-            <span class="text-[14px] font-bold text-slate-100">{{ user.directorate || '—' }}</span>
+            <span class="text-[12px] text-slate-500 font-medium">Directorate</span>
+            <span class="text-[16px] font-bold text-slate-100">{{ user.directorate || '—' }}</span>
           </div>
           <div class="flex flex-col gap-1">
-            <span class="text-[11.5px] text-slate-500 font-medium">Department</span>
-            <span class="text-[14px] font-bold text-slate-100">{{ user.department || '—' }}</span>
+            <span class="text-[12px] text-slate-500 font-medium">Department</span>
+            <span class="text-[16px] font-bold text-slate-100">{{ user.department || '—' }}</span>
           </div>
           <div class="flex flex-col gap-1">
-            <span class="text-[11.5px] text-slate-500 font-medium">Branch</span>
-            <span class="text-[14px] font-bold text-slate-100">{{ user.branch }}</span>
+            <span class="text-[12px] text-slate-500 font-medium">Branch</span>
+            <span class="text-[16px] font-bold text-slate-100">{{ user.branch }}</span>
           </div>
           <div class="flex flex-col gap-1">
-            <span class="text-[11.5px] text-slate-500 font-medium">Created</span>
-            <span class="text-[14px] font-bold text-slate-100">{{ user.createdAt || '—' }}</span>
+            <span class="text-[12px] text-slate-500 font-medium">Created</span>
+            <span class="text-[16px] font-bold text-slate-100">{{ user.createdAt || '—' }}</span>
           </div>
         </div>
 

@@ -1,6 +1,8 @@
 <template>
   <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
+    <ToastContainer />
+
     <!-- Page Header -->
     <div class="flex items-start justify-between mb-5">
       <div>
@@ -20,19 +22,17 @@
           'bg-[#1e2535] text-slate-100 font-semibold': activeTab === tab.id,
           'bg-transparent text-slate-500 hover:text-slate-400': activeTab !== tab.id
         }"
-      >
-        {{ tab.label }}
-      </button>
+      >{{ tab.label }}</button>
     </div>
 
     <!-- ── TAB 1: ISSUE FIREARMS ── -->
     <template v-if="activeTab === 'issue'">
-
-      <!-- Section card -->
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-5 py-5 mb-4">
         <div class="flex items-center justify-between mb-5">
           <h3 class="text-[14px] font-semibold text-slate-100 m-0">Issue Firearm to Security Personnel</h3>
-          <button class="flex items-center gap-1.5 bg-blue-600 text-white border-none rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer hover:bg-blue-700 transition-colors whitespace-nowrap">
+          <button
+            @click="showIssueModal = true"
+            class="flex items-center gap-1.5 bg-blue-600 text-white border-none rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer hover:bg-blue-700 transition-colors whitespace-nowrap">
             <Shield :size="14" />
             Issue Firearm
           </button>
@@ -49,7 +49,6 @@
         </div>
       </div>
 
-      <!-- Active Handovers Table -->
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
         <h3 class="text-[14px] font-semibold text-slate-100 px-6 py-4 border-b border-[#1e2535] m-0">Active Handovers</h3>
         <table class="w-full border-collapse text-[13px]">
@@ -88,7 +87,9 @@
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
         <div class="flex items-center justify-between px-6 pt-5 pb-0 mb-2">
           <h3 class="text-[14px] font-semibold text-slate-100 m-0">Return Firearms</h3>
-          <button class="flex items-center gap-1.5 bg-blue-600 text-white border-none rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer hover:bg-blue-700 transition-colors whitespace-nowrap">
+          <button
+            @click="openProcessReturn"
+            class="flex items-center gap-1.5 bg-blue-600 text-white border-none rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer hover:bg-blue-700 transition-colors whitespace-nowrap">
             <ArrowLeft :size="14" />
             Process Return
           </button>
@@ -115,16 +116,16 @@
               <td class="px-4 py-3.5 text-slate-400">{{ h.ammoIssued }}</td>
               <td class="px-4 py-3.5 text-slate-400">{{ h.issuedAt }}</td>
               <td class="px-4 py-3.5">
-                <span
-                  class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide whitespace-nowrap"
+                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide whitespace-nowrap"
                   :class="{
                     'bg-red-950/70 text-red-400 border border-red-700/50': h.returnStatus === 'Overdue',
-                    'bg-emerald-950/70 text-emerald-400 border border-emerald-700/50': h.returnStatus !== 'Overdue'
-                  }"
-                >{{ h.returnStatus }}</span>
+                    'bg-emerald-950/70 text-emerald-400 border border-emerald-700/50': h.returnStatus !== 'Overdue',
+                  }">{{ h.returnStatus }}</span>
               </td>
               <td class="px-4 py-3.5">
-                <button class="bg-blue-600 text-white border-none rounded-lg px-4 py-1.5 text-[12.5px] font-semibold cursor-pointer hover:bg-blue-700 transition-colors">
+                <button
+                  @click="openReturn(h)"
+                  class="bg-blue-600 text-white border-none rounded-lg px-4 py-1.5 text-[12.5px] font-semibold cursor-pointer hover:bg-blue-700 transition-colors">
                   Return
                 </button>
               </td>
@@ -169,19 +170,30 @@
               <td class="px-4 py-3.5 text-slate-400">{{ h.issuedAt }}</td>
               <td class="px-4 py-3.5 text-slate-400">{{ h.returnedAt }}</td>
               <td class="px-4 py-3.5">
-                <span
-                  class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide whitespace-nowrap"
+                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide whitespace-nowrap"
                   :class="{
                     'bg-emerald-950/70 text-emerald-400 border border-emerald-700/50': h.historyStatus === 'COMPLETED',
-                    'bg-blue-950/70 text-blue-400 border border-blue-700/50': h.historyStatus === 'RETURNED'
-                  }"
-                >{{ h.historyStatus }}</span>
+                    'bg-blue-950/70 text-blue-400 border border-blue-700/50': h.historyStatus === 'RETURNED',
+                  }">{{ h.historyStatus }}</span>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </template>
+
+    <!-- ── Modals ── -->
+    <IssueFirearm
+      v-model:open="showIssueModal"
+      :deployments="deploymentOptions"
+      :available-firearms="availableFirearmOptions"
+      @submit="handleIssue"
+    />
+    <ReturnFirearm
+      v-model:open="showReturnModal"
+      :handover="returningHandover"
+      @submit="handleReturn"
+    />
 
   </div>
 </template>
@@ -191,29 +203,35 @@ definePageMeta({ layout: 'admin-layout' })
 
 import { ref, computed } from 'vue'
 import { Shield, ArrowLeft } from 'lucide-vue-next'
+import ToastContainer from '@/components/app-specific/Toast/toastContainer.vue'
+import IssueFirearm from '@/components/app-specific/dialogs/firearm/IssueFireArm.vue'
+import ReturnFirearm from '@/components/app-specific/dialogs/firearm/ReturnFireArm.vue'
+import { useToast } from '@/composables/useToast'
+
+const { show: showToast } = useToast()
 
 const activeTab = ref('issue')
-
 const tabs = [
   { id: 'issue',   label: 'Issue Firearms' },
   { id: 'return',  label: 'Return Firearms' },
   { id: 'history', label: 'Handover History' },
 ]
 
+// ── Data ──
 const activeHandovers = ref([
-  { weaponNum: 'BRT342', firearm: 'BERETTA',              type: 'PISTOL', personnel: 'J. K. Sanga',    ammoIssued: '15 rounds', issuedAt: '12/24/2024, 7:00:00 PM', status: 'On Duty' },
-  { weaponNum: 'YFW214', firearm: 'GLOCK 17',             type: 'PISTOL', personnel: 'N. O. Mwinyi',   ammoIssued: '20 rounds', issuedAt: '12/25/2024, 7:00:00 AM', status: 'On Duty' },
-  { weaponNum: 'SIG445', firearm: 'SIG SAUER P226',       type: 'PISTOL', personnel: 'P. Q. Hamisi',   ammoIssued: '18 rounds', issuedAt: '12/25/2024, 7:00:00 PM', status: 'On Duty' },
-  { weaponNum: 'CZ7501', firearm: 'CZ 75',                type: 'PISTOL', personnel: 'M. T. Mwakyusa', ammoIssued: '25 rounds', issuedAt: '12/26/2024, 7:00:00 AM', status: 'On Duty' },
-  { weaponNum: 'SW9402', firearm: 'SMITH & WESSON M&P',   type: 'PISTOL', personnel: 'R. S. Juma',     ammoIssued: '15 rounds', issuedAt: '12/26/2024, 1:00:00 PM', status: 'On Duty' },
+  { weaponNum: 'BRT342', firearm: 'BERETTA',            type: 'PISTOL', personnel: 'J. K. Sanga',    ammoIssued: '15 rounds', issuedAt: '12/24/2024, 7:00:00 PM', status: 'On Duty' },
+  { weaponNum: 'YFW214', firearm: 'GLOCK 17',           type: 'PISTOL', personnel: 'N. O. Mwinyi',   ammoIssued: '20 rounds', issuedAt: '12/25/2024, 7:00:00 AM', status: 'On Duty' },
+  { weaponNum: 'SIG445', firearm: 'SIG SAUER P226',     type: 'PISTOL', personnel: 'P. Q. Hamisi',   ammoIssued: '18 rounds', issuedAt: '12/25/2024, 7:00:00 PM', status: 'On Duty' },
+  { weaponNum: 'CZ7501', firearm: 'CZ 75',              type: 'PISTOL', personnel: 'M. T. Mwakyusa', ammoIssued: '25 rounds', issuedAt: '12/26/2024, 7:00:00 AM', status: 'On Duty' },
+  { weaponNum: 'SW9402', firearm: 'SMITH & WESSON M&P', type: 'PISTOL', personnel: 'R. S. Juma',     ammoIssued: '15 rounds', issuedAt: '12/26/2024, 1:00:00 PM', status: 'On Duty' },
 ])
 
 const returnHandovers = ref([
-  { weaponNum: 'BRT342', firearm: 'BERETTA',              type: 'PISTOL', personnel: 'J. K. Sanga',    ammoIssued: '15 rounds', issuedAt: '12/24/2024, 7:00:00 PM', returnStatus: 'Overdue' },
-  { weaponNum: 'YFW214', firearm: 'GLOCK 17',             type: 'PISTOL', personnel: 'N. O. Mwinyi',   ammoIssued: '20 rounds', issuedAt: '12/25/2024, 7:00:00 AM', returnStatus: 'Overdue' },
-  { weaponNum: 'SIG445', firearm: 'SIG SAUER P226',       type: 'PISTOL', personnel: 'P. Q. Hamisi',   ammoIssued: '18 rounds', issuedAt: '12/25/2024, 7:00:00 PM', returnStatus: 'Overdue' },
-  { weaponNum: 'CZ7501', firearm: 'CZ 75',                type: 'PISTOL', personnel: 'M. T. Mwakyusa', ammoIssued: '25 rounds', issuedAt: '12/26/2024, 7:00:00 AM', returnStatus: 'Overdue' },
-  { weaponNum: 'SW9402', firearm: 'SMITH & WESSON M&P',   type: 'PISTOL', personnel: 'R. S. Juma',     ammoIssued: '15 rounds', issuedAt: '12/26/2024, 1:00:00 PM', returnStatus: 'On Time' },
+  { weaponNum: 'BRT342', firearm: 'BERETTA',            type: 'PISTOL', personnel: 'J. K. Sanga',    ammoIssued: '15 rounds', issuedAt: '12/24/2024, 7:00:00 PM', returnStatus: 'Overdue' },
+  { weaponNum: 'YFW214', firearm: 'GLOCK 17',           type: 'PISTOL', personnel: 'N. O. Mwinyi',   ammoIssued: '20 rounds', issuedAt: '12/25/2024, 7:00:00 AM', returnStatus: 'Overdue' },
+  { weaponNum: 'SIG445', firearm: 'SIG SAUER P226',     type: 'PISTOL', personnel: 'P. Q. Hamisi',   ammoIssued: '18 rounds', issuedAt: '12/25/2024, 7:00:00 PM', returnStatus: 'Overdue' },
+  { weaponNum: 'CZ7501', firearm: 'CZ 75',              type: 'PISTOL', personnel: 'M. T. Mwakyusa', ammoIssued: '25 rounds', issuedAt: '12/26/2024, 7:00:00 AM', returnStatus: 'Overdue' },
+  { weaponNum: 'SW9402', firearm: 'SMITH & WESSON M&P', type: 'PISTOL', personnel: 'R. S. Juma',     ammoIssued: '15 rounds', issuedAt: '12/26/2024, 1:00:00 PM', returnStatus: 'On Time' },
 ])
 
 const handoverHistory = ref([
@@ -227,6 +245,90 @@ const handoverHistory = ref([
   { weaponNum: 'MOS556', firearm: 'MOSSBERG 500',       type: 'SHORT GUN', personnel: 'N. O. Mwinyi',   keeper: 'F. G. Massawe', ammoIssued: '30 rounds', ammoReturned: '25 rounds (-5)', ammoDiscount: true,  issuedAt: '12/22/2024, 7:00:00 AM', returnedAt: '12/22/2024, 7:00:00 PM', historyStatus: 'RETURNED' },
 ])
 
-const activeDeployments = computed(() => activeHandovers.value.length)
-const availableFirearms = ref(8)
+// ── Computed ──
+const activeDeployments  = computed(() => activeHandovers.value.length)
+const availableFirearms  = ref(8)
+
+const deploymentOptions = computed(() =>
+  activeHandovers.value.map(h => ({
+    id: h.weaponNum,
+    label: `${h.personnel} — ${h.firearm} (${h.weaponNum})`,
+  }))
+)
+
+const availableFirearmOptions = computed(() => [
+  { weaponNum: 'FN-001', label: 'FN HERSTAL - FN-001' },
+  { weaponNum: 'HK-002', label: 'HK USP - HK-002' },
+  { weaponNum: 'SPR-003', label: 'SPRINGFIELD XD - SPR-003' },
+])
+
+// ── Modal state ──
+const showIssueModal   = ref(false)
+const showReturnModal  = ref(false)
+const returningHandover = ref<typeof returnHandovers.value[0] | null>(null)
+
+function openReturn(h: typeof returnHandovers.value[0]) {
+  returningHandover.value = h
+  showReturnModal.value = true
+}
+
+function openProcessReturn() {
+  // Open with first pending item pre-selected, or blank
+  returningHandover.value = returnHandovers.value[0] ?? null
+  showReturnModal.value = true
+}
+
+// ── Submit handlers ──
+function handleIssue(data: any) {
+  const firearmOpt = availableFirearmOptions.value.find(f => f.weaponNum === data.firearm)
+  const label = firearmOpt?.label.split(' - ')[0] ?? data.firearm
+  const now = new Date().toLocaleString()
+
+  activeHandovers.value.push({
+    weaponNum: data.firearm,
+    firearm:   label,
+    type:      'PISTOL',
+    personnel: deploymentOptions.value.find(d => d.id === data.deployment)?.label.split(' — ')[0] ?? '—',
+    ammoIssued: `${data.ammoCount} rounds`,
+    issuedAt:   now,
+    status:     'On Duty',
+  })
+  availableFirearms.value = Math.max(0, availableFirearms.value - 1)
+  showToast('Firearm issued successfully. OTP sent.', 'success')
+}
+
+function handleReturn(data: any) {
+  const idx = returnHandovers.value.findIndex(h => h.weaponNum === data.weaponNum)
+  if (idx === -1) return
+
+  const h = returnHandovers.value[idx]
+  const issuedNum = parseInt(h.ammoIssued.match(/\d+/)?.[0] ?? '0')
+  const diff = issuedNum - data.ammoReturned
+  const ammoReturnedStr = diff > 0
+    ? `${data.ammoReturned} rounds (-${diff})`
+    : `${data.ammoReturned} rounds`
+
+  // Add to history
+  handoverHistory.value.unshift({
+    weaponNum:     h.weaponNum,
+    firearm:       h.firearm,
+    type:          h.type,
+    personnel:     h.personnel,
+    keeper:        'F. G. Massawe',
+    ammoIssued:    h.ammoIssued,
+    ammoReturned:  ammoReturnedStr,
+    ammoDiscount:  diff > 0,
+    issuedAt:      h.issuedAt,
+    returnedAt:    new Date().toLocaleString(),
+    historyStatus: 'RETURNED',
+  })
+
+  // Remove from return table + active
+  returnHandovers.value.splice(idx, 1)
+  const activeIdx = activeHandovers.value.findIndex(a => a.weaponNum === data.weaponNum)
+  if (activeIdx !== -1) activeHandovers.value.splice(activeIdx, 1)
+
+  availableFirearms.value += 1
+  showToast(`${h.firearm} returned successfully`, 'success')
+}
 </script>
