@@ -21,7 +21,7 @@
         <div class="flex flex-col gap-2">
           <label class="text-[13px] font-semibold text-slate-200">Select Deployment</label>
           <Select v-model="form.deployment">
-            <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] h-[42px] focus:ring-0 focus:border-blue-500"
+            <SelectTrigger class="bg-[#1a2030] border w-[full] border-[#1e2535] rounded-lg text-[13px] h-[42px] focus:ring-0 focus:border-blue-500"
               :class="form.deployment ? 'text-slate-100' : 'text-slate-500'">
               <SelectValue placeholder="Choose active deployment" />
             </SelectTrigger>
@@ -38,7 +38,7 @@
         <div class="flex flex-col gap-2">
           <label class="text-[13px] font-semibold text-slate-200">Select Firearm</label>
           <Select v-model="form.firearm">
-            <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] h-[42px] focus:ring-0 focus:border-blue-500"
+            <SelectTrigger class="bg-[#1a2030] border w-[full] border-[#1e2535] rounded-lg text-[13px] h-[42px] focus:ring-0 focus:border-blue-500"
               :class="form.firearm ? 'text-slate-100' : 'text-slate-500'">
               <SelectValue placeholder="Choose available firearm" />
             </SelectTrigger>
@@ -65,9 +65,11 @@
           class="py-2.5 rounded-lg bg-white text-slate-900 text-[13px] font-semibold cursor-pointer border-none hover:bg-slate-100 transition-colors">
           Cancel
         </button>
-        <button @click="handleSubmit"
-          class="py-2.5 rounded-lg bg-blue-600 text-white text-[13px] font-semibold cursor-pointer border-none hover:bg-blue-700 transition-colors">
-          Generate OTP &amp; Issue
+        <button
+        @click="handleSubmit(); $emit('update:open', false)"
+        class="py-2.5 rounded-lg bg-blue-600 text-white text-[13px] font-semibold cursor-pointer border-none hover:bg-blue-700 transition-colors"
+        >
+        Generate OTP &amp; Issue
         </button>
       </DialogFooter>
 

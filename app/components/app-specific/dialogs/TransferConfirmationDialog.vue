@@ -11,7 +11,7 @@
       </DialogHeader>
       
       <div class="flex flex-col gap-8 p-6 sm:p-8">
-        <!-- Summary Grid -->
+        <!-- Summary     Grd -->
         <dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
             <dt class="text-sm text-muted-foreground">Transfer ID</dt>

@@ -301,27 +301,32 @@ function handleReturn(data: any) {
   const idx = returnHandovers.value.findIndex(h => h.weaponNum === data.weaponNum)
   if (idx === -1) return
 
-  const h = returnHandovers.value[idx]
-  const issuedNum = parseInt(h.ammoIssued.match(/\d+/)?.[0] ?? '0')
-  const diff = issuedNum - data.ammoReturned
-  const ammoReturnedStr = diff > 0
+ const h = returnHandovers.value[idx]
+
+if (!h) return
+
+const issuedNum = Number(h.ammoIssued?.match(/\d+/)?.[0]) || 0
+const diff = issuedNum - data.ammoReturned
+
+const ammoReturnedStr =
+  diff > 0
     ? `${data.ammoReturned} rounds (-${diff})`
     : `${data.ammoReturned} rounds`
 
-  // Add to history
-  handoverHistory.value.unshift({
-    weaponNum:     h.weaponNum,
-    firearm:       h.firearm,
-    type:          h.type,
-    personnel:     h.personnel,
-    keeper:        'F. G. Massawe',
-    ammoIssued:    h.ammoIssued,
-    ammoReturned:  ammoReturnedStr,
-    ammoDiscount:  diff > 0,
-    issuedAt:      h.issuedAt,
-    returnedAt:    new Date().toLocaleString(),
-    historyStatus: 'RETURNED',
-  })
+// Add to history
+handoverHistory.value.unshift({
+  weaponNum: h.weaponNum,
+  firearm: h.firearm,
+  type: h.type,
+  personnel: h.personnel,
+  keeper: 'F. G. Massawe',
+  ammoIssued: h.ammoIssued,
+  ammoReturned: ammoReturnedStr,
+  ammoDiscount: diff > 0,
+  issuedAt: h.issuedAt,
+  returnedAt: new Date().toLocaleString(),
+  historyStatus: 'RETURNED',
+})
 
   // Remove from return table + active
   returnHandovers.value.splice(idx, 1)
