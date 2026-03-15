@@ -1,8 +1,6 @@
 <template>
   <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
-    <ToastContainer />
-
     <!-- Page Header -->
     <div class="flex items-start justify-between mb-5">
       <div>
@@ -68,7 +66,7 @@
             </SelectContent>
           </Select>
           <Select v-model="filterAvailability">
-            <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] text-slate-300 h-[40px] focus:ring-0 w-[200px]">
+            <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] text-slate-300 h-10 focus:ring-0 w-[200px]">
               <SelectValue placeholder="All Availability" />
             </SelectTrigger>
             <SelectContent class="bg-[#1a2030] border border-[#1e2535] rounded-lg">
@@ -268,20 +266,17 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ layout: 'admin-layout' })
+definePageMeta({ layout: 'admin-layout' , middleware: ['auth']})
 
 import { ref, computed } from 'vue'
 import { Plus, Eye, History, Lock, LockOpen, AlertCircle, Search, Clock } from 'lucide-vue-next'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import ToastContainer from '@/components/app-specific/Toast/toastContainer.vue'
+import { toast } from 'vue-sonner'
 import RegisterFirearm from '@/components/app-specific/dialogs/armsregister/RegisterFireArm.vue'
 import FireArmDetails from '@/components/app-specific/dialogs/armsregister/FireArmsDetails.vue'
 import RecordFireArm from '@/components/app-specific/dialogs/armsregister/RecordFireArm.vue'
 import DisposeFireArm from '@/components/app-specific/dialogs/armsregister/DisposeFireArm.vue'
 import ReviewFirearm from '@/components/app-specific/dialogs/armsregister/ReviewFireArm.vue'
-import { useToast } from '@/composables/useToast'
-
-const { show: showToast } = useToast()
 
 interface Firearm {
   id: number; barcode: string; makeModel: string; fireamType: string
@@ -365,7 +360,7 @@ function openReview(item: PendingFirearm) { reviewingFirearm.value = item; showR
 function toggleLock(f: Firearm) {
   f.locked = !f.locked
   f.lockReason = f.locked ? 'Manually locked by MIS' : undefined
-  showToast(f.locked ? 'Firearm locked successfully' : 'Firearm unlocked successfully', f.locked ? 'success' : 'info')
+  f.locked ? toast.success('Firearm locked successfully') : toast.info('Firearm unlocked successfully')
 }
 
 function handleApprove(id: number) {
@@ -381,14 +376,14 @@ function handleApprove(id: number) {
       currentLocation: `${item.branch} - MAIN Armoury`, inspectionHistory: [],
     })
     pendingApprovals.value = pendingApprovals.value.filter(p => p.id !== id)
-    showToast(`${item.makeModel} approved and added to register`, 'success')
+    toast.success(`${item.makeModel} approved and added to register`)
   }
 }
 
 function handleReject(id: number, reason: string) {
   const item = pendingApprovals.value.find(p => p.id === id)
   pendingApprovals.value = pendingApprovals.value.filter(p => p.id !== id)
-  showToast(`${item?.makeModel} registration rejected`, 'error')
+  toast.error(`${item?.makeModel} registration rejected`)
 }
 
 function handleFormSubmit(data: any) {
@@ -402,10 +397,10 @@ function handleFormSubmit(data: any) {
       dateRegistered: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
       lastInspection: '—', currentLocation: `${data.branch} - ${data.armouryLocation}`, inspectionHistory: [],
     })
-    showToast('Firearm registered and submitted for approval', 'success')
+    toast.success('Firearm registered and submitted for approval')
   } else {
     const idx = firearms.value.findIndex(f => f.id === selectedFirearm.value?.id)
-    if (idx !== -1) { firearms.value[idx] = { ...firearms.value[idx], ...data }; showToast('Firearm updated and submitted for re-approval', 'success') }
+    if (idx !== -1) { firearms.value[idx] = { ...firearms.value[idx], ...data }; toast.success('Firearm updated and submitted for re-approval') }
   }
 }
 
@@ -416,12 +411,12 @@ function handleInspectionSubmit(data: any) {
     f.lastInspection = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
     f.nextMaintenance = data.nextMaintenance
     f.inspectionHistory.unshift({ type: data.inspectionType, date: f.lastInspection, findings: data.findings || 'No findings recorded' })
-    showToast('Inspection record saved successfully', 'success')
+    toast.success('Inspection record saved successfully')
   }
 }
 
 function handleDispose() {
   firearms.value = firearms.value.filter(f => f.id !== disposeId.value)
-  showToast('Firearm marked as disposed', 'info')
+  toast.info('Firearm marked as disposed')
 }
 </script>

@@ -16,11 +16,12 @@
     }
   ],
   "compilerOptions": {
-    "baseUrl": ".", // or "src" if your project structure is different
+    "baseUrl": ".",
+    "module": "preserve",
+    "moduleResolution": "Bundler",
     "paths": {
-      "@/*": [
-        "./*"
-      ] // or "./src/*"
+      "@/*": ["./app/*"],
+      "~/*": ["./app/*"]
     }
   }
 }

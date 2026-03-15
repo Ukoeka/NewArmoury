@@ -1,37 +1,36 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm, Field as VeeField } from 'vee-validate'
+import { ref } from 'vue'
 
 import { Button } from '@/components/ui/button'
 import {
-  Field,
-  FieldLabel,
-  FieldError,
-  FieldGroup,
-} from '@/components/ui/field'
-import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
-  DialogTitle,
-  DialogFooter
+  DialogTitle
 } from "@/components/ui/dialog"
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from '@/components/ui/field'
 
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 
 import {
   Select,
-  SelectTrigger,
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { createFirearmFormSchema, useFirearm, type CreateFirearmSchema } from '~/composables/firearm/useFirearm'
 import type { Firearm } from '~/lib/models/Firearm'
-import { createFirearmFormSchema, type CreateFirearmSchema } from '~/composables/firearm/useFirearm'
-import { useFirearm } from '~/composables/firearm/useFirearm'
 
 const props = defineProps<{
   isOpen: boolean,

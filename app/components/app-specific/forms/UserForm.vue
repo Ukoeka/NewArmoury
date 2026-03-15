@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { h, ref } from 'vue'
+import { h } from 'vue'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm, Field as VeeField } from 'vee-validate'
 import { toast } from 'vue-sonner'
-import { email, z } from 'zod'
+import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -11,7 +11,6 @@ import {
   FieldLabel,
   FieldError,
   FieldGroup,
-  FieldDescription
 } from '@/components/ui/field'
 
 import { Input } from '@/components/ui/input'
@@ -23,11 +22,8 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectValue,
 } from "@/components/ui/select"
-
-import { InputGroup, InputGroupAddon, InputGroupText } from '@/components/ui/input-group'
 
 // ------------------------------
 // Validation Schema
@@ -37,7 +33,7 @@ const formSchema = toTypedSchema(
     firstName: z.string().min(1, "First name is required"),
     lastName: z.string().min(1, "Last name is required"),
     username: z.string().min(1, "Username is required"),
-    email: email(),
+    email: z.string().email("Invalid email address"),
     phoneNumber: z.string().min(1, "Allocated to field is required"),
     role: z.string().min(1, "Role is required"),
     status: z.enum(["Active", "Returned", "Overdue", "Lost", "Damaged"]),

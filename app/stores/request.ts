@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { ammunitionsDb } from '~/lib/mockdb'
-import type { Ammunition } from '~/lib/models/Ammunition'
 import type { Request } from '~/lib/models/Request'
 
 export const useRequestStore = defineStore('request-assets', {

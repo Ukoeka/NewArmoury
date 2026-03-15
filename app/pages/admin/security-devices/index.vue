@@ -1,8 +1,6 @@
 <template>
   <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
-    <ToastContainer />
-
     <!-- Page Header -->
     <div class="flex items-start justify-between mb-6">
       <div>
@@ -180,13 +178,10 @@ definePageMeta({ layout: 'admin-layout' })
 
 import { ref, computed } from 'vue'
 import { Plus, Search, Database, CircleCheck, TriangleAlert, ShieldAlert, PenSquare } from 'lucide-vue-next'
-import ToastContainer from '@/components/app-specific/Toast/toastContainer.vue'
+import { toast } from 'vue-sonner'
 import AddEdit from '@/components/app-specific/dialogs/securitydevices/AddEdit.vue'
 import DeviceInspection from '@/components/app-specific/dialogs/securitydevices/DeviceInspection.vue'
 import DeviceDetails from '@/components/app-specific/dialogs/securitydevices/DeviceDetails.vue'
-import { useToast } from '@/composables/useToast'
-
-const { show: showToast } = useToast()
 
 interface Device {
   id: string; name: string; type: string; use: string
@@ -291,7 +286,7 @@ function handleAdd(data: any) {
     nextInspection: '—', daysUntil: 0,
     number: data.number, location: data.location,
   })
-  showToast(`Device "${data.deviceName}" added successfully`, 'success')
+  toast.success(`Device "${data.deviceName}" added successfully`)
 }
 
 function handleEdit(data: any) {
@@ -304,7 +299,7 @@ function handleEdit(data: any) {
     status: data.status === 'Good' ? 'GOOD' : data.status === 'Maintenance Required' ? 'MAINTENANCE' : 'MALFUNCTION',
   }
   editingId.value = null
-  showToast(`Device "${data.deviceName}" updated`, 'success')
+  toast.success(`Device "${data.deviceName}" updated`)
 }
 
 function handleInspection(data: any) {
@@ -318,6 +313,6 @@ function handleInspection(data: any) {
     inspectedBy: 'Current User',
   }
   inspectingId.value = null
-  showToast(`Inspection recorded for "${devices.value[idx].name}"`, 'success')
+  toast.success(`Inspection recorded for "${devices.value[idx].name}"`)
 }
 </script>

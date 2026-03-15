@@ -1,8 +1,6 @@
 <template>
   <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
-    <ToastContainer />
-
     <!-- Page Header -->
     <div class="flex items-start justify-between mb-5">
       <div>
@@ -199,16 +197,13 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ layout: 'admin-layout' })
+definePageMeta({ layout: 'admin-layout' , middleware: ['auth']})
 
 import { ref, computed } from 'vue'
 import { Shield, ArrowLeft } from 'lucide-vue-next'
-import ToastContainer from '@/components/app-specific/Toast/toastContainer.vue'
+import { toast } from 'vue-sonner'
 import IssueFirearm from '@/components/app-specific/dialogs/firearm/IssueFireArm.vue'
 import ReturnFirearm from '@/components/app-specific/dialogs/firearm/ReturnFireArm.vue'
-import { useToast } from '@/composables/useToast'
-
-const { show: showToast } = useToast()
 
 const activeTab = ref('issue')
 const tabs = [
@@ -294,7 +289,7 @@ function handleIssue(data: any) {
     status:     'On Duty',
   })
   availableFirearms.value = Math.max(0, availableFirearms.value - 1)
-  showToast('Firearm issued successfully. OTP sent.', 'success')
+  toast.success('Firearm issued successfully. OTP sent.')
 }
 
 function handleReturn(data: any) {
@@ -334,6 +329,6 @@ handoverHistory.value.unshift({
   if (activeIdx !== -1) activeHandovers.value.splice(activeIdx, 1)
 
   availableFirearms.value += 1
-  showToast(`${h.firearm} returned successfully`, 'success')
+  toast.success(`${h.firearm} returned successfully`)
 }
 </script>

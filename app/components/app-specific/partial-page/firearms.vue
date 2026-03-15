@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import FireArmDataTable from '@/components/app-specific/datatable/FireArmDataTable.vue';
 import { Plus } from 'lucide-vue-next';
 import { useFirearm } from "~/composables/firearm/useFirearm";
 import CreateFirearmForm from '../dialogs/CreateFirearmForm.vue';
-import FireArmDataTable from '@/components/app-specific/datatable/FireArmDataTable.vue';
 const {
   searchQuery,
   currentFirearm,

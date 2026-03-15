@@ -228,7 +228,7 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ layout: 'admin-layout' })
+definePageMeta({ layout: 'admin-layout' ,middleware: ['auth']})
 
 import { ref, computed } from 'vue'
 import {

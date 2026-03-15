@@ -1,9 +1,8 @@
 <script setup lang="ts">
 
 
-import AmmounitionDatatable from "~/components/app-specific/datatable/AmmunitionDatatable.vue"
 import { Plus } from 'lucide-vue-next';
-import type { Ammunition } from "~/lib/models/Ammunition"
+import AmmounitionDatatable from "~/components/app-specific/datatable/AmmunitionDatatable.vue";
 import { useAmmunition } from "~/composables/ammunition/useAmmunition";
 import CreateAmmunitionForm from "../dialogs/CreateAmmunitionForm.vue";
 

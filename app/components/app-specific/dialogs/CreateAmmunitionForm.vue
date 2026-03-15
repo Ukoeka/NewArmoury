@@ -1,35 +1,35 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { toTypedSchema } from '@vee-validate/zod'
-import { useForm, Field as VeeField } from 'vee-validate'
 import { Button } from '@/components/ui/button'
-import {
-  Field,
-  FieldLabel,
-  FieldError,
-  FieldGroup,
-} from '@/components/ui/field'
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
-  DialogTitle,
-  DialogFooter
+  DialogTitle
 } from "@/components/ui/dialog"
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from '@/components/ui/field'
+import { toTypedSchema } from '@vee-validate/zod'
+import { useForm, Field as VeeField } from 'vee-validate'
+import { ref } from 'vue'
 
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 
 import {
   Select,
-  SelectTrigger,
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import type { Ammunition } from '~/lib/models/Ammunition'
 import { createAmmunitionFormSchema, useAmmunition, type CreateAmmunitionSchema } from '~/composables/ammunition/useAmmunition'
+import type { Ammunition } from '~/lib/models/Ammunition'
 
 
 
@@ -100,7 +100,6 @@ const onSubmit = handleSubmit(values => {
         class="w-full sm:max-w-2xl mx-auto p-4 flex flex-col gap-4  rounded-lg bg-card-light dark:bg-card-dark shadow-sm">
         <form id="ammunition-form" @submit="onSubmit">
           <FieldGroup class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
             <!-- Lot Number  -->
             <VeeField v-slot="{ field, errors }" name="lotNumber">
               <Field :data-invalid="!!errors.length">

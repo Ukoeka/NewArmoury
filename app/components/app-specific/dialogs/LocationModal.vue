@@ -1,7 +1,7 @@
 <template>
-  <Dialog :open="open" @update:open="$emit('update:open', $event)">
+  <Dialog v-model:open="localOpen">
     <DialogContent
-      class="bg-[#161b27] border border-[#1e2535] text-slate-100 p-0 gap-0 max-w-[460px] rounded-xl shadow-2xl"
+      class="bg-[#161b27] border border-[#1e2535] text-slate-100 p-0 gap-0 max-w-115 rounded-xl shadow-2xl"
       hide-close
     >
       <!-- Header -->
@@ -9,107 +9,112 @@
         <div class="flex items-start justify-between">
           <div>
             <DialogTitle class="text-[17px] font-bold text-slate-100 mb-1">
-              {{ mode === 'add' ? 'Add New Location' : 'Edit Location' }}
+              {{ props.initial ? 'Edit Location' : 'Add New Location' }}
             </DialogTitle>
             <DialogDescription class="text-[13px] text-slate-500 m-0">
-              {{ mode === 'add' ? 'Create a new location for firearm deployment' : 'Update location details' }}
+              {{ props.initial ? 'Update location details' : 'Create a new location for firearm deployment' }}
             </DialogDescription>
           </div>
-          <button
-            @click="$emit('update:open', false)"
+          <!-- <Button
+            @click="localOpen = false"
             class="text-slate-500 hover:text-slate-200 transition-colors bg-transparent border-none cursor-pointer p-1 rounded-md hover:bg-[#1e2535] mt-0.5"
           >
-          </button>
+            <X :size="16" />
+          </Button> -->
         </div>
       </DialogHeader>
 
       <!-- Form -->
-      <div class="px-6 py-5 flex flex-col gap-5">
+      <form id="location-form" @submit="onSubmit" class="px-6 py-5 flex flex-col gap-5">
 
         <!-- Location Type -->
-        <div class="flex flex-col gap-2">
-          <label class="text-[13px] font-semibold text-slate-200">Location Type</label>
-          <Select v-model="form.locationType">
-            <SelectTrigger
-              class="w-full bg-[#1a2030] border border-blue-600/60 rounded-lg px-3.5 py-2.5 text-[13.5px] text-slate-100 outline-none focus:border-blue-500 focus:ring-0 h-[42px]"
-            >
-              <SelectValue placeholder="Select type" />
-            </SelectTrigger>
-            <SelectContent class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-slate-100">
-              <SelectItem
-                v-for="opt in locationTypeOptions"
-                :key="opt"
-                :value="opt"
-                class="text-[13.5px] text-slate-200 focus:bg-[#252f42] focus:text-slate-100 cursor-pointer py-2.5 px-3.5"
-              >
-                {{ opt }}
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <VeeField v-slot="{ field, errors }" name="type">
+          <Field :data-invalid="!!errors.length">
+            <FieldLabel>Location Type</FieldLabel>
+            <Select :model-value="field.value" @update:model-value="field.onChange">
+              <SelectTrigger class="w-full bg-[#1a2030] border border-[#1e2535] rounded-lg h-10.5 text-[13.5px] text-slate-100 focus:border-blue-500 focus:ring-0">
+                <SelectValue placeholder="Select type" />
+              </SelectTrigger>
+              <SelectContent class="bg-[#1a2030] border border-[#1e2535] text-slate-100">
+                <SelectItem :value=LocationType.IN_OFFICE class="text-[13.5px] cursor-pointer focus:bg-[#252f42]">In-Office</SelectItem>
+                <SelectItem :value=LocationType.OUT_OFFICE class="text-[13.5px] cursor-pointer focus:bg-[#252f42]">Out-of-Office</SelectItem>
+                <!-- <SelectItem :value=LocationType.FIELD  class="text-[13.5px] cursor-pointer focus:bg-[#252f42]">Field</SelectItem> -->
+              </SelectContent>
+            </Select>
+            <FieldError :errors="errors" />
+          </Field>
+        </VeeField>
 
-        <!-- Category (Branch) -->
-        <div class="flex flex-col gap-2">
-          <label class="text-[13px] font-semibold text-slate-200">
-            Category (Branch / Category)
-          </label>
+        <!-- Branch -->
+        <VeeField v-slot="{ field, errors }" name="branch_id">
+          <Field :data-invalid="!!errors.length">
+            <FieldLabel>Branch</FieldLabel>
+            <Select :model-value="field.value" @update:model-value="field.onChange">
+              <SelectTrigger class="w-full bg-[#1a2030] border border-[#1e2535] rounded-lg h-10.5 text-[13.5px] text-slate-100 focus:border-blue-500 focus:ring-0">
+                <SelectValue placeholder="Select branch" />
+              </SelectTrigger>
+              <SelectContent class="bg-[#1a2030] border border-[#1e2535] text-slate-100">
+                <SelectItem
+                  v-for="branch in branchList"
+                  :key="branch.id"
+                  :value="branch.id"
+                  class="text-[13.5px] cursor-pointer focus:bg-[#252f42]"
+                >
+                  {{ branch.name }}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            <FieldError :errors="errors" />
+          </Field>
+        </VeeField>
 
-          <!-- Dropdown for Add mode -->
-          <Select v-if="mode === 'add'" v-model="form.branch">
-            <SelectTrigger
-              class="w-full bg-[#1a2030] border border-[#1e2535] rounded-lg px-3.5 py-2.5 text-[13.5px] text-slate-100 outline-none focus:border-blue-500 focus:ring-0 h-[42px]"
-            >
-              <SelectValue placeholder="Select branch" class="text-slate-500" />
-            </SelectTrigger>
-            <SelectContent class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-slate-100">
-              <SelectItem
-                v-for="branch in branchOptions"
-                :key="branch"
-                :value="branch"
-                class="text-[13.5px] text-slate-200 focus:bg-[#252f42] focus:text-slate-100 cursor-pointer py-2.5 px-3.5"
-              >
-                {{ branch }}
-              </SelectItem>
-            </SelectContent>
-          </Select>
-
-          <!-- Text input for Edit mode -->
-          <input
-            v-else
-            v-model="form.branch"
-            type="text"
-            class="w-full bg-[#1a2030] border border-[#1e2535] rounded-lg px-3.5 py-2.5 text-[13.5px] text-slate-100 outline-none focus:border-blue-500 transition-colors h-[42px]"
-          />
-        </div>
+        <!-- Name -->
+        <VeeField v-slot="{ field, errors }" name="name">
+          <Field :data-invalid="!!errors.length">
+            <FieldLabel>Location Name</FieldLabel>
+            <Input
+              v-bind="field"
+              :model-value="field.value"
+              placeholder="e.g., Main Entrance"
+              type="text"
+              class="bg-[#1a2030] border-[#1e2535] h-10.5 text-[13.5px]"
+            />
+            <FieldError :errors="errors" />
+          </Field>
+        </VeeField>
 
         <!-- Specific Area -->
-        <div class="flex flex-col gap-2">
-          <label class="text-[13px] font-semibold text-slate-200">
-            {{ mode === 'add' ? 'Specific Area (Room / Zone / Assignment)' : 'Specific Area' }}
-          </label>
-          <input
-            v-model="form.specificArea"
-            type="text"
-            :placeholder="mode === 'add' ? 'e.g., Server Room, Main Entrance, VIP Protection' : ''"
-            class="w-full bg-[#1a2030] border border-[#1e2535] rounded-lg px-3.5 py-2.5 text-[13.5px] text-slate-100 placeholder:text-slate-600 outline-none focus:border-blue-500 transition-colors h-[42px]"
-          />
-        </div>
+        <VeeField v-slot="{ field, errors }" name="specific_area">
+          <Field :data-invalid="!!errors.length">
+            <FieldLabel>Specific Area</FieldLabel>
+            <Input
+              v-bind="field"
+              :model-value="field.value"
+              placeholder="e.g., Server Room, VIP Protection, Patrol Zone"
+              type="text"
+              class="bg-[#1a2030] border-[#1e2535] h-10.5 text-[13.5px]"
+            />
+            <FieldError :errors="errors" />
+          </Field>
+        </VeeField>
 
-      </div>
+      </form>
 
       <!-- Footer -->
-      <DialogFooter class="px-6 pb-6 flex items-center justify-end gap-3">
+      <DialogFooter class="px-6 pb-6 pt-2 flex items-center justify-end gap-3 border-t border-[#1e2535]">
         <button
-          @click="$emit('update:open', false)"
-          class="px-5 py-2.5 rounded-lg bg-white text-slate-900 text-[13px] font-semibold cursor-pointer border-none hover:bg-slate-100 transition-colors"
+          type="button"
+          @click="localOpen = false"
+          class="px-5 py-2.5 rounded-lg bg-transparent text-slate-400 text-[13px] font-semibold cursor-pointer border border-[#1e2535] hover:border-slate-600 hover:text-slate-200 transition-colors"
         >
           Cancel
         </button>
         <button
-          @click="handleSubmit"
+          type="submit"
+          form="location-form"
           class="px-5 py-2.5 rounded-lg bg-blue-600 text-white text-[13px] font-semibold cursor-pointer border-none hover:bg-blue-700 transition-colors"
         >
-          {{ mode === 'add' ? 'Add Location' : 'Save Changes' }}
+          {{ props.initial ? 'Save Changes' : 'Add Location' }}
         </button>
       </DialogFooter>
 
@@ -118,74 +123,79 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { X } from 'lucide-vue-next'
+import { ref, watch, onMounted } from 'vue'
+import { toTypedSchema } from '@vee-validate/zod'
+import { useForm, Field as VeeField } from 'vee-validate'
+import { z } from 'zod'
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
+  Dialog, DialogContent, DialogHeader,
+  DialogTitle, DialogDescription, DialogFooter,
 } from '@/components/ui/dialog'
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem,
+  SelectTrigger, SelectValue,
 } from '@/components/ui/select'
+import { Input } from '@/components/ui/input'
+import { useBranchApi } from '~/services/branch.service'
+import type { BranchResponse } from '~/lib/models/Branch'
+import { LocationType, type LocationCreate, type UpdateLocation } from '~/lib/models/Location'
 
-interface LocationForm {
-  locationType: string
-  branch: string
-  specificArea: string
-}
+const locationSchema = z.object({
+  name:          z.string().min(1, 'Name is required'),
+  type:          z.nativeEnum(LocationType, { required_error: 'Type is required' }),
+  specific_area: z.string().min(1, 'Specific area is required'),
+  branch_id:     z.string().uuid('Branch is required'),
+})
+
+type LocationSchema = z.infer<typeof locationSchema>
 
 const props = defineProps<{
-  open: boolean
-  mode: 'add' | 'edit'
-  initialData?: Partial<LocationForm>
+  isOpen: boolean
+  initial?: UpdateLocation | null
 }>()
 
-const emit = defineEmits<{
-  (e: 'update:open', value: boolean): void
-  (e: 'submit', data: LocationForm): void
+const emits = defineEmits<{
+  (e: 'update:isOpen', value: boolean): void
+  (e: 'confirm', payload: LocationCreate): void
 }>()
 
-const locationTypeOptions = ['In-Office', 'Out-of-Office', 'Field', 'Transit']
+const localOpen  = ref(props.isOpen)
+const branchList = ref<BranchResponse[]>([])
 
-const branchOptions = [
-  'Dar es Salaam Sub-HQ',
-  'Dodoma HQ',
-  'Zanzibar Sub-HQ',
-  'Mwanza Branch',
-  'Mtwara Branch',
-  'Mbeya Branch',
-  'Arusha Branch',
-]
+watch(() => props.isOpen, v => (localOpen.value = v))
+watch(localOpen, v => emits('update:isOpen', v))
 
-const form = ref<LocationForm>({
-  locationType: 'In-Office',
-  branch: '',
-  specificArea: '',
+const { handleSubmit, setValues, resetForm } = useForm<LocationSchema>({
+  validationSchema: toTypedSchema(locationSchema),
 })
 
-watch(() => props.open, (val) => {
-  if (val && props.mode === 'edit' && props.initialData) {
-    form.value = {
-      locationType: props.initialData.locationType ?? 'In-Office',
-      branch:       props.initialData.branch       ?? '',
-      specificArea: props.initialData.specificArea ?? '',
+// fetch all branches for the dropdown
+onMounted(async () => {
+  const api = useBranchApi()
+  const res = await api.getBranches(1, 100)
+  branchList.value = res.items
+})
+
+watch(
+  () => [props.isOpen, props.initial] as const,
+  ([open, val]) => {
+    if (!open) return
+    if (val) {
+      setValues({
+        name:          val.name          ?? '',
+        type:          (val.type as LocationSchema['type']) ?? undefined,
+        specific_area: val.specific_area ?? '',
+        branch_id:     val.branch_id     ?? '',
+      })
+    } else {
+      resetForm()
     }
-  }
-  if (val && props.mode === 'add') {
-    form.value = { locationType: 'In-Office', branch: '', specificArea: '' }
-  }
-})
+  },
+  { immediate: true },
+)
 
-function handleSubmit() {
-  emit('submit', { ...form.value })
-  emit('update:open', false)
-}
+const onSubmit = handleSubmit((values) => {
+  emits('confirm', values)
+  localOpen.value = false
+})
 </script>
