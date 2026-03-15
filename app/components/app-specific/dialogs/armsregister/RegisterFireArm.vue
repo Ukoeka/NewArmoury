@@ -31,7 +31,7 @@
           <div class="flex flex-col gap-1.5">
             <label class="text-[12.5px] font-semibold text-slate-300">Firearm Type *</label>
             <Select v-model="form.fireamType">
-              <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] text-slate-100 h-[40px] focus:ring-0 focus:border-blue-500">
+              <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] w-full rounded-lg text-[13px] text-slate-100 h-[40px] focus:ring-0 focus:border-blue-500">
                 <SelectValue placeholder="Select type" />
               </SelectTrigger>
               <SelectContent class="bg-[#1a2030] border border-[#1e2535] rounded-lg">
@@ -74,18 +74,18 @@
           <div class="flex flex-col gap-1.5">
             <label class="text-[12.5px] font-semibold text-slate-300">Branch *</label>
             <Select v-model="form.branch">
-              <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] text-slate-100 h-[40px] focus:ring-0 focus:border-blue-500">
+              <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] w-full rounded-lg text-[13px] text-slate-100 h-[40px] focus:ring-0 focus:border-blue-500">
                 <SelectValue placeholder="Select branch" />
               </SelectTrigger>
               <SelectContent class="bg-[#1a2030] border border-[#1e2535] rounded-lg">
-                <SelectItem v-for="b in branchOptions" :key="b" :value="b" class="text-[13px] text-slate-200 focus:bg-[#252f42] cursor-pointer">{{ b }}</SelectItem>
+                <SelectItem v-for="b in branchOptions" :key="b" :value="b" class="text-[13px] w-full text-slate-200 focus:bg-[#252f42] cursor-pointer">{{ b }}</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div class="flex flex-col gap-1.5">
             <label class="text-[12.5px] font-semibold text-slate-300">Armoury Location *</label>
             <Select v-model="form.armouryLocation">
-              <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] text-slate-100 h-[40px] focus:ring-0 focus:border-blue-500">
+              <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] w-full text-slate-100 h-[40px] focus:ring-0 focus:border-blue-500">
                 <SelectValue placeholder="Select location" />
               </SelectTrigger>
               <SelectContent class="bg-[#1a2030] border border-[#1e2535] rounded-lg">
@@ -100,7 +100,7 @@
           <div class="flex flex-col gap-1.5">
             <label class="text-[12.5px] font-semibold text-slate-300">Condition Status *</label>
             <Select v-model="form.conditionStatus">
-              <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] text-slate-100 h-[40px] focus:ring-0 focus:border-blue-500">
+              <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] w-full rounded-lg text-[13px] text-slate-100 h-[40px] focus:ring-0 focus:border-blue-500">
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
               <SelectContent class="bg-[#1a2030] border border-[#1e2535] rounded-lg">

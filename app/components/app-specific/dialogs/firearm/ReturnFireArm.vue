@@ -10,7 +10,6 @@
           </div>
           <button @click="$emit('update:open', false)"
             class="text-slate-500 hover:text-slate-200 bg-transparent border-none cursor-pointer p-1 rounded-md hover:bg-[#1e2535] transition-colors">
-            <X :size="16" />
           </button>
         </div>
       </DialogHeader>
