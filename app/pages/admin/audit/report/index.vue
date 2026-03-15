@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
-  layout: "admin-layout"
+  layout: "admin-layout",
+  middleware: ['auth']
 })
 import { ref } from 'vue'
 // import { format } from 'date-fns'

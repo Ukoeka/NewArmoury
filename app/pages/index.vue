@@ -1,87 +1,88 @@
+
 <template>
-  <div class="min-h-screen flex flex-col justify-between max-w-[960px] mx-auto px-4 md:px-6">
+  <div class="max-w-6xl mx-auto px-6">
 
-    <!-- Header -->
-    <header
-      class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 py-3"
-    >
-      <div class="flex items-center gap-4 text-slate-900 dark:text-white">
-        <GalleryVerticalEnd class="h-5 w-5 text-primary" />
-        <h2 class="text-lg font-bold tracking-tight">ArmoryCore</h2>
+    <!-- Hero Section -->
+    <div class="py-24 flex flex-col gap-8 max-w-3xl">
+      <div class="inline-flex items-center gap-2 bg-blue-600/10 border border-blue-500/20 rounded-full px-4 py-1.5 w-fit">
+        <span class="w-2 h-2 rounded-full bg-blue-500 shrink-0"></span>
+        <span class="text-xs text-blue-400 font-semibold tracking-wide">Secure · Official · Monitored</span>
       </div>
-    </header>
 
-    <!-- Main -->
-    <main class="mt-8 mx-4 md:mx-8 flex flex-col space-y-10 grow justify-center">
-
-      <div class="flex flex-col gap-y-2">
-        <h1 class="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
-          Official Firearm Management Portal
+      <div class="flex flex-col gap-4">
+        <h1 class="text-5xl md:text-6xl font-black tracking-tight text-slate-100 leading-tight">
+          Official Firearm<br>
+          <span class="text-blue-500">Management</span> Portal
         </h1>
-        <h2 class="text-base md:text-lg text-slate-600 dark:text-slate-400">
-          Securely manage, register, and track firearm records and licensing.
-        </h2>
+        <p class="text-lg text-slate-400 leading-relaxed max-w-xl">
+          Securely manage, register, and track firearm records across all branches — from armoury management to personnel deployment.
+        </p>
       </div>
 
-      <div class="flex flex-row gap-4">
+      <div class="flex items-center gap-4">
         <NuxtLink to="/auth/login">
-          <Button class="h-10 md:h-12 px-4 md:px-5 text-sm md:text-base font-bold cursor-pointer bg-blue-600 text-white">
+          <Button class="h-12 px-6 text-base font-bold bg-blue-600 hover:bg-blue-500 text-white cursor-pointer gap-2">
             Access Portal
+            <ArrowRight :size="16" />
           </Button>
         </NuxtLink>
-
         <NuxtLink to="/learn-more">
           <Button
             variant="outline"
-            class="h-10 md:h-12 px-4 md:px-5 text-sm md:text-base font-bold cursor-pointer"
+            class="h-12 px-6 text-base font-bold border-[#1e2535] text-slate-400 hover:text-slate-100 hover:border-slate-600 bg-transparent cursor-pointer"
           >
             Learn More
           </Button>
         </NuxtLink>
       </div>
-    <!-- TODO: Add a vertical carousel to the right of the screen  -->
-    </main>
+    </div>
 
-    <!-- Footer -->
-    <footer
-      class="flex flex-col gap-6 py-10 text-center border-t border-slate-200 dark:border-slate-800"
-    >
-      <div class="flex flex-row items-center justify-center gap-x-6">
-        <NuxtLink
-          to="/about"
-          class="text-slate-800 text-sm font-medium  hover:text-primary"
-        >
-          About Us
-        </NuxtLink>
-
-        <NuxtLink
-          to="/terms"
-          class="text-slate-800  text-sm font-medium  hover:text-primary dark:hover:text-white"
-        >
-          Terms and Conditions
-        </NuxtLink>
-
-        <NuxtLink
-          to="/privacy"
-          class="text-slate-800  text-sm font-medium  hover:text-primary dark:hover:text-white"
-        >
-          Privacy Policy
-        </NuxtLink>
+    <!-- Feature Highlights -->
+    <div class="pb-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-lg bg-blue-600/15 border border-blue-500/20 flex items-center justify-center">
+          <Shield :size="18" class="text-blue-400" />
+        </div>
+        <div>
+          <div class="text-[14px] font-semibold text-slate-100 mb-1">Arms Register</div>
+          <div class="text-[13px] text-slate-500 leading-relaxed">Centralized registry of all firearms with full approval workflows.</div>
+        </div>
       </div>
-
-      <p class="text-slate-500 dark:text-slate-500 text-sm">
-        © 2024 Firearm Management System. All Rights Reserved.
-      </p>
-    </footer>
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-lg bg-purple-600/15 border border-purple-500/20 flex items-center justify-center">
+          <Users :size="18" class="text-purple-400" />
+        </div>
+        <div>
+          <div class="text-[14px] font-semibold text-slate-100 mb-1">SP Deployment</div>
+          <div class="text-[13px] text-slate-500 leading-relaxed">Plan and monitor security personnel duty rosters across all branches.</div>
+        </div>
+      </div>
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-lg bg-emerald-600/15 border border-emerald-500/20 flex items-center justify-center">
+          <Lock :size="18" class="text-emerald-400" />
+        </div>
+        <div>
+          <div class="text-[14px] font-semibold text-slate-100 mb-1">OTP-Gated Issuance</div>
+          <div class="text-[13px] text-slate-500 leading-relaxed">Firearm handover secured with one-time password verification.</div>
+        </div>
+      </div>
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-lg bg-orange-600/15 border border-orange-500/20 flex items-center justify-center">
+          <BarChart3 :size="18" class="text-orange-400" />
+        </div>
+        <div>
+          <div class="text-[14px] font-semibold text-slate-100 mb-1">Reports & Analytics</div>
+          <div class="text-[13px] text-slate-500 leading-relaxed">Generate comprehensive reports on inventory, activity, and audit logs.</div>
+        </div>
+      </div>
+    </div>
 
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Button } from '@/components/ui/button'
-import { GalleryVerticalEnd } from "lucide-vue-next"
-</script>
+import { Shield, Lock, BarChart3, Users, ArrowRight } from 'lucide-vue-next'
 
-<style>
-/* Tailwind config must include custom colors if used */
-</style>
+definePageMeta({ layout: 'public' })
+</script>

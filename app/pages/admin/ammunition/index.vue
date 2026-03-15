@@ -1,8 +1,6 @@
 <template>
   <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
-    <ToastContainer />
-
     <!-- Page Header -->
     <div class="flex items-start justify-between mb-6">
       <div>
@@ -198,17 +196,14 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ layout: 'admin-layout' })
+definePageMeta({ layout: 'admin-layout', middleware: ['auth'] })
 
 import { ref, computed } from 'vue'
 import { Plus, Search, Package, TrendingUp, TriangleAlert, Settings2 } from 'lucide-vue-next'
-import ToastContainer from '@/components/app-specific/Toast/toastContainer.vue'
+import { toast } from 'vue-sonner'
 import RegisterAmmoTypeModal from '@/components/app-specific/dialogs/ammunition/RegisterAmmoType.vue'
 import AddAmmoInventoryModal from '@/components/app-specific/dialogs/ammunition/AddAmmoInventory.vue'
 import AdjustInventoryModal from '@/components/app-specific/dialogs/ammunition/AdjustInventory.vue'
-import { useToast } from '@/composables/useToast'
-
-const { show: showToast } = useToast()
 
 interface InventoryItem {
   type: string; branch: string; location: string
@@ -305,7 +300,7 @@ function handleRegisterType(data: any) {
     description: data.description,
     applicable:  data.applicableFirearms.join(', ') || '—',
   })
-  showToast(`Ammunition type "${data.name}" registered`, 'success')
+  toast.success(`Ammunition type "${data.name}" registered`)
 }
 
 function handleAddInventory(data: any) {
@@ -317,7 +312,7 @@ function handleAddInventory(data: any) {
     quantity:   Number(data.quantity),
     stockLevel: Number(data.quantity) > 500 ? 'Good' : Number(data.quantity) > 200 ? 'Low' : 'Critical',
   })
-  showToast('Ammunition inventory added successfully', 'success')
+  toast.success('Ammunition inventory added successfully')
 }
 
 function handleAdjust(data: any) {
@@ -336,11 +331,6 @@ function handleAdjust(data: any) {
   // Recalculate stock level
   item.stockLevel = item.quantity > 500 ? 'Good' : item.quantity > 200 ? 'Low' : 'Critical'
 
-  showToast(
-    data.action === 'add'
-      ? `Added ${delta} rounds to ${item.type}`
-      : `Removed ${delta} rounds from ${item.type}`,
-    'success'
-  )
+  toast.success(data.action === 'add' ? `Added ${delta} rounds to ${item.type}` : `Removed ${delta} rounds from ${item.type}`)
 }
 </script>
