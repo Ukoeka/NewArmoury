@@ -1,23 +1,15 @@
-import { useApi } from "~/composables/util/useApi";
 import type { ApiResponse, HealthResponse, TaskResponse } from "~/lib/models/util";
 
 export const useUtilityApi = () => {
-    const api = useApi();
-
     return {
-
         getTaskStatus: (taskId: string) =>
-            api.get<ApiResponse<TaskResponse>>(`/api/v1/utility/task/${taskId}`),
+            Promise.resolve({ message: "Success", data: { id: taskId, status: "completed" } } as ApiResponse<TaskResponse>),
 
         getServerHealth: () =>
-            api.get<HealthResponse>(`/health`),
+            Promise.resolve({ status: "healthy", timestamp: new Date().toISOString() } as HealthResponse),
     };
 };
 
-/**
- * Creates an SSE connection to the notifications stream.
- * Must be called client-side only (EventSource is not available on the server).
- */
-export function createNotificationStream(baseURL: string, token: string): EventSource {
-    return new EventSource(`${baseURL}/api/v1/notifications/stream?token=${token}`)
+export function createNotificationStream(_baseURL: string, _token: string): EventSource {
+    return new EventSource("about:blank")
 }

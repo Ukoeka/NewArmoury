@@ -1,37 +1,66 @@
-import { useApi } from "~/composables/util/useApi";
 import type { LoginResponse, RefreshToken, RequestOtp, VerifyOtp } from "~/lib/models/Auth";
 
-const BASE = "/api/v1/auth";
+const mockUser = {
+  id: "550e8400-e29b-41d4-a716-446655440000",
+  username: "admin",
+  email: "admin@armoury.tz",
+  first_name: "System",
+  surname: "Administrator",
+  initial: "S",
+  file_number: "ADM001",
+  title: "Administrator",
+  department: "IT",
+  directorate: "Operations",
+  phone_number: "+255 123 456 789",
+  status: "active",
+  is_superuser: true,
+  last_login: new Date().toISOString(),
+  role_id: "role-admin-001",
+  branch_id: "branch-hq-001",
+  role: {
+    id: "role-admin-001",
+    name: "system_admin",
+    abbreviation: "SYSTEM_ADMIN",
+    description: "Full system access",
+    is_system: true,
+    permissions: [],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  branch: {
+    id: "branch-hq-001",
+    name: "Dodoma HQ",
+    location: "Dodoma",
+    type: "head_office",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  created_at: new Date().toISOString(),
+  updated_at: new Date().toISOString()
+}
 
 export const useAuthApi = () => {
-  const api = useApi();
-
   return {
-
     requestOtp: (payload: RequestOtp) =>
-      api.post<{ message: string }>(`${BASE}/otp/request`, payload),
+      Promise.resolve({ message: "OTP sent" }),
 
     verifyOtp: (payload: VerifyOtp) =>
-      api.post<{ message: string }>(`${BASE}/otp/verify`, payload),
+      Promise.resolve({ message: "Verified" }),
 
     refreshToken: (payload: RefreshToken) =>
-      api.post<{ message: string }>(`${BASE}/otp/refresh`, payload),
+      Promise.resolve({ message: "Token refreshed" }),
 
     login: (username: string, password: string) => {
-      const formData = new FormData();
-      formData.append("username", username);
-      formData.append("password", password);
-      return api.post<LoginResponse>(
-        `${BASE}/login`,
-        formData,
-      );
+      return Promise.resolve({
+        access_token: "mock-access-token",
+        refresh_token: "mock-refresh-token",
+        token_type: "Bearer",
+        user: mockUser
+      } as LoginResponse);
     },
 
     logout: () => {
-      const refreshToken = useCookie<string | null>("refresh_token");
-      return api.post<{ message: string }>(`${BASE}/logout`, {
-        refresh_token: refreshToken.value,
-      });
+      return Promise.resolve({ message: "Logged out" });
     },
   };
 };
