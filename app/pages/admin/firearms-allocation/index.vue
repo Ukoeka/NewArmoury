@@ -2,7 +2,7 @@
   <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
     <!-- Page Header -->
-    <div class="flex items-start justify-between mb-5">
+    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-5">
       <div>
         <h1 class="text-2xl font-bold text-slate-100 -tracking-[0.3px] mb-1">Firearm Handover & Return</h1>
         <p class="text-sm text-slate-500">Manage firearm issuance and returns with OTP verification</p>
@@ -10,7 +10,7 @@
     </div>
 
     <!-- Tabs -->
-    <div class="inline-flex bg-[#161b27] border border-[#1e2535] rounded-[10px] p-1 gap-0.5 mb-5">
+    <div class="inline-flex bg-[#161b27] border border-[#1e2535] rounded-[10px] p-1 gap-0.5 mb-5 overflow-x-auto">
       <button
         v-for="tab in tabs"
         :key="tab.id"
@@ -35,7 +35,7 @@
             Issue Firearm
           </button>
         </div>
-        <div class="grid grid-cols-2 gap-3.5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           <div class="bg-[#0f1829] border border-[#1e3a5f] rounded-[10px] px-5 py-4 flex flex-col gap-2">
             <span class="text-xs text-slate-500 font-medium">Active Deployments</span>
             <span class="text-[28px] font-bold text-blue-400 leading-none">{{ activeDeployments }}</span>
@@ -47,9 +47,9 @@
         </div>
       </div>
 
-      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-x-auto">
         <h3 class="text-[14px] font-semibold text-slate-100 px-6 py-4 border-b border-[#1e2535] m-0">Active Handovers</h3>
-        <table class="w-full border-collapse text-[13px]">
+        <table class="w-full min-w-[700px] border-collapse text-[13px]">
           <thead>
             <tr class="border-b border-[#1e2535]">
               <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500 whitespace-nowrap">Weapon Number</th>
@@ -82,7 +82,7 @@
 
     <!-- ── TAB 2: RETURN FIREARMS ── -->
     <template v-if="activeTab === 'return'">
-      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-x-auto">
         <div class="flex items-center justify-between px-6 pt-5 pb-0 mb-2">
           <h3 class="text-[14px] font-semibold text-slate-100 m-0">Return Firearms</h3>
           <button
@@ -92,7 +92,7 @@
             Process Return
           </button>
         </div>
-        <table class="w-full border-collapse text-[13px] mt-2">
+        <table class="w-full min-w-[700px] border-collapse text-[13px] mt-2">
           <thead>
             <tr class="border-b border-[#1e2535]">
               <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500 whitespace-nowrap">Weapon Number</th>
@@ -135,9 +135,9 @@
 
     <!-- ── TAB 3: HANDOVER HISTORY ── -->
     <template v-if="activeTab === 'history'">
-      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-x-auto">
         <h3 class="text-[14px] font-semibold text-slate-100 px-6 py-4 border-b border-[#1e2535] m-0">Recent Handover History</h3>
-        <table class="w-full border-collapse text-[13px]">
+        <table class="w-full min-w-[900px] border-collapse text-[13px]">
           <thead>
             <tr class="border-b border-[#1e2535]">
               <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500 whitespace-nowrap">Weapon Number</th>

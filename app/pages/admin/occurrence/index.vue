@@ -2,12 +2,12 @@
   <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
     <!-- Page Header -->
-    <div class="flex items-start justify-between mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
       <div>
         <h1 class="text-2xl font-bold text-slate-100 -tracking-[0.3px] mb-1">Occurrence Book & Inspections</h1>
         <p class="text-sm text-slate-500">Log security incidents and guard post inspections</p>
       </div>
-      <div class="flex gap-2.5">
+      <div class="flex gap-2.5 flex-wrap">
         <button class="flex items-center gap-1.5 bg-transparent text-slate-400 border border-slate-700 rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer hover:border-blue-500 hover:text-slate-200 transition-all whitespace-nowrap">
           <Plus :size="14" />
           Add Occurrence
@@ -20,7 +20,7 @@
     </div>
 
     <!-- Stats -->
-    <div class="grid grid-cols-4 gap-4 mb-5">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
           <span class="text-xs text-slate-500 font-medium">Total Occurrences</span>

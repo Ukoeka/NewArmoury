@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-[#0A0E1A] flex">
     <!-- Left — Form panel -->
     <div
-      class="flex flex-col w-full lg:w-120 xl:w-130 shrink-0 px-8 py-10 md:px-14"
+      class="flex flex-col w-full lg:w-120 xl:w-130 shrink-0 px-6 py-8 md:px-14 lg:px-8 lg:py-10"
     >
       <!-- Logo -->
       <NuxtLink to="/" class="flex items-center gap-2.5 group w-fit">
@@ -129,7 +129,7 @@
                 Multi-Branch Operations
               </div>
               <div class="text-[12px] text-slate-500 mt-0.5">
-                Real-time visibility across all 7 organisational branches
+                Real-time visibility across all organisational branches
               </div>
             </div>
           </div>

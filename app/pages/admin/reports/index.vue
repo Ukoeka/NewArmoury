@@ -8,7 +8,7 @@
     </div>
 
     <!-- Stats — 5 cards -->
-    <div class="grid grid-cols-5 gap-3.5 mb-6">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 mb-6">
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-5 py-4 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
           <span class="text-xs text-slate-500 font-medium">Total Firearms</span>

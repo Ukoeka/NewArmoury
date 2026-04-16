@@ -8,7 +8,7 @@
     </div>
 
     <!-- Tabs -->
-    <div class="inline-flex bg-[#161b27] border border-[#1e2535] rounded-[10px] p-1 gap-1 mb-6">
+    <div class="inline-flex bg-[#161b27] border border-[#1e2535] rounded-[10px] p-1 gap-1 mb-6 overflow-x-auto">
       <button
         v-for="tab in tabs"
         :key="tab.id"
@@ -26,7 +26,7 @@
 
     <!-- ── GENERAL TAB ── -->
     <template v-if="activeTab === 'general'">
-      <div class="grid grid-cols-2 gap-4 mb-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
 
         <!-- OTP Configuration -->
         <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5">

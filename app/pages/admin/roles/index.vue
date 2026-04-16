@@ -10,7 +10,7 @@
     </div>
 
     <!-- Stats -->
-    <div class="grid grid-cols-3 gap-4 mb-5">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
           <span class="text-xs text-slate-500 font-medium">Total Roles</span>

@@ -2,7 +2,7 @@
   <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
     <!-- Page Header -->
-    <div class="flex items-start justify-between mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
       <div>
         <h1 class="text-2xl font-bold text-slate-100 -tracking-[0.3px] mb-1">Ammunition Requests</h1>
         <p class="text-sm text-slate-500">Manage ammunition transfers between branches and armouries</p>
@@ -14,7 +14,7 @@
     </div>
 
     <!-- Stats — 5 cards -->
-    <div class="grid grid-cols-5 gap-4 mb-6">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
           <span class="text-xs text-slate-500 font-medium">Total Requests</span>

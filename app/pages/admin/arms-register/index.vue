@@ -2,7 +2,7 @@
   <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
     <!-- Page Header -->
-    <div class="flex items-start justify-between mb-5">
+    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-5">
       <div>
         <h1 class="text-2xl font-bold text-slate-100 -tracking-[0.3px] mb-1">Arms Register</h1>
         <p class="text-sm text-slate-500">Centralized register of all firearms owned by the organization</p>
@@ -41,45 +41,47 @@
       <!-- Filter & Search -->
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 mb-5">
         <h3 class="text-[13.5px] font-bold text-slate-200 mb-4">Filter & Search</h3>
-        <div class="flex items-center gap-3">
-          <div class="relative flex-1 max-w-[320px]">
+        <div class="flex flex-col md:flex-row md:items-center gap-3">
+          <div class="relative flex-1 max-w-[320px] w-full">
             <Search :size="14" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
             <input v-model="searchQuery" type="text" placeholder="Search by barcode, model, weapon #..."
               class="w-full bg-[#1a2030] border border-[#1e2535] rounded-lg pl-9 pr-3 py-2.5 text-[13px] text-slate-200 placeholder:text-slate-600 outline-none focus:border-blue-500/50 transition-colors" />
           </div>
-          <Select v-model="filterBranch">
-            <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] text-slate-300 h-[40px] focus:ring-0 w-[200px]">
-              <SelectValue placeholder="All Branches" />
-            </SelectTrigger>
-            <SelectContent class="bg-[#1a2030] border border-[#1e2535] rounded-lg">
-              <SelectItem value="all" class="text-[13px] text-slate-200 focus:bg-[#252f42] cursor-pointer">All Branches</SelectItem>
-              <SelectItem v-for="b in branchOptions" :key="b" :value="b" class="text-[13px] text-slate-200 focus:bg-[#252f42] cursor-pointer">{{ b }}</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select v-model="filterCondition">
-            <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] text-slate-300 h-[40px] focus:ring-0 w-[200px]">
-              <SelectValue placeholder="All Conditions" />
-            </SelectTrigger>
-            <SelectContent class="bg-[#1a2030] border border-[#1e2535] rounded-lg">
-              <SelectItem value="all" class="text-[13px] text-slate-200 focus:bg-[#252f42] cursor-pointer">All Conditions</SelectItem>
-              <SelectItem v-for="c in conditionOptions" :key="c" :value="c" class="text-[13px] text-slate-200 focus:bg-[#252f42] cursor-pointer">{{ c }}</SelectItem>
-            </SelectContent>
-          </Select>
-          <Select v-model="filterAvailability">
-            <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] text-slate-300 h-10 focus:ring-0 w-[200px]">
-              <SelectValue placeholder="All Availability" />
-            </SelectTrigger>
-            <SelectContent class="bg-[#1a2030] border border-[#1e2535] rounded-lg">
-              <SelectItem value="all" class="text-[13px] text-slate-200 focus:bg-[#252f42] cursor-pointer">All Availability</SelectItem>
-              <SelectItem v-for="a in availabilityOptions" :key="a" :value="a" class="text-[13px] text-slate-200 focus:bg-[#252f42] cursor-pointer">{{ a }}</SelectItem>
-            </SelectContent>
-          </Select>
+          <div class="flex flex-wrap gap-3">
+            <Select v-model="filterBranch">
+              <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] text-slate-300 h-[40px] focus:ring-0 w-full sm:w-[200px]">
+                <SelectValue placeholder="All Branches" />
+              </SelectTrigger>
+              <SelectContent class="bg-[#1a2030] border border-[#1e2535] rounded-lg">
+                <SelectItem value="all" class="text-[13px] text-slate-200 focus:bg-[#252f42] cursor-pointer">All Branches</SelectItem>
+                <SelectItem v-for="b in branchOptions" :key="b" :value="b" class="text-[13px] text-slate-200 focus:bg-[#252f42] cursor-pointer">{{ b }}</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select v-model="filterCondition">
+              <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] text-slate-300 h-[40px] focus:ring-0 w-full sm:w-[200px]">
+                <SelectValue placeholder="All Conditions" />
+              </SelectTrigger>
+              <SelectContent class="bg-[#1a2030] border border-[#1e2535] rounded-lg">
+                <SelectItem value="all" class="text-[13px] text-slate-200 focus:bg-[#252f42] cursor-pointer">All Conditions</SelectItem>
+                <SelectItem v-for="c in conditionOptions" :key="c" :value="c" class="text-[13px] text-slate-200 focus:bg-[#252f42] cursor-pointer">{{ c }}</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select v-model="filterAvailability">
+              <SelectTrigger class="bg-[#1a2030] border border-[#1e2535] rounded-lg text-[13px] text-slate-300 h-10 focus:ring-0 w-full sm:w-[200px]">
+                <SelectValue placeholder="All Availability" />
+              </SelectTrigger>
+              <SelectContent class="bg-[#1a2030] border border-[#1e2535] rounded-lg">
+                <SelectItem value="all" class="text-[13px] text-slate-200 focus:bg-[#252f42] cursor-pointer">All Availability</SelectItem>
+                <SelectItem v-for="a in availabilityOptions" :key="a" :value="a" class="text-[13px] text-slate-200 focus:bg-[#252f42] cursor-pointer">{{ a }}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 
       <!-- Table -->
-      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
-        <table class="w-full">
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-x-auto">
+        <table class="w-full min-w-[900px]">
           <thead>
             <tr class="border-b border-[#1e2535]">
               <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Barcode</th>

@@ -2,12 +2,12 @@
   <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
     <!-- Page Header -->
-    <div class="flex items-start justify-between mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
       <div>
         <h1 class="text-2xl font-bold text-slate-100 -tracking-[0.3px] mb-1">Ammunition Inventory</h1>
         <p class="text-sm text-slate-500">Track and manage ammunition stock across all branches</p>
       </div>
-      <div class="flex gap-2.5">
+      <div class="flex gap-2.5 flex-wrap">
         <button
           @click="showRegisterTypeModal = true"
           class="flex items-center gap-1.5 bg-transparent text-slate-400 border border-slate-700 rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer hover:border-blue-500 hover:text-slate-200 transition-all">
@@ -24,12 +24,12 @@
     </div>
 
     <!-- Tabs -->
-    <div class="inline-flex bg-[#161b27] border border-[#1e2535] rounded-[10px] p-1 gap-1 mb-4">
+    <div class="inline-flex bg-[#161b27] border border-[#1e2535] rounded-[10px] p-1 gap-1 mb-4 overflow-x-auto">
       <button
         v-for="tab in tabs"
         :key="tab.id"
         @click="activeTab = tab.id"
-        class="flex items-center gap-2 px-6 py-2 border-none rounded-[7px] text-[13.5px] font-medium cursor-pointer transition-all"
+        class="flex items-center gap-2 px-6 py-2 border-none rounded-[7px] text-[13.5px] font-medium cursor-pointer transition-all whitespace-nowrap"
         :class="{
           'bg-[#1e2535] text-slate-100 font-semibold': activeTab === tab.id,
           'bg-transparent text-slate-500 hover:text-slate-400': activeTab !== tab.id
@@ -44,7 +44,7 @@
     <div v-if="activeTab === 'inventory'">
 
       <!-- Stats -->
-      <div class="grid grid-cols-3 gap-4 mb-5">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
         <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
           <div class="flex flex-col gap-2">
             <span class="text-xs text-slate-500 font-medium">Total Ammunition</span>

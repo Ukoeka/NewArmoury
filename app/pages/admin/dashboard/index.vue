@@ -14,7 +14,7 @@
     </div>
 
     <!-- Top Stats Row -->
-    <div class="grid grid-cols-4 gap-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
       <div
         class="bg-[#0f1829] border border-[#1e3a5f] rounded-xl px-7 py-7 flex items-center justify-between"
       >
@@ -85,7 +85,7 @@
           >Risk Heat Indicators</span
         >
       </div>
-      <div class="grid grid-cols-2 gap-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div
           class="flex items-start gap-3 bg-[#1a1208] border border-amber-500/20 rounded-[10px] px-4 py-3.5"
         >
@@ -128,7 +128,7 @@
     </div>
 
     <!-- Branch Map + Out-of-Office -->
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <div
         class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden"
       >
@@ -161,7 +161,7 @@
                 >{{ branch.active }} Active</span
               >
             </div>
-            <div class="grid grid-cols-4 gap-2">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
               <div
                 class="bg-[#0F172B] border border-[#1e2535] rounded-lg px-2.5 py-2 flex flex-col items-center gap-1"
               >
@@ -249,7 +249,7 @@
 
     <!-- Charts Row -->
     <ClientOnly>
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div
           class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden"
         >
@@ -418,7 +418,7 @@
     </div>
 
     <!-- Alert Cards Row 1 -->
-    <div class="grid grid-cols-4 gap-3.5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
       <div
         class="bg-[#1a0d0d] border border-red-900/35 rounded-xl px-5 py-4 flex items-center justify-between"
       >
@@ -522,7 +522,7 @@
     </div>
 
     <!-- Alert Cards Row 2 -->
-    <div class="grid grid-cols-4 gap-3.5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
       <div
         class="bg-[#0f1829] border border-blue-900/35 rounded-xl px-5 py-6 flex items-center justify-between"
       >
