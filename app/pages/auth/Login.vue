@@ -209,7 +209,7 @@ function roleBadgeClass(role: string) {
     AMIS: "bg-orange-950/60 text-orange-300 border-orange-800/50",
     BISO: "bg-blue-950/60 text-blue-300 border-blue-800/50",
     MAK: "bg-cyan-950/60 text-cyan-300 border-cyan-800/50",
-    AK: "bg-emerald-950/60 text-emerald-300 border-emerald-800/50",
+    AM: "bg-emerald-950/60 text-emerald-300 border-emerald-800/50",
     SP: "bg-slate-800/60 text-slate-300 border-slate-700/50",
     AUDITOR: "bg-amber-950/60 text-amber-300 border-amber-800/50",
   };
