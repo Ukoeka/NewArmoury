@@ -129,7 +129,7 @@
                 Multi-Branch Operations
               </div>
               <div class="text-[12px] text-slate-500 mt-0.5">
-                Real-time visibility across all organisational branches
+                Real-time visibility across all 7 organisational branches
               </div>
             </div>
           </div>
