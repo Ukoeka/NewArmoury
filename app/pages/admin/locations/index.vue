@@ -48,7 +48,7 @@
     </div>
 
     <!-- Search + Tabs -->
-    <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-4 py-3 flex items-center gap-4 mb-5">
+    <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-4 py-3 flex flex-col sm:flex-row gap-3 sm:gap-4 sm:items-center mb-5">
       <!-- Search -->
       <div class="relative flex-1">
         <Search :size="14" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 pointer-events-none" />
@@ -61,18 +61,19 @@
       </div>
 
       <!-- Tabs -->
-      <div class="inline-flex bg-[#0A0E1A] border border-[#1e2535] rounded-lg p-1 gap-1 shrink-0">
+      <div class="inline-flex bg-[#0A0E1A] border border-[#1e2535] rounded-lg p-1 gap-1 shrink-0 overflow-x-auto">
         <Button
           v-for="tab in tabs"
           :key="tab.value"
           @click="setTab(tab.value)"
-          class="flex items-center gap-2 px-4 py-1.5 rounded-md text-[12.5px] font-medium cursor-pointer border-none transition-all"
+          class="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 rounded-md text-[12px] sm:text-[12.5px] font-medium cursor-pointer border-none transition-all whitespace-nowrap shrink-0"
           :class="locationFilter === tab.value
             ? 'bg-[#1e2535] text-slate-100 font-semibold'
             : 'bg-transparent text-slate-500 hover:text-slate-400'"
         >
           <component :is="tab.icon" :size="13" />
-          {{ tab.label }}
+          <span class="hidden xs:inline">{{ tab.label }}</span>
+          <span class="xs:hidden">IN</span>
           <span
             class="text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none"
             :class="locationFilter === tab.value
@@ -103,50 +104,82 @@
         <div
           v-for="item in locationList"
           :key="item.id"
-          class="flex items-center gap-4 px-5 py-4 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors"
+          class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 px-5 py-4 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors"
         >
-          <!-- Type icon -->
-          <div
-            class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border"
-            :class="typeStyle(item.type).bg"
-          >
-            <component :is="typeStyle(item.type).icon" :size="18" :class="typeStyle(item.type).color" />
-          </div>
-
-          <div class="flex flex-col gap-0.5 min-w-0" style="flex: 1.5">
-            <span class="text-[11px] text-slate-500 font-medium">Name</span>
-            <span class="text-[14px] font-bold text-slate-100">{{ item.name }}</span>
-          </div>
-
-          <div class="flex flex-col gap-0.5 min-w-0" style="flex: 1.2">
-            <span class="text-[11px] text-slate-500 font-medium">Specific Area</span>
-            <span class="text-[13px] text-slate-400">{{ item.specific_area }}</span>
-          </div>
-
-          <div class="flex flex-col gap-0.5 min-w-0" style="flex: 1.2">
-            <span class="text-[11px] text-slate-500 font-medium">Branch</span>
-            <span class="text-[13px] text-slate-400">{{ item.branch?.name ?? '—' }}</span>
-          </div>
-
-          <div class="flex flex-col gap-0.5" style="flex: 0.8">
-            <span class="text-[11px] text-slate-500 font-medium">Type</span>
-            <span
-              class="inline-flex self-start items-center px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wide border mt-0.5"
-              :class="typeStyle(item.type).badge"
+          <!-- Mobile: Icon and primary info together -->
+          <div class="flex items-center gap-3 sm:hidden">
+            <div
+              class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border"
+              :class="typeStyle(item.type).bg"
             >
-              {{ typeStyle(item.type).label }}
-            </span>
+              <component :is="typeStyle(item.type).icon" :size="18" :class="typeStyle(item.type).color" />
+            </div>
+            <div class="flex flex-col gap-0.5 min-w-0 flex-1">
+              <span class="text-[14px] font-bold text-slate-100">{{ item.name }}</span>
+              <span class="text-[13px] text-slate-400">{{ item.specific_area }}</span>
+            </div>
+            <div class="flex items-center gap-1 shrink-0">
+              <span
+                class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold tracking-wide border"
+                :class="typeStyle(item.type).badge"
+              >
+                {{ typeStyle(item.type).label }}
+              </span>
+              <button @click="openEdit(item)" title="Edit"
+                class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer">
+                <PenSquare :size="15" />
+              </button>
+              <button @click="promptDelete(item)" title="Delete"
+                class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-red-400 hover:bg-red-950/30 transition-all cursor-pointer">
+                <Trash2 :size="15" />
+              </button>
+            </div>
           </div>
 
-          <div class="flex items-center ml-auto shrink-0 gap-1">
-            <button @click="openEdit(item)" title="Edit"
-              class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer">
-              <PenSquare :size="15" />
-            </button>
-            <button @click="promptDelete(item)" title="Delete"
-              class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-red-400 hover:bg-red-950/30 transition-all cursor-pointer">
-              <Trash2 :size="15" />
-            </button>
+          <!-- Desktop: Full layout -->
+          <div class="hidden sm:flex sm:items-center gap-4 w-full">
+            <div
+              class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border"
+              :class="typeStyle(item.type).bg"
+            >
+              <component :is="typeStyle(item.type).icon" :size="18" :class="typeStyle(item.type).color" />
+            </div>
+
+            <div class="flex flex-col gap-0.5 min-w-0 flex-1">
+              <span class="text-[11px] text-slate-500 font-medium">Name</span>
+              <span class="text-[14px] font-bold text-slate-100">{{ item.name }}</span>
+            </div>
+
+            <div class="flex flex-col gap-0.5 min-w-0 flex-1">
+              <span class="text-[11px] text-slate-500 font-medium">Specific Area</span>
+              <span class="text-[13px] text-slate-400">{{ item.specific_area }}</span>
+            </div>
+
+            <div class="flex flex-col gap-0.5 min-w-0 flex-1">
+              <span class="text-[11px] text-slate-500 font-medium">Branch</span>
+              <span class="text-[13px] text-slate-400">{{ item.branch?.name ?? '—' }}</span>
+            </div>
+
+            <div class="flex flex-col gap-0.5 flex-1">
+              <span class="text-[11px] text-slate-500 font-medium">Type</span>
+              <span
+                class="inline-flex self-start items-center px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wide border mt-0.5"
+                :class="typeStyle(item.type).badge"
+              >
+                {{ typeStyle(item.type).label }}
+              </span>
+            </div>
+
+            <div class="flex items-center shrink-0 gap-1">
+              <button @click="openEdit(item)" title="Edit"
+                class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer">
+                <PenSquare :size="15" />
+              </button>
+              <button @click="promptDelete(item)" title="Delete"
+                class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-red-400 hover:bg-red-950/30 transition-all cursor-pointer">
+                <Trash2 :size="15" />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -156,21 +189,20 @@
       </div>
 
       <!-- Pagination -->
-      <div v-if="totalPages > 1" class="flex items-center justify-between px-5 py-4 border-t border-[#1e2535]">
-        <span class="text-[12px] text-slate-500">
+      <div v-if="totalPages > 1" class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-5 py-4 border-t border-[#1e2535]">
+        <span class="text-[12px] text-slate-500 text-center sm:text-left">
           Page {{ currentPage }} of {{ totalPages }} · {{ total }} total
         </span>
         <Pagination
           v-model:page="currentPage"
           :total="total"
           :items-per-page="pageSize"
-          :sibling-count="1"
-          show-edges
-          class="mx-0 w-auto justify-end"
+          :sibling-count="0"
+          :show-edges="false"
+          class="mx-0 w-full sm:w-auto justify-center sm:justify-end"
           @update:page="fetchLocations"
         >
           <PaginationContent v-slot="{ items }">
-            <PaginationFirst />
             <PaginationPrev />
             <template v-for="(item, idx) in items" :key="item.type === 'page' ? item.value : `ellipsis-${idx}`">
               <PaginationItem v-if="item.type === 'page'" :value="item.value" :is-active="item.value === currentPage">
@@ -179,7 +211,6 @@
               <PaginationEllipsis v-else />
             </template>
             <PaginationNext />
-            <PaginationLast />
           </PaginationContent>
         </Pagination>
       </div>
