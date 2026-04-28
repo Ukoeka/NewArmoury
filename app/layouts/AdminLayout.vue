@@ -30,18 +30,18 @@ const { currentUser } = useUserStore()
     <SidebarInset class="bg-[#0A0E1A]">
 
       <!-- Header -->
-      <header class="flex  shrink-0 items-center justify-between bg-[#0A0E1A] border-b border-[#1e2535] px-3 py-3">
+      <header class="flex shrink-0 items-center justify-between bg-[#0A0E1A] border-b border-[#1e2535] px-3 sm:px-4 py-3">
 
         <!-- Left: trigger + logo -->
-        <div class="flex items-center gap-">
+        <div class="flex items-center gap-0">
           <SidebarTrigger
             class="text-slate-400 hover:text-slate-200 hover:bg-[#1a2030] rounded-lg p-2 transition-all border-none bg-transparent cursor-pointer"
           />
-          <Separator orientation="vertical" class="h-4 bg-[#1e2535]" />
+          <Separator orientation="vertical" class="h-4 bg-[#1e2535] hidden sm:block" />
         </div>
 
         <!-- Right: notifications + user info + sign out -->
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 sm:gap-3">
 
           <!-- Notification bell -->
           <DropdownMenu @update:open="open => open && markAllRead()">
@@ -58,7 +58,7 @@ const { currentUser } = useUserStore()
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              class="w-80 bg-[#161b27] border-[#1e2535] p-0 overflow-hidden"
+              class="w-72 sm:w-80 bg-[#161b27] border-[#1e2535] p-0 overflow-hidden"
             >
               <DropdownMenuLabel class="px-4 py-3 text-[13px] font-semibold text-slate-200 border-b border-[#1e2535]">
                 Notifications
@@ -87,7 +87,7 @@ const { currentUser } = useUserStore()
           </DropdownMenu>
 
           <!-- User pill -->
-          <div class="flex items-center gap-2.5 bg-[#161b27] border border-[#1e2535] rounded-xl px-3 py-2">
+          <div class="hidden sm:flex items-center gap-2.5 bg-[#161b27] border border-[#1e2535] rounded-xl px-3 py-2">
             <div class="w-7 h-7 rounded-full bg-blue-600/30 border border-blue-500/40 flex items-center justify-center shrink-0">
               <User :size="14" class="text-blue-400" />
             </div>
@@ -97,13 +97,18 @@ const { currentUser } = useUserStore()
             </div>
           </div>
 
+          <!-- Mobile user button -->
+          <button class="sm:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-[#161b27] border border-[#1e2535] text-slate-400 hover:text-slate-200 hover:border-slate-600 transition-all cursor-pointer">
+            <User :size="16" class="text-blue-400" />
+          </button>
+
           <!-- Sign out button -->
           <button
-            class="flex items-center gap-2 bg-transparent text-slate-400 hover:text-slate-200 hover:border-slate-600 hover:bg-[#161b27] rounded-xl px-3 py-2 text-[13px] font-medium cursor-pointer transition-all whitespace-nowrap"
+            class="flex items-center gap-1 sm:gap-2 bg-transparent text-slate-400 hover:text-slate-200 hover:border-slate-600 hover:bg-[#161b27] rounded-xl px-2 sm:px-3 py-2 text-[12px] sm:text-[13px] font-medium cursor-pointer transition-all"
             @click="handleSignOut"
           >
             <LogOut :size="14" />
-            Sign Out
+            <span class="hidden sm:inline">Sign Out</span>
           </button>
         </div>
 
