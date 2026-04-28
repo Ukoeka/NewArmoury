@@ -17,12 +17,12 @@
     </div>
 
     <!-- Tabs -->
-    <div class="inline-flex bg-[#161b27] border border-[#1e2535] rounded-[10px] p-1 gap-1 mb-5">
+    <div class="inline-flex bg-[#161b27] border border-[#1e2535] rounded-[10px] p-1 gap-1 mb-5 overflow-x-auto">
       <button
         v-for="tab in tabs"
         :key="tab.id"
         @click="activeTab = tab.id"
-        class="flex items-center gap-2 px-5 py-2 border-none rounded-[7px] text-[13.5px] font-medium cursor-pointer transition-all"
+        class="flex items-center gap-1 sm:gap-2 px-3 sm:px-5 py-1.5 sm:py-2 border-none rounded-[7px] text-[12px] sm:text-[13.5px] font-medium cursor-pointer transition-all whitespace-nowrap shrink-0"
         :class="{
           'bg-[#1e2535] text-slate-100 font-semibold': activeTab === tab.id,
           'bg-transparent text-slate-500 hover:text-slate-400': activeTab !== tab.id
@@ -30,7 +30,7 @@
       >
         {{ tab.label }}
         <span v-if="tab.id === 'pending' && pendingApprovals.length"
-          class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-red-600 text-white text-[11px] font-bold leading-none">
+          class="inline-flex items-center justify-center w-4 sm:w-5 h-4 sm:h-5 rounded-full bg-red-600 text-white text-[10px] sm:text-[11px] font-bold leading-none ml-1">
           {{ pendingApprovals.length }}
         </span>
       </button>

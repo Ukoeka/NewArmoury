@@ -66,16 +66,15 @@
           v-for="tab in tabs"
           :key="tab.value"
           @click="setTab(tab.value)"
-          class="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 rounded-md text-[12px] sm:text-[12.5px] font-medium cursor-pointer border-none transition-all whitespace-nowrap shrink-0"
+          class="flex items-center gap-1 sm:gap-1.5 sm:gap-2 px-3 py-1.5 rounded-md text-[12px] font-medium cursor-pointer border-none transition-all whitespace-nowrap shrink-0"
           :class="locationFilter === tab.value
             ? 'bg-[#1e2535] text-slate-100 font-semibold'
             : 'bg-transparent text-slate-500 hover:text-slate-400'"
         >
           <component :is="tab.icon" :size="13" />
-          <span class="hidden xs:inline">{{ tab.label }}</span>
-          <span class="xs:hidden">{{ tab.label }}</span>
+          {{ tab.label }}
           <span
-            class="text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none"
+            class="text-[10px] font-bold px-1 sm:px-1.5 py-0.5 rounded-full leading-none ml-1"
             :class="locationFilter === tab.value
               ? 'bg-blue-600/30 text-blue-400'
               : 'bg-[#1e2535] text-slate-500'"

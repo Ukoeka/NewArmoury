@@ -29,7 +29,7 @@
         v-for="tab in tabs"
         :key="tab.id"
         @click="activeTab = tab.id"
-        class="flex items-center gap-2 px-6 py-2 border-none rounded-[7px] text-[13.5px] font-medium cursor-pointer transition-all whitespace-nowrap"
+        class="flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-1.5 sm:py-2 border-none rounded-[7px] text-[12px] sm:text-[13.5px] font-medium cursor-pointer transition-all whitespace-nowrap shrink-0"
         :class="{
           'bg-[#1e2535] text-slate-100 font-semibold': activeTab === tab.id,
           'bg-transparent text-slate-500 hover:text-slate-400': activeTab !== tab.id
