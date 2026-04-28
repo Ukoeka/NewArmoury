@@ -75,16 +75,18 @@
       </div>
 
       <!-- Filter Bar -->
-      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-4 py-3 flex gap-3 items-center mb-5">
-        <select v-model="selectedBranch" class="bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-sm text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors min-w-[160px]">
-          <option value="">All Branches</option>
-          <option v-for="b in branches" :key="b" :value="b">{{ b }}</option>
-        </select>
-        <select v-model="selectedArmoury" class="bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-sm text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors min-w-[160px]">
-          <option value="">All Armouries</option>
-          <option value="MAIN">Main</option>
-          <option value="SUB">Sub</option>
-        </select>
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-4 py-3 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center mb-5">
+        <div class="flex flex-col sm:flex-row gap-3 flex-1">
+          <select v-model="selectedBranch" class="bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-sm text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors flex-1 sm:flex-none sm:min-w-[160px]">
+            <option value="">All Branches</option>
+            <option v-for="b in branches" :key="b" :value="b">{{ b }}</option>
+          </select>
+          <select v-model="selectedArmoury" class="bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-sm text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors flex-1 sm:flex-none sm:min-w-[160px]">
+            <option value="">All Armouries</option>
+            <option value="MAIN">Main</option>
+            <option value="SUB">Sub</option>
+          </select>
+        </div>
         <div class="relative flex-1">
           <Search :size="14" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 pointer-events-none" />
           <input v-model="searchQuery" type="text" placeholder="Search inventory..."
@@ -96,8 +98,43 @@
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden">
         <h3 class="text-sm font-semibold text-slate-100 px-6 py-4 border-b border-[#1e2535]">Current Inventory</h3>
 
+        <!-- Mobile Layout -->
         <div v-for="(item, index) in filteredInventory" :key="index"
-          class="flex items-center px-6 py-4 border-b border-[#1a2030] hover:bg-[#1a2030]/60 transition-colors last:border-b-0">
+          class="sm:hidden px-4 py-4 border-b border-[#1a2030] hover:bg-[#1a2030]/60 transition-colors last:border-b-0">
+          <div class="flex items-start justify-between mb-3">
+            <div class="flex flex-col gap-1 min-w-0 flex-1">
+              <span class="text-[13.5px] font-semibold text-slate-200">{{ item.type }}</span>
+              <span class="text-[12px] font-semibold text-slate-400">{{ item.branch }}</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold tracking-wide" :class="stockClass(item.stockLevel)">
+                {{ item.stockLevel }}
+              </span>
+              <button
+                @click="openAdjust(item)"
+                class="flex items-center gap-1 text-slate-500 text-[12px] font-medium cursor-pointer px-2 py-1 rounded border border-transparent hover:bg-[#1e2535] hover:text-slate-300 hover:border-slate-700/60 transition-all">
+                <Plus :size="12" />
+                Adjust
+              </button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-sm">
+            <div class="flex items-center gap-3">
+              <span class="text-slate-500">Batch:</span>
+              <span class="font-mono font-semibold text-slate-200">{{ item.batch }}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex text-[10px] font-bold text-slate-400 bg-[#1e2535] border border-slate-700/70 rounded px-1.5 py-0.5 tracking-widest">
+                {{ item.location }}
+              </span>
+              <span class="font-bold text-slate-100">{{ item.quantity.toLocaleString() }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desktop Layout -->
+        <div v-for="(item, index) in filteredInventory" :key="index"
+          class="hidden sm:flex sm:items-center px-6 py-4 border-b border-[#1a2030] hover:bg-[#1a2030]/60 transition-colors last:border-b-0">
           <div class="flex flex-col gap-1 flex-[2] min-w-0">
             <span class="text-[11px] text-slate-600 font-medium uppercase tracking-wide">Ammunition Type</span>
             <span class="text-[13.5px] font-semibold text-slate-200 truncate">{{ item.type }}</span>
@@ -160,15 +197,15 @@
               class="w-full bg-[#0A0E1A] border border-[#1e2535] rounded-lg pl-9 pr-3 py-2 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-blue-500 transition-colors" />
           </div>
         </div>
-        <div class="grid grid-cols-3 gap-4 p-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 sm:p-6">
           <div v-for="(item, index) in filteredTypes" :key="index"
-            class="bg-[#0A0E1A] border border-[#1e2535] rounded-xl p-5 hover:border-slate-600 transition-colors cursor-default">
+            class="bg-[#0A0E1A] border border-[#1e2535] rounded-xl p-4 sm:p-5 hover:border-slate-600 transition-colors cursor-default">
             <div class="flex flex-col gap-2">
               <span class="text-[14px] font-semibold text-slate-100">{{ item.name }}</span>
               <span class="text-xs text-slate-500 leading-relaxed">{{ item.description }}</span>
-              <div class="flex items-center gap-1.5 mt-1">
+              <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-1.5 mt-1">
                 <span class="text-[11px] text-slate-600 font-medium">Applicable firearms:</span>
-                <span class="text-[11px] text-slate-400 font-semibold">{{ item.applicable }}</span>
+                <span class="text-[11px] text-slate-400 font-semibold break-words">{{ item.applicable }}</span>
               </div>
             </div>
           </div>
