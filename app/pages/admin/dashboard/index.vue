@@ -335,7 +335,7 @@
     </ClientOnly>
 
     <!-- Status Distribution + Availability -->
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div
         class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden"
       >
@@ -344,7 +344,7 @@
         >
           Firearms Status Distribution
         </div>
-        <div class="px-5 py-4 flex items-center justify-center gap-8">
+        <div class="px-5 py-4 flex flex-col sm:flex-row sm:items-center justify-center gap-4 sm:gap-8">
           <ClientOnly>
             <apexchart
               type="donut"
@@ -382,7 +382,7 @@
         >
           Firearms by Availability Status
         </div>
-        <div class="grid grid-cols-3 gap-2.5 p-5">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 p-5">
           <div
             v-for="av in availability"
             :key="av.label"
@@ -491,9 +491,9 @@
         <div
           v-for="ba in branchAvailability"
           :key="ba.name"
-          class="flex items-center justify-between gap-4 bg-[#1D293D] border border-[#1e2535] rounded-lg px-4 py-3"
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 bg-[#1D293D] border border-[#1e2535] rounded-lg px-4 py-3"
         >
-          <div class="flex flex-col gap-0.5 min-w-45">
+          <div class="flex flex-col gap-0.5 min-w-0 sm:min-w-45">
             <span class="text-[13.5px] font-semibold text-slate-100">{{
               ba.name
             }}</span>
@@ -501,8 +501,8 @@
               >{{ ba.available }} available / {{ ba.total }} total</span
             >
           </div>
-          <div class="flex items-center gap-3 flex-1 justify-end">
-            <div class="w-48 h-1.5 bg-[#1e2535] rounded-full overflow-hidden">
+          <div class="flex items-center gap-3 flex-1 justify-end sm:justify-end">
+            <div class="w-full sm:w-48 h-1.5 bg-[#1e2535] rounded-full overflow-hidden">
               <div
                 class="h-full rounded-full transition-all"
                 :style="{
@@ -512,7 +512,7 @@
               ></div>
             </div>
             <span
-              class="text-[12px] font-semibold text-slate-500 min-w-9 text-right"
+              class="text-[12px] font-semibold text-slate-500 min-w-9 text-right shrink-0"
               >{{ ba.pct }}%</span
             >
           </div>
