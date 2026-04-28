@@ -241,55 +241,57 @@
 
         <div class="flex flex-col gap-4">
           <div v-for="item in pendingApprovals" :key="item.id"
-            class="bg-[#0f1422] border border-orange-700/40 rounded-xl p-5">
-            <!-- Card header -->
-            <div class="flex items-center justify-between mb-4">
-              <div class="flex items-center gap-3">
-                <Clock :size="16" class="text-orange-500 flex-shrink-0" />
-                <span class="text-[14.5px] font-bold text-slate-100">{{ item.makeModel }}</span>
-                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold bg-orange-950/60 text-orange-400 border border-orange-700/50">
+            class="bg-[#0f1422] border border-orange-700/40 rounded-xl p-4 sm:p-5">
+            <!-- Card header - Mobile layout -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 mb-4">
+              <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                <div class="flex items-center gap-3">
+                  <Clock :size="16" class="text-orange-500 flex-shrink-0" />
+                  <span class="text-[14px] sm:text-[14.5px] font-bold text-slate-100">{{ item.makeModel }}</span>
+                </div>
+                <span class="inline-flex items-center px-2 py-1 sm:px-2.5 sm:py-1 rounded-md text-[10px] sm:text-[11px] font-bold bg-orange-950/60 text-orange-400 border border-orange-700/50 self-start sm:self-center">
                   Pending Approval
                 </span>
               </div>
               <button @click="openReview(item)"
-                class="px-4 py-2 rounded-lg bg-blue-600 text-white text-[13px] font-semibold cursor-pointer border-none hover:bg-blue-700 transition-colors">
+                class="px-4 py-2 rounded-lg bg-blue-600 text-white text-[13px] font-semibold cursor-pointer border-none hover:bg-blue-700 transition-colors w-full sm:w-auto">
                 Review
               </button>
             </div>
 
-            <!-- Details grid -->
-            <div class="grid grid-cols-4 gap-x-8 gap-y-4">
+            <!-- Details grid - Responsive -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 sm:gap-x-8 gap-y-3 sm:gap-y-4">
               <div class="flex flex-col gap-1">
                 <span class="text-[11.5px] text-slate-500">Barcode:</span>
-                <span class="text-[13px] font-bold text-slate-100">{{ item.barcode }}</span>
+                <span class="text-[13px] font-bold text-slate-100 break-all">{{ item.barcode }}</span>
               </div>
               <div class="flex flex-col gap-1">
                 <span class="text-[11.5px] text-slate-500">Type:</span>
-                <span class="text-[13px] font-bold text-slate-100">{{ item.fireamType.toUpperCase() }}</span>
+                <span class="text-[13px] font-bold text-slate-100 break-words">{{ item.fireamType.toUpperCase() }}</span>
               </div>
               <div class="flex flex-col gap-1">
                 <span class="text-[11.5px] text-slate-500">Weapon #:</span>
-                <span class="text-[13px] font-bold text-slate-100">{{ item.weaponNumber }}</span>
+                <span class="text-[13px] font-bold text-slate-100 break-all">{{ item.weaponNumber }}</span>
               </div>
               <div class="flex flex-col gap-1">
                 <span class="text-[11.5px] text-slate-500">C.A.R. #:</span>
-                <span class="text-[13px] font-bold text-slate-100">{{ item.carNumber }}</span>
+                <span class="text-[13px] font-bold text-slate-100 break-all">{{ item.carNumber }}</span>
               </div>
               <div class="flex flex-col gap-1">
                 <span class="text-[11.5px] text-slate-500">Branch:</span>
-                <span class="text-[13px] font-bold text-slate-100">{{ item.branch }}</span>
+                <span class="text-[13px] font-bold text-slate-100 break-words">{{ item.branch }}</span>
               </div>
               <div class="flex flex-col gap-1">
                 <span class="text-[11.5px] text-slate-500">Status:</span>
-                <span class="text-[13px] font-bold text-slate-100">{{ item.conditionStatus.toUpperCase() }}</span>
+                <span class="text-[13px] font-bold text-slate-100 break-words">{{ item.conditionStatus.toUpperCase() }}</span>
               </div>
               <div class="flex flex-col gap-1">
                 <span class="text-[11.5px] text-slate-500">Registered By:</span>
-                <span class="text-[13px] font-bold text-slate-100">{{ item.registeredBy }}</span>
+                <span class="text-[13px] font-bold text-slate-100 break-words">{{ item.registeredBy }}</span>
               </div>
               <div class="flex flex-col gap-1">
                 <span class="text-[11.5px] text-slate-500">Date:</span>
-                <span class="text-[13px] font-bold text-slate-100">{{ item.submitted }}</span>
+                <span class="text-[13px] font-bold text-slate-100 break-words">{{ item.submitted }}</span>
               </div>
             </div>
           </div>

@@ -73,7 +73,7 @@
         >
           <component :is="tab.icon" :size="13" />
           <span class="hidden xs:inline">{{ tab.label }}</span>
-          <span class="xs:hidden">IN</span>
+          <span class="xs:hidden">{{ tab.label }}</span>
           <span
             class="text-[10px] font-bold px-1.5 py-0.5 rounded-full leading-none"
             :class="locationFilter === tab.value
@@ -290,13 +290,13 @@ onMounted(() => fetchLocations(1))
 const tabs = computed(() => [
   {
     value: LocationType.IN_OFFICE,
-    label: 'IN OFFICE',
+    label: 'in-office',
     icon:  Building2,
     count: stats.value.in_office,
   },
   {
     value: LocationType.OUT_OFFICE,
-    label: 'OUT OF OFFICE',
+    label: 'out-of-office',
     icon:  MapPinOff,
     count: stats.value.out_of_office,
   },
