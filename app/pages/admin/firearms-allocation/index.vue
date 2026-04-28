@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
+  <div class="p-4 sm:p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-5">
@@ -47,136 +47,217 @@
         </div>
       </div>
 
-      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-x-auto">
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl">
         <h3 class="text-[14px] font-semibold text-slate-100 px-6 py-4 border-b border-[#1e2535] m-0">Active Handovers</h3>
-        <table class="w-full min-w-[700px] border-collapse text-[13px]">
-          <thead>
-            <tr class="border-b border-[#1e2535]">
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500 whitespace-nowrap">Weapon Number</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Firearm</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Type</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Security Personnel</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Ammo Issued</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Issued At</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="h in activeHandovers" :key="h.weaponNum" class="border-b border-[#1a2030] hover:bg-[#1a2030] transition-colors last:border-b-0">
-              <td class="px-4 py-3.5 font-semibold text-slate-100">{{ h.weaponNum }}</td>
-              <td class="px-4 py-3.5 font-semibold text-slate-100">{{ h.firearm }}</td>
-              <td class="px-4 py-3.5 text-slate-400">{{ h.type }}</td>
-              <td class="px-4 py-3.5 text-slate-200">{{ h.personnel }}</td>
-              <td class="px-4 py-3.5 text-slate-400">{{ h.ammoIssued }}</td>
-              <td class="px-4 py-3.5 text-slate-400">{{ h.issuedAt }}</td>
-              <td class="px-4 py-3.5">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide bg-emerald-950/70 text-emerald-400 border border-emerald-700/50">
-                  {{ h.status }}
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <!-- Table for medium+ screens -->
+        <div class="hidden md:block overflow-x-auto">
+          <table class="w-full min-w-[700px] border-collapse text-[13px]">
+            <thead>
+              <tr class="border-b border-[#1e2535]">
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500 whitespace-nowrap">Weapon Number</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Firearm</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Type</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Security Personnel</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Ammo Issued</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Issued At</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="h in activeHandovers" :key="h.weaponNum" class="border-b border-[#1a2030] hover:bg-[#1a2030] transition-colors last:border-b-0">
+                <td class="px-4 py-3.5 font-semibold text-slate-100">{{ h.weaponNum }}</td>
+                <td class="px-4 py-3.5 font-semibold text-slate-100">{{ h.firearm }}</td>
+                <td class="px-4 py-3.5 text-slate-400">{{ h.type }}</td>
+                <td class="px-4 py-3.5 text-slate-200">{{ h.personnel }}</td>
+                <td class="px-4 py-3.5 text-slate-400">{{ h.ammoIssued }}</td>
+                <td class="px-4 py-3.5 text-slate-400">{{ h.issuedAt }}</td>
+                <td class="px-4 py-3.5">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide bg-emerald-950/70 text-emerald-400 border border-emerald-700/50">
+                    {{ h.status }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Cards for small screens -->
+        <div class="md:hidden p-4 space-y-4">
+          <div v-for="h in activeHandovers" :key="h.weaponNum" class="bg-[#1a2030] border border-[#1e2535] rounded-xl p-4">
+            <div class="flex justify-between items-start mb-2">
+              <span class="font-semibold text-slate-100">{{ h.weaponNum }}</span>
+              <span class="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-bold tracking-wide bg-emerald-950/70 text-emerald-400 border border-emerald-700/50">
+                {{ h.status }}
+              </span>
+            </div>
+            <div class="space-y-1 text-sm">
+              <div><span class="text-slate-500">Firearm:</span> <span class="font-semibold text-slate-100">{{ h.firearm }}</span></div>
+              <div><span class="text-slate-500">Type:</span> {{ h.type }}</div>
+              <div><span class="text-slate-500">Personnel:</span> {{ h.personnel }}</div>
+              <div><span class="text-slate-500">Ammo Issued:</span> {{ h.ammoIssued }}</div>
+              <div><span class="text-slate-500">Issued At:</span> {{ h.issuedAt }}</div>
+            </div>
+          </div>
+        </div>
       </div>
     </template>
 
     <!-- ── TAB 2: RETURN FIREARMS ── -->
     <template v-if="activeTab === 'return'">
-      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-x-auto">
-        <div class="flex items-center justify-between px-6 pt-5 pb-0 mb-2">
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between px-6 pt-5 pb-0 mb-2 gap-2">
           <h3 class="text-[14px] font-semibold text-slate-100 m-0">Return Firearms</h3>
           <button
             @click="openProcessReturn"
-            class="flex items-center gap-1.5 bg-blue-600 text-white border-none rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer hover:bg-blue-700 transition-colors whitespace-nowrap">
+            class="flex items-center gap-1.5 bg-blue-600 text-white border-none rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer hover:bg-blue-700 transition-colors whitespace-nowrap w-full sm:w-auto justify-center">
             <ArrowLeft :size="14" />
             Process Return
           </button>
         </div>
-        <table class="w-full min-w-[700px] border-collapse text-[13px] mt-2">
-          <thead>
-            <tr class="border-b border-[#1e2535]">
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500 whitespace-nowrap">Weapon Number</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Firearm</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Type</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Security Personnel</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Ammo Issued</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Issued At</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Status</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="h in returnHandovers" :key="h.weaponNum" class="border-b border-[#1a2030] hover:bg-[#1a2030] transition-colors last:border-b-0">
-              <td class="px-4 py-3.5 font-semibold text-slate-100">{{ h.weaponNum }}</td>
-              <td class="px-4 py-3.5 font-semibold text-slate-100">{{ h.firearm }}</td>
-              <td class="px-4 py-3.5 text-slate-400">{{ h.type }}</td>
-              <td class="px-4 py-3.5 text-slate-200">{{ h.personnel }}</td>
-              <td class="px-4 py-3.5 text-slate-400">{{ h.ammoIssued }}</td>
-              <td class="px-4 py-3.5 text-slate-400">{{ h.issuedAt }}</td>
-              <td class="px-4 py-3.5">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide whitespace-nowrap"
+        <!-- Table for medium+ screens -->
+        <div class="hidden md:block overflow-x-auto">
+          <table class="w-full min-w-[700px] border-collapse text-[13px] mt-2">
+            <thead>
+              <tr class="border-b border-[#1e2535]">
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500 whitespace-nowrap">Weapon Number</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Firearm</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Type</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Security Personnel</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Ammo Issued</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Issued At</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Status</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="h in returnHandovers" :key="h.weaponNum" class="border-b border-[#1a2030] hover:bg-[#1a2030] transition-colors last:border-b-0">
+                <td class="px-4 py-3.5 font-semibold text-slate-100">{{ h.weaponNum }}</td>
+                <td class="px-4 py-3.5 font-semibold text-slate-100">{{ h.firearm }}</td>
+                <td class="px-4 py-3.5 text-slate-400">{{ h.type }}</td>
+                <td class="px-4 py-3.5 text-slate-200">{{ h.personnel }}</td>
+                <td class="px-4 py-3.5 text-slate-400">{{ h.ammoIssued }}</td>
+                <td class="px-4 py-3.5 text-slate-400">{{ h.issuedAt }}</td>
+                <td class="px-4 py-3.5">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide whitespace-nowrap"
+                    :class="{
+                      'bg-red-950/70 text-red-400 border border-red-700/50': h.returnStatus === 'Overdue',
+                      'bg-emerald-950/70 text-emerald-400 border border-emerald-700/50': h.returnStatus !== 'Overdue',
+                    }">{{ h.returnStatus }}</span>
+                </td>
+                <td class="px-4 py-3.5">
+                  <button
+                    @click="openReturn(h)"
+                    class="bg-blue-600 text-white border-none rounded-lg px-4 py-1.5 text-[12.5px] font-semibold cursor-pointer hover:bg-blue-700 transition-colors">
+                    Return
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Cards for small screens -->
+        <div class="md:hidden p-4 space-y-4">
+          <div v-for="h in returnHandovers" :key="h.weaponNum" class="bg-[#1a2030] border border-[#1e2535] rounded-xl p-4">
+            <div class="flex justify-between items-start mb-2">
+              <span class="font-semibold text-slate-100">{{ h.weaponNum }}</span>
+              <div class="flex gap-2">
+                <span class="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-bold tracking-wide"
                   :class="{
                     'bg-red-950/70 text-red-400 border border-red-700/50': h.returnStatus === 'Overdue',
                     'bg-emerald-950/70 text-emerald-400 border border-emerald-700/50': h.returnStatus !== 'Overdue',
                   }">{{ h.returnStatus }}</span>
-              </td>
-              <td class="px-4 py-3.5">
                 <button
                   @click="openReturn(h)"
-                  class="bg-blue-600 text-white border-none rounded-lg px-4 py-1.5 text-[12.5px] font-semibold cursor-pointer hover:bg-blue-700 transition-colors">
+                  class="bg-blue-600 text-white border-none rounded-lg px-3 py-1 text-[12px] font-semibold cursor-pointer hover:bg-blue-700 transition-colors">
                   Return
                 </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </div>
+            </div>
+            <div class="space-y-1 text-sm">
+              <div><span class="text-slate-500">Firearm:</span> <span class="font-semibold text-slate-100">{{ h.firearm }}</span></div>
+              <div><span class="text-slate-500">Type:</span> {{ h.type }}</div>
+              <div><span class="text-slate-500">Personnel:</span> {{ h.personnel }}</div>
+              <div><span class="text-slate-500">Ammo Issued:</span> {{ h.ammoIssued }}</div>
+              <div><span class="text-slate-500">Issued At:</span> {{ h.issuedAt }}</div>
+            </div>
+          </div>
+        </div>
       </div>
     </template>
 
     <!-- ── TAB 3: HANDOVER HISTORY ── -->
     <template v-if="activeTab === 'history'">
-      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-x-auto">
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl">
         <h3 class="text-[14px] font-semibold text-slate-100 px-6 py-4 border-b border-[#1e2535] m-0">Recent Handover History</h3>
-        <table class="w-full min-w-[900px] border-collapse text-[13px]">
-          <thead>
-            <tr class="border-b border-[#1e2535]">
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500 whitespace-nowrap">Weapon Number</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Firearm</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Type</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Security Personnel</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Armoury Keeper</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Ammo Issued</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Ammo Returned</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Issued At</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Returned At</th>
-              <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="h in handoverHistory" :key="h.weaponNum + h.issuedAt" class="border-b border-[#1a2030] hover:bg-[#1a2030] transition-colors last:border-b-0">
-              <td class="px-4 py-3.5 font-semibold text-slate-100">{{ h.weaponNum }}</td>
-              <td class="px-4 py-3.5 font-semibold text-slate-100">{{ h.firearm }}</td>
-              <td class="px-4 py-3.5 text-slate-400">{{ h.type }}</td>
-              <td class="px-4 py-3.5 text-slate-200">{{ h.personnel }}</td>
-              <td class="px-4 py-3.5 text-slate-400">{{ h.keeper }}</td>
-              <td class="px-4 py-3.5 text-slate-400">{{ h.ammoIssued }}</td>
-              <td class="px-4 py-3.5">
+        <!-- Table for medium+ screens -->
+        <div class="hidden md:block overflow-x-auto">
+          <table class="w-full min-w-[900px] border-collapse text-[13px]">
+            <thead>
+              <tr class="border-b border-[#1e2535]">
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500 whitespace-nowrap">Weapon Number</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Firearm</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Type</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Security Personnel</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Armoury Keeper</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Ammo Issued</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Ammo Returned</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Issued At</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Returned At</th>
+                <th class="px-4 py-3 text-left text-[12px] font-semibold text-slate-500">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="h in handoverHistory" :key="h.weaponNum + h.issuedAt" class="border-b border-[#1a2030] hover:bg-[#1a2030] transition-colors last:border-b-0">
+                <td class="px-4 py-3.5 font-semibold text-slate-100">{{ h.weaponNum }}</td>
+                <td class="px-4 py-3.5 font-semibold text-slate-100">{{ h.firearm }}</td>
+                <td class="px-4 py-3.5 text-slate-400">{{ h.type }}</td>
+                <td class="px-4 py-3.5 text-slate-200">{{ h.personnel }}</td>
+                <td class="px-4 py-3.5 text-slate-400">{{ h.keeper }}</td>
+                <td class="px-4 py-3.5 text-slate-400">{{ h.ammoIssued }}</td>
+                <td class="px-4 py-3.5">
+                  <span v-if="h.ammoReturned === '-'" class="text-slate-400">-</span>
+                  <span v-else-if="h.ammoDiscount" class="font-semibold text-amber-400">{{ h.ammoReturned }}</span>
+                  <span v-else class="text-slate-400">{{ h.ammoReturned }}</span>
+                </td>
+                <td class="px-4 py-3.5 text-slate-400">{{ h.issuedAt }}</td>
+                <td class="px-4 py-3.5 text-slate-400">{{ h.returnedAt }}</td>
+                <td class="px-4 py-3.5">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide whitespace-nowrap"
+                    :class="{
+                      'bg-emerald-950/70 text-emerald-400 border border-emerald-700/50': h.historyStatus === 'COMPLETED',
+                      'bg-blue-950/70 text-blue-400 border border-blue-700/50': h.historyStatus === 'RETURNED',
+                    }">{{ h.historyStatus }}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Cards for small screens -->
+        <div class="md:hidden p-4 space-y-4">
+          <div v-for="h in handoverHistory" :key="h.weaponNum + h.issuedAt" class="bg-[#1a2030] border border-[#1e2535] rounded-xl p-4">
+            <div class="flex justify-between items-start mb-2">
+              <span class="font-semibold text-slate-100">{{ h.weaponNum }}</span>
+              <span class="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-bold tracking-wide"
+                :class="{
+                  'bg-emerald-950/70 text-emerald-400 border border-emerald-700/50': h.historyStatus === 'COMPLETED',
+                  'bg-blue-950/70 text-blue-400 border border-blue-700/50': h.historyStatus === 'RETURNED',
+                }">{{ h.historyStatus }}</span>
+            </div>
+            <div class="space-y-1 text-sm">
+              <div><span class="text-slate-500">Firearm:</span> <span class="font-semibold text-slate-100">{{ h.firearm }}</span></div>
+              <div><span class="text-slate-500">Type:</span> {{ h.type }}</div>
+              <div><span class="text-slate-500">Personnel:</span> {{ h.personnel }}</div>
+              <div><span class="text-slate-500">Keeper:</span> {{ h.keeper }}</div>
+              <div><span class="text-slate-500">Ammo Issued:</span> {{ h.ammoIssued }}</div>
+              <div><span class="text-slate-500">Ammo Returned:</span>
                 <span v-if="h.ammoReturned === '-'" class="text-slate-400">-</span>
                 <span v-else-if="h.ammoDiscount" class="font-semibold text-amber-400">{{ h.ammoReturned }}</span>
                 <span v-else class="text-slate-400">{{ h.ammoReturned }}</span>
-              </td>
-              <td class="px-4 py-3.5 text-slate-400">{{ h.issuedAt }}</td>
-              <td class="px-4 py-3.5 text-slate-400">{{ h.returnedAt }}</td>
-              <td class="px-4 py-3.5">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide whitespace-nowrap"
-                  :class="{
-                    'bg-emerald-950/70 text-emerald-400 border border-emerald-700/50': h.historyStatus === 'COMPLETED',
-                    'bg-blue-950/70 text-blue-400 border border-blue-700/50': h.historyStatus === 'RETURNED',
-                  }">{{ h.historyStatus }}</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </div>
+              <div><span class="text-slate-500">Issued At:</span> {{ h.issuedAt }}</div>
+              <div><span class="text-slate-500">Returned At:</span> {{ h.returnedAt }}</div>
+            </div>
+          </div>
+        </div>
       </div>
     </template>
 

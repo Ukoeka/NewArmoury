@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
+  <div class="p-4 sm:p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">

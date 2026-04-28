@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
+  <div class="p-4 sm:p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
@@ -85,31 +85,31 @@
           v-for="device in filteredDevices"
           :key="device.id"
           @click="openDetails(device)"
-          class="flex items-start gap-6 px-5 py-5 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors cursor-pointer"
+          class="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-6 px-5 py-5 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors cursor-pointer"
         >
           <!-- Device Name + ID -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.4">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-[1.4]">
             <span class="text-[11px] text-slate-500 font-medium uppercase tracking-wide">Device Name</span>
             <span class="text-[14px] font-bold text-slate-100 leading-snug mt-0.5">{{ device.name }}</span>
             <span class="text-[11px] text-slate-600 font-mono mt-0.5">{{ device.id }}</span>
           </div>
           <!-- Type -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-1">
             <span class="text-[11px] text-slate-500 font-medium uppercase tracking-wide">Type</span>
             <span class="text-[13px] text-slate-300 font-medium mt-0.5">{{ device.type }}</span>
           </div>
           <!-- Use -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.2">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-[1.2]">
             <span class="text-[11px] text-slate-500 font-medium uppercase tracking-wide">Use</span>
             <span class="text-[13px] text-slate-400 mt-0.5">{{ device.use }}</span>
           </div>
           <!-- Branch -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-1">
             <span class="text-[11px] text-slate-500 font-medium uppercase tracking-wide">Branch</span>
             <span class="text-[13px] font-semibold text-slate-200 mt-0.5">{{ device.branch }}</span>
           </div>
           <!-- Status -->
-          <div class="flex flex-col gap-1" style="flex: 0.7">
+          <div class="flex flex-col gap-1 sm:flex-[0.7]">
             <span class="text-[11px] text-slate-500 font-medium uppercase tracking-wide">Status</span>
             <span class="inline-flex self-start items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide mt-1"
               :class="{
@@ -120,7 +120,7 @@
             >{{ device.status }}</span>
           </div>
           <!-- Next Inspection -->
-          <div class="flex flex-col gap-1" style="flex: 1">
+          <div class="flex flex-col gap-1 sm:flex-1">
             <span class="text-[11px] text-slate-500 font-medium uppercase tracking-wide">Next Inspection</span>
             <span class="text-[13.5px] font-semibold text-slate-200 mt-0.5">{{ device.nextInspection }}</span>
             <span class="inline-flex self-start items-center text-[11px] font-semibold rounded-md px-2.5 py-1 mt-1 bg-orange-950/60 text-orange-400 border border-orange-700/50">
@@ -128,15 +128,23 @@
             </span>
           </div>
           <!-- Actions — stop propagation so row click doesn't open details -->
-          <div class="flex items-center gap-3 flex-shrink-0 self-center ml-auto" @click.stop>
-            <button @click="openEdit(device)" title="Edit"
-              class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-500 hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer">
-              <PenSquare :size="15" />
-            </button>
+          <div class="flex items-center gap-3 flex-shrink-0 sm:self-center sm:ml-auto" @click.stop>
+            <div class="flex gap-2 sm:hidden">
+              <button @click="openEdit(device)" title="Edit"
+                class="flex items-center justify-center p-2 rounded-md bg-transparent border-none text-slate-500 hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer">
+                <PenSquare :size="16" />
+              </button>
+            </div>
             <button @click="openInspection(device)"
-              class="bg-transparent border-none text-slate-400 text-[13px] font-medium cursor-pointer py-1 hover:text-slate-200 transition-colors whitespace-nowrap">
+              class="bg-transparent border-none text-slate-400 text-[13px] font-medium cursor-pointer py-1 hover:text-slate-200 transition-colors whitespace-nowrap w-full sm:w-auto text-center">
               Record Inspection
             </button>
+            <div class="hidden sm:flex gap-1">
+              <button @click="openEdit(device)" title="Edit"
+                class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-500 hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer">
+                <PenSquare :size="15" />
+              </button>
+            </div>
           </div>
         </div>
 

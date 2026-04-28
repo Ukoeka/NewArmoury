@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
+  <div class="p-4 sm:p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans overflow-x-hidden">
 
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
@@ -14,7 +14,7 @@
     </div>
 
     <!-- Stats — 5 cards -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4 mb-6">
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
           <span class="text-xs text-slate-500 font-medium">Total Requests</span>
@@ -73,43 +73,43 @@
         <div
           v-for="req in pendingRequests"
           :key="req.id"
-          class="flex items-center gap-6 px-5 py-4 bg-red-950/20 border border-red-900/40 rounded-xl"
+          class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 px-5 py-4 bg-red-950/20 border border-red-900/40 rounded-xl"
         >
           <!-- Request Type -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-1">
             <span class="text-[11px] text-slate-500 font-medium">Request Type</span>
             <span class="text-[13px] font-bold text-slate-100 font-mono tracking-wide">{{ req.type }}</span>
           </div>
           <!-- From -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-1">
             <span class="text-[11px] text-slate-500 font-medium">From</span>
             <span class="text-[13px] font-semibold text-slate-200">{{ req.from }}</span>
           </div>
           <!-- To -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-1">
             <span class="text-[11px] text-slate-500 font-medium">To</span>
             <span class="text-[13px] font-semibold text-slate-200">{{ req.to }}</span>
           </div>
           <!-- Items -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 0.8">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-[0.8]">
             <span class="text-[11px] text-slate-500 font-medium">Items</span>
             <span class="text-[13px] text-slate-300">{{ req.items }}</span>
           </div>
           <!-- Status -->
-          <div class="flex flex-col gap-1" style="flex: 0.7">
+          <div class="flex flex-col gap-1 sm:flex-[0.7]">
             <span class="text-[11px] text-slate-500 font-medium">Status</span>
             <span class="inline-flex self-start items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide mt-0.5 bg-[#1e2535] text-slate-400 border border-slate-700/60">
               {{ req.status }}
             </span>
           </div>
           <!-- Created -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 0.8">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-[0.8]">
             <span class="text-[11px] text-slate-500 font-medium">Created</span>
             <span class="text-[13px] text-slate-400">{{ req.created }}</span>
           </div>
           <!-- Action -->
-          <div class="flex-shrink-0 ml-auto">
-            <button class="bg-blue-600 text-white border-none rounded-lg px-5 py-2 text-[13px] font-semibold cursor-pointer hover:bg-blue-700 transition-colors">
+          <div class="flex-shrink-0 sm:ml-auto">
+            <button class="bg-blue-600 text-white border-none rounded-lg px-3 sm:px-5 py-2 text-[13px] font-semibold cursor-pointer hover:bg-blue-700 transition-colors w-full sm:w-auto">
               Verify
             </button>
           </div>
@@ -145,30 +145,30 @@
         <div
           v-for="req in filteredRequests"
           :key="req.id"
-          class="flex items-center gap-6 px-5 py-4 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors"
+          class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 px-5 py-4 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors"
         >
           <!-- Request ID -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 0.8">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-[0.8]">
             <span class="text-[11px] text-slate-500 font-medium">Request ID</span>
             <span class="text-[13px] font-bold text-slate-100 font-mono">{{ req.id }}</span>
           </div>
           <!-- Type -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-1">
             <span class="text-[11px] text-slate-500 font-medium">Type</span>
             <span class="text-[12px] font-bold text-slate-300 font-mono tracking-wide">{{ req.type }}</span>
           </div>
           <!-- From → To -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.3">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-[1.3]">
             <span class="text-[11px] text-slate-500 font-medium">From → To</span>
             <span class="text-[13px] text-slate-300">{{ req.from }} → {{ req.to }}</span>
           </div>
           <!-- Items -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 0.8">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-[0.8]">
             <span class="text-[11px] text-slate-500 font-medium">Items</span>
             <span class="text-[13px] text-slate-400">{{ req.items }}</span>
           </div>
           <!-- Status -->
-          <div class="flex flex-col gap-1" style="flex: 0.8">
+          <div class="flex flex-col gap-1 sm:flex-[0.8]">
             <span class="text-[11px] text-slate-500 font-medium">Status</span>
             <span
               class="inline-flex self-start items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide mt-0.5"
@@ -182,7 +182,7 @@
             >{{ req.status }}</span>
           </div>
           <!-- Created -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 0.8">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-[0.8]">
             <span class="text-[11px] text-slate-500 font-medium">Created</span>
             <span class="text-[13px] text-slate-400">{{ req.created }}</span>
           </div>

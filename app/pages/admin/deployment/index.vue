@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
+  <div class="p-4 sm:p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
@@ -103,34 +103,34 @@
         <div
           v-for="dep in filteredDeployments"
           :key="dep.id"
-          class="flex items-center gap-4 px-5 py-4 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors"
+          class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 px-5 py-4 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors"
         >
           <!-- Security Personnel -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.1">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-[1.1]">
             <span class="text-[12px] text-slate-500 font-medium">Security Personnel</span>
             <span class="text-[14px] font-bold text-slate-100">{{ dep.personnel }}</span>
           </div>
 
           <!-- Duty -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.2">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-[1.2]">
             <span class="text-[12px] text-slate-500 font-medium">Duty</span>
             <span class="text-[14px]">{{ dep.duty }}</span>
           </div>
 
           <!-- Scheduled Start -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.2">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-[1.2]">
             <span class="text-[12px] text-slate-500 font-medium">Scheduled Start</span>
             <span class="text-[14px]">{{ dep.start }}</span>
           </div>
 
           <!-- Scheduled End -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.2">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-[1.2]">
             <span class="text-[12px] text-slate-500 font-medium">Scheduled End</span>
             <span class="text-[14px]">{{ dep.end }}</span>
           </div>
 
           <!-- Status -->
-          <div class="flex flex-col gap-1" style="flex: 0.7">
+          <div class="flex flex-col gap-1 sm:flex-[0.7]">
             <span class="text-[12px] text-slate-500 font-medium">Status</span>
             <span
               class="inline-flex self-start items-center px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide mt-0.5"
@@ -143,18 +143,18 @@
           </div>
 
           <!-- Branch -->
-          <div class="flex flex-col gap-1 min-w-0" style="flex: 1.1">
+          <div class="flex flex-col gap-1 min-w-0 sm:flex-[1.1]">
             <span class="text-[11px] text-slate-500 font-medium">Branch</span>
             <span class="text-[13px] font-semibold text-slate-200">{{ dep.branch }}</span>
           </div>
 
           <!-- Actions -->
-          <div class="flex items-center gap-2 ml-auto flex-shrink-0">
+          <div class="flex items-center gap-2 flex-shrink-0 sm:ml-auto">
             <!-- ACTIVE: Complete button -->
             <template v-if="dep.status === 'ACTIVE'">
               <button
                 @click="handleComplete(dep)"
-                class="flex items-center gap-1.5 bg-transparent border-none text-slate-400 text-[13px] font-medium cursor-pointer px-1 py-1.5 rounded-md hover:text-slate-200 hover:bg-[#1e2535] transition-all"
+                class="flex items-center gap-1.5 bg-transparent border-none text-slate-400 text-[13px] font-medium cursor-pointer px-1 py-1.5 rounded-md hover:text-slate-200 hover:bg-[#1e2535] transition-all w-full sm:w-auto justify-center"
               >
                 <CircleCheck :size="14" />
                 Complete
@@ -164,32 +164,57 @@
             <template v-if="dep.status === 'SCHEDULED'">
               <button
                 @click="handleStart(dep)"
-                class="flex items-center gap-1.5 bg-transparent border-none text-[13px] font-medium cursor-pointer px-1 py-1.5 rounded-md hover:text-slate-200 hover:bg-[#1e2535] transition-all"
+                class="flex items-center gap-1.5 bg-transparent border-none text-[13px] font-medium cursor-pointer px-1 py-1.5 rounded-md hover:text-slate-200 hover:bg-[#1e2535] transition-all w-full sm:w-auto justify-center"
               >
                 <CirclePlay :size="14" />
                 Start
               </button>
-              <button
-                @click="openEdit(dep)"
-                title="Edit"
-                class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer"
-              >
-                <PenSquare :size="14" />
-              </button>
-              <button
-                @click="openReplace(dep)"
-                title="Reassign"
-                class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer"
-              >
-                <UserPlus :size="14" />
-              </button>
-              <button
-                @click="handleCancel(dep)"
-                title="Cancel"
-                class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none hover:text-red-400 hover:bg-red-950/30 transition-all cursor-pointer"
-              >
-                <CircleX :size="14" />
-              </button>
+              <div class="flex gap-1 sm:hidden">
+                <button
+                  @click="openEdit(dep)"
+                  title="Edit"
+                  class="flex items-center justify-center p-2 rounded-md bg-transparent border-none hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer"
+                >
+                  <PenSquare :size="14" />
+                </button>
+                <button
+                  @click="openReplace(dep)"
+                  title="Reassign"
+                  class="flex items-center justify-center p-2 rounded-md bg-transparent border-none hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer"
+                >
+                  <UserPlus :size="14" />
+                </button>
+                <button
+                  @click="handleCancel(dep)"
+                  title="Cancel"
+                  class="flex items-center justify-center p-2 rounded-md bg-transparent border-none hover:text-red-400 hover:bg-red-950/30 transition-all cursor-pointer"
+                >
+                  <CircleX :size="14" />
+                </button>
+              </div>
+              <div class="hidden sm:flex gap-1">
+                <button
+                  @click="openEdit(dep)"
+                  title="Edit"
+                  class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer"
+                >
+                  <PenSquare :size="14" />
+                </button>
+                <button
+                  @click="openReplace(dep)"
+                  title="Reassign"
+                  class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer"
+                >
+                  <UserPlus :size="14" />
+                </button>
+                <button
+                  @click="handleCancel(dep)"
+                  title="Cancel"
+                  class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none hover:text-red-400 hover:bg-red-950/30 transition-all cursor-pointer"
+                >
+                  <CircleX :size="14" />
+                </button>
+              </div>
             </template>
           </div>
         </div>

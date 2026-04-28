@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
+  <div class="p-4 sm:p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans">
 
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-5">
@@ -80,42 +80,104 @@
       </div>
 
       <!-- Table -->
-      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-x-auto">
-        <table class="w-full min-w-[900px]">
-          <thead>
-            <tr class="border-b border-[#1e2535]">
-              <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Barcode</th>
-              <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Type</th>
-              <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Make & Model</th>
-              <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Weapon #</th>
-              <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">C.A.R. #</th>
-              <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Location</th>
-              <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Status</th>
-              <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Availability</th>
-              <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="firearm in filteredFirearms" :key="firearm.id"
-              class="border-b border-[#1e2535] hover:bg-[#1a2030] transition-colors">
+      <div class="bg-[#161b27] border border-[#1e2535] rounded-xl">
+        <!-- Table for medium+ screens -->
+        <div class="hidden md:block overflow-x-auto">
+          <table class="w-full min-w-[900px]">
+            <thead>
+              <tr class="border-b border-[#1e2535]">
+                <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Barcode</th>
+                <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Type</th>
+                <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Make & Model</th>
+                <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Weapon #</th>
+                <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">C.A.R. #</th>
+                <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Location</th>
+                <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Status</th>
+                <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Availability</th>
+                <th class="text-left px-5 py-3.5 text-[12px] font-semibold text-slate-500 uppercase tracking-wide">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="firearm in filteredFirearms" :key="firearm.id"
+                class="border-b border-[#1e2535] hover:bg-[#1a2030] transition-colors">
               <td class="px-5 py-3.5">
                 <div class="flex items-center gap-1.5">
-                  <span class="text-[13px] font-mono text-slate-300">{{ firearm.barcode }}</span>
+                  <span class="text-[13px] font-mono text-slate-300 break-all">{{ firearm.barcode }}</span>
                   <Lock v-if="firearm.locked" :size="11" class="text-red-500" />
                 </div>
               </td>
-              <td class="px-5 py-3.5 text-[13px] text-slate-400">{{ firearm.fireamType.toUpperCase() }}</td>
-              <td class="px-5 py-3.5 text-[13px] font-semibold text-slate-100">{{ firearm.makeModel }}</td>
-              <td class="px-5 py-3.5 text-[13px] font-mono text-slate-300">{{ firearm.weaponNumber }}</td>
-              <td class="px-5 py-3.5 text-[13px] font-mono text-slate-300">{{ firearm.carNumber }}</td>
-              <td class="px-5 py-3.5">
-                <div class="flex flex-col gap-0.5">
-                  <span class="text-[13px] text-slate-200">{{ firearm.branch }}</span>
-                  <span class="text-[11.5px] text-slate-500 uppercase tracking-wide">{{ firearm.armouryLocation }}</span>
-                </div>
-              </td>
-              <td class="px-5 py-3.5">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold"
+              <td class="px-5 py-3.5 text-[13px] text-slate-400 break-words">{{ firearm.fireamType.toUpperCase() }}</td>
+              <td class="px-5 py-3.5 text-[13px] font-semibold text-slate-100 break-words">{{ firearm.makeModel }}</td>
+              <td class="px-5 py-3.5 text-[13px] font-mono text-slate-300 break-all">{{ firearm.weaponNumber }}</td>
+              <td class="px-5 py-3.5 text-[13px] font-mono text-slate-300 break-all">{{ firearm.carNumber }}</td>
+                <td class="px-5 py-3.5">
+                  <div class="flex flex-col gap-0.5">
+                    <span class="text-[13px] text-slate-200">{{ firearm.branch }}</span>
+                    <span class="text-[11.5px] text-slate-500 uppercase tracking-wide">{{ firearm.armouryLocation }}</span>
+                  </div>
+                </td>
+                <td class="px-5 py-3.5">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold"
+                    :class="{
+                      'bg-blue-600 text-white': firearm.conditionStatus === 'Good',
+                      'bg-amber-950/70 text-amber-400 border border-amber-700/50': firearm.conditionStatus === 'Fair',
+                      'bg-red-600 text-white': firearm.conditionStatus === 'Malfunction',
+                      'bg-orange-950/70 text-orange-400 border border-orange-700/50': firearm.conditionStatus === 'Maintenance Required',
+                    }"
+                  >{{ firearm.conditionStatus.toUpperCase() }}</span>
+                </td>
+                <td class="px-5 py-3.5">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold"
+                    :class="{
+                      'bg-blue-950/60 text-blue-300 border border-blue-700/50': firearm.availability === 'ARMOURY',
+                      'bg-emerald-950/60 text-emerald-300 border border-emerald-700/50': firearm.availability === 'DUTY',
+                      'bg-slate-800/60 text-slate-300 border border-slate-600/50': !['ARMOURY','DUTY'].includes(firearm.availability),
+                    }"
+                  >{{ firearm.availability }}</span>
+                </td>
+                <td class="px-5 py-3.5">
+                  <div class="flex items-center gap-1">
+                    <button @click="openView(firearm)" title="View"
+                      class="p-1.5 rounded-lg text-slate-500 hover:text-blue-400 hover:bg-blue-950/30 border-none bg-transparent cursor-pointer transition-all">
+                      <Eye :size="15" />
+                    </button>
+                    <button @click="openEdit(firearm)"
+                      class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-[#252f42] border-none bg-transparent cursor-pointer transition-all text-[12.5px] font-medium">
+                      Edit
+                    </button>
+                    <button @click="openRecord(firearm)" title="Record Inspection"
+                      class="p-1.5 rounded-lg text-slate-500 hover:text-emerald-400 hover:bg-emerald-950/30 border-none bg-transparent cursor-pointer transition-all">
+                      <History :size="15" />
+                    </button>
+                    <button @click="toggleLock(firearm)" :title="firearm.locked ? 'Unlock' : 'Lock'"
+                      class="p-1.5 rounded-lg border-none bg-transparent cursor-pointer transition-all"
+                      :class="firearm.locked ? 'text-red-500 hover:text-red-400 hover:bg-red-950/30' : 'text-emerald-500 hover:text-emerald-400 hover:bg-emerald-950/30'">
+                      <Lock v-if="firearm.locked" :size="15" />
+                      <LockOpen v-else :size="15" />
+                    </button>
+                    <button @click="openDispose(firearm)" title="Dispose"
+                      class="p-1.5 rounded-lg text-orange-500 hover:text-orange-400 hover:bg-orange-950/30 border-none bg-transparent cursor-pointer transition-all">
+                      <AlertCircle :size="15" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr v-if="filteredFirearms.length === 0">
+                <td colspan="9" class="px-5 py-14 text-center text-slate-600 text-sm">No firearms found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Cards for small screens -->
+        <div class="md:hidden p-4 space-y-4">
+          <div v-for="firearm in filteredFirearms" :key="firearm.id" class="bg-[#1a2030] border border-[#1e2535] rounded-xl p-4">
+            <div class="flex justify-between items-start mb-2">
+              <div class="flex items-center gap-2">
+                <span class="font-semibold text-slate-100 font-mono">{{ firearm.barcode }}</span>
+                <Lock v-if="firearm.locked" :size="14" class="text-red-500" />
+              </div>
+              <div class="flex gap-2">
+                <span class="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-bold"
                   :class="{
                     'bg-blue-600 text-white': firearm.conditionStatus === 'Good',
                     'bg-amber-950/70 text-amber-400 border border-amber-700/50': firearm.conditionStatus === 'Fair',
@@ -123,48 +185,51 @@
                     'bg-orange-950/70 text-orange-400 border border-orange-700/50': firearm.conditionStatus === 'Maintenance Required',
                   }"
                 >{{ firearm.conditionStatus.toUpperCase() }}</span>
-              </td>
-              <td class="px-5 py-3.5">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold"
+                <span class="inline-flex items-center px-2 py-1 rounded-md text-[11px] font-bold"
                   :class="{
                     'bg-blue-950/60 text-blue-300 border border-blue-700/50': firearm.availability === 'ARMOURY',
                     'bg-emerald-950/60 text-emerald-300 border border-emerald-700/50': firearm.availability === 'DUTY',
                     'bg-slate-800/60 text-slate-300 border border-slate-600/50': !['ARMOURY','DUTY'].includes(firearm.availability),
                   }"
                 >{{ firearm.availability }}</span>
-              </td>
-              <td class="px-5 py-3.5">
-                <div class="flex items-center gap-1">
-                  <button @click="openView(firearm)" title="View"
-                    class="p-1.5 rounded-lg text-slate-500 hover:text-blue-400 hover:bg-blue-950/30 border-none bg-transparent cursor-pointer transition-all">
-                    <Eye :size="15" />
-                  </button>
-                  <button @click="openEdit(firearm)"
-                    class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-[#252f42] border-none bg-transparent cursor-pointer transition-all text-[12.5px] font-medium">
-                    Edit
-                  </button>
-                  <button @click="openRecord(firearm)" title="Record Inspection"
-                    class="p-1.5 rounded-lg text-slate-500 hover:text-emerald-400 hover:bg-emerald-950/30 border-none bg-transparent cursor-pointer transition-all">
-                    <History :size="15" />
-                  </button>
-                  <button @click="toggleLock(firearm)" :title="firearm.locked ? 'Unlock' : 'Lock'"
-                    class="p-1.5 rounded-lg border-none bg-transparent cursor-pointer transition-all"
-                    :class="firearm.locked ? 'text-red-500 hover:text-red-400 hover:bg-red-950/30' : 'text-emerald-500 hover:text-emerald-400 hover:bg-emerald-950/30'">
-                    <Lock v-if="firearm.locked" :size="15" />
-                    <LockOpen v-else :size="15" />
-                  </button>
-                  <button @click="openDispose(firearm)" title="Dispose"
-                    class="p-1.5 rounded-lg text-orange-500 hover:text-orange-400 hover:bg-orange-950/30 border-none bg-transparent cursor-pointer transition-all">
-                    <AlertCircle :size="15" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr v-if="filteredFirearms.length === 0">
-              <td colspan="9" class="px-5 py-14 text-center text-slate-600 text-sm">No firearms found.</td>
-            </tr>
-          </tbody>
-        </table>
+              </div>
+            </div>
+            <div class="space-y-1 text-sm mb-3">
+              <div><span class="text-slate-500">Type:</span> <span class="font-semibold text-slate-100 break-words">{{ firearm.fireamType.toUpperCase() }}</span></div>
+              <div><span class="text-slate-500">Make & Model:</span> <span class="font-semibold text-slate-100 break-words">{{ firearm.makeModel }}</span></div>
+              <div><span class="text-slate-500">Weapon #:</span> <span class="font-mono text-slate-300 break-all">{{ firearm.weaponNumber }}</span></div>
+              <div><span class="text-slate-500">C.A.R. #:</span> <span class="font-mono text-slate-300 break-all">{{ firearm.carNumber }}</span></div>
+              <div><span class="text-slate-500">Location:</span> <span class="break-words">{{ firearm.branch }} - {{ firearm.armouryLocation }}</span></div>
+            </div>
+            <div class="flex gap-1 flex-wrap">
+              <button @click="openView(firearm)" title="View"
+                class="p-2 rounded-lg text-slate-500 hover:text-blue-400 hover:bg-blue-950/30 border-none bg-transparent cursor-pointer transition-all">
+                <Eye :size="16" />
+              </button>
+              <button @click="openEdit(firearm)"
+                class="px-3 py-1 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-[#252f42] border-none bg-transparent cursor-pointer transition-all text-sm font-medium">
+                Edit
+              </button>
+              <button @click="openRecord(firearm)" title="Record Inspection"
+                class="p-2 rounded-lg text-slate-500 hover:text-emerald-400 hover:bg-emerald-950/30 border-none bg-transparent cursor-pointer transition-all">
+                <History :size="16" />
+              </button>
+              <button @click="toggleLock(firearm)" :title="firearm.locked ? 'Unlock' : 'Lock'"
+                class="p-2 rounded-lg border-none bg-transparent cursor-pointer transition-all"
+                :class="firearm.locked ? 'text-red-500 hover:text-red-400 hover:bg-red-950/30' : 'text-emerald-500 hover:text-emerald-400 hover:bg-emerald-950/30'">
+                <Lock v-if="firearm.locked" :size="16" />
+                <LockOpen v-else :size="16" />
+              </button>
+              <button @click="openDispose(firearm)" title="Dispose"
+                class="p-2 rounded-lg text-orange-500 hover:text-orange-400 hover:bg-orange-950/30 border-none bg-transparent cursor-pointer transition-all">
+                <AlertCircle :size="16" />
+              </button>
+            </div>
+          </div>
+          <div v-if="filteredFirearms.length === 0" class="py-12 text-center text-slate-600 text-sm">
+            No firearms found.
+          </div>
+        </div>
       </div>
     </div>
 

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans flex flex-col gap-4"
+    class="p-4 sm:p-6 min-h-screen bg-[#0A0E1A] text-slate-200 font-sans flex flex-col gap-4 overflow-x-hidden"
   >
     <!-- Page Header -->
     <div>
@@ -8,8 +8,7 @@
         Dashboard
       </h1>
       <p class="text-[16px] text-slate-500 leading-relaxed">
-        Organization-wide overview and monitoring · Branch-level operations and
-        alerts · Armoury operations and maintenance tracking
+        Organization-wide overview and monitoring · Branch-level operations and alerts · Armoury operations and maintenance tracking
       </p>
     </div>
 
