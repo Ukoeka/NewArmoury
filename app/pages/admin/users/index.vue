@@ -94,8 +94,8 @@
     </div>
 
     <!-- Filter Bar -->
-    <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-4 py-3 flex gap-3 items-center mb-5">
-      <div class="relative flex-1">
+    <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-4 py-3 flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-5">
+      <div class="relative w-full sm:flex-1">
         <Search :size="14" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 pointer-events-none" />
         <input
           v-model="searchQuery"
@@ -104,25 +104,27 @@
           class="w-full bg-[#0A0E1A] border border-[#1e2535] rounded-lg pl-9 pr-3 py-2 text-[13px] text-slate-200 placeholder-slate-600 outline-none focus:border-blue-500 transition-colors"
         />
       </div>
-      <select
-        v-model="roleFilter"
-        class="bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-[13px] text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors appearance-none min-w-40"
-      >
-        <option value="">All Roles</option>
-        <option v-for="role in roles" :key="role.id" :value="role.id">
-          — {{ role.name }}
-        </option>
-      </select>
-      <select
-        v-model="statusFilter"
-        class="bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-[13px] text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors appearance-none min-w-36"
-      >
-        <option :value="UserStatus.ALL">All Statuses</option>
-        <option :value="UserStatus.ACTIVE">Active</option>
-        <option :value="UserStatus.DISABLED">Disabled</option>
-        <option :value="UserStatus.SUSPENDED">Suspended</option>
-        <option :value="UserStatus.BANNED">Banned</option>
-      </select>
+      <div class="flex gap-3 w-full sm:w-auto">
+        <select
+          v-model="roleFilter"
+          class="flex-1 bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-[13px] text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors appearance-none"
+        >
+          <option value="">All Roles</option>
+          <option v-for="role in roles" :key="role.id" :value="role.id">
+            — {{ role.name }}
+          </option>
+        </select>
+        <select
+          v-model="statusFilter"
+          class="flex-1 bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-[13px] text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors appearance-none"
+        >
+          <option :value="UserStatus.ALL">All Statuses</option>
+          <option :value="UserStatus.ACTIVE">Active</option>
+          <option :value="UserStatus.DISABLED">Disabled</option>
+          <option :value="UserStatus.SUSPENDED">Suspended</option>
+          <option :value="UserStatus.BANNED">Banned</option>
+        </select>
+      </div>
     </div>
 
     <!-- Users List -->
