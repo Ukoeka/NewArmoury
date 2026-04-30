@@ -141,90 +141,83 @@
         <div
           v-for="user in userList"
           :key="user.id"
-          @click="viewUser(user)"
-          class="flex items-center gap-4 px-5 py-4 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors cursor-pointer"
+          class="flex flex-col gap-4 px-5 py-4 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors cursor-pointer"
         >
-          <!-- Avatar + Name -->
-          <div class="flex items-center gap-3" style="flex: 1.4; min-width: 0">
-            <div class="w-9 h-9 rounded-full bg-[#252f42] border border-[#1e2535] flex items-center justify-center shrink-0">
-              <span class="text-[13px] font-bold text-slate-300">{{ user.initial || user.first_name?.[0] }}</span>
+          <!-- Header row -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3 min-w-0 flex-1" @click="viewUser(user)">
+              <div class="w-9 h-9 rounded-full bg-[#252f42] border border-[#1e2535] flex items-center justify-center shrink-0">
+                <span class="text-[13px] font-bold text-slate-300">{{ user.initial || user.first_name?.[0] }}</span>
+              </div>
+              <div class="flex flex-col gap-0.5 min-w-0">
+                <span class="text-[14px] font-semibold text-slate-100 truncate">
+                  {{ user.initial }}. {{ user.first_name }} {{ user.surname }}
+                </span>
+                <span class="text-[11px] text-slate-500 font-mono">{{ user.file_number }}</span>
+              </div>
             </div>
-            <div class="flex flex-col gap-0.5 min-w-0">
-              <span class="text-[14px] font-semibold text-slate-100 truncate">
-                {{ user.initial }}. {{ user.first_name }} {{ user.surname }}
+            <div class="flex items-center gap-1 shrink-0" @click.stop>
+              <button
+                @click="viewUser(user)"
+                title="View"
+                class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-blue-400 hover:bg-blue-950/30 transition-all cursor-pointer"
+              >
+                <Eye :size="15" />
+              </button>
+              <button
+                @click="openEdit(user)"
+                title="Edit"
+                class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer"
+              >
+                <PenSquare :size="15" />
+              </button>
+              <button
+                @click="promptDelete(user)"
+                title="Delete"
+                class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-red-400 hover:bg-red-950/30 transition-all cursor-pointer"
+              >
+                <Trash2 :size="15" />
+              </button>
+            </div>
+          </div>
+
+          <!-- Details grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4" @click="viewUser(user)">
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[11px] text-slate-500 font-medium">Email</span>
+              <span class="text-[13px] text-slate-400 truncate">{{ user.email }}</span>
+            </div>
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[11px] text-slate-500 font-medium">Phone</span>
+              <span class="text-[13px] text-slate-400">{{ user.phone_number }}</span>
+            </div>
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[11px] text-slate-500 font-medium">Role</span>
+              <span
+                v-if="user.role"
+                class="inline-flex self-start items-center p-1 uppercase rounded-sm text-[10px] font-bold tracking-wide border mt-0.5"
+                :style="{
+                  background:  getRoleStyle(user.role.abbreviation).background,
+                  color:       getRoleStyle(user.role.abbreviation).color,
+                  borderColor: getRoleStyle(user.role.abbreviation).borderColor,
+                }"
+              >
+                {{ user.role.abbreviation }}
               </span>
-              <span class="text-[11px] text-slate-500 font-mono">{{ user.file_number }}</span>
             </div>
-          </div>
-
-          <!-- Email -->
-          <div class="flex flex-col gap-0.5 min-w-0" style="flex: 1.3">
-            <span class="text-[11px] text-slate-500 font-medium">Email</span>
-            <span class="text-[13px] text-slate-400 truncate">{{ user.email }}</span>
-          </div>
-
-          <!-- Phone -->
-          <div class="flex flex-col gap-0.5" style="flex: 0.9">
-            <span class="text-[11px] text-slate-500 font-medium">Phone</span>
-            <span class="text-[13px] text-slate-400">{{ user.phone_number }}</span>
-          </div>
-
-          <!-- Role -->
-          <div class="flex flex-col gap-0.5" style="flex: 0.6">
-            <span class="text-[11px] text-slate-500 font-medium">Role</span>
-            <span
-              v-if="user.role"
-              class="inline-flex self-start items-center p-1 uppercase rounded-sm text-[10px] font-bold tracking-wide border mt-0.5"
-              :style="{
-                background:  getRoleStyle(user.role.abbreviation).background,
-                color:       getRoleStyle(user.role.abbreviation).color,
-                borderColor: getRoleStyle(user.role.abbreviation).borderColor,
-              }"
-            >
-              {{ user.role.abbreviation }}
-            </span>
-          </div>
-
-          <!-- Branch -->
-          <div class="flex flex-col gap-0.5 ml-4 min-w-0" style="flex: 1">
-            <span class="text-[11px] text-slate-500 font-medium">Branch</span>
-            <span class="text-[13px] font-medium text-slate-200 truncate">{{ user.branch?.name }}</span>
-          </div>
-
-          <!-- Status -->
-          <div class="flex flex-col gap-0.5" style="flex: 0.6">
-            <span class="text-[11px] text-slate-500 font-medium">Status</span>
-            <span
-              class="inline-flex self-start items-center uppercase px-2 py-0.5 rounded-md text-[10.5px] font-bold tracking-wide mt-0.5"
-              :class="getStatusClass(user.status)"
-            >
-              {{ user.status }}
-            </span>
-          </div>
-
-          <!-- Actions -->
-          <div class="flex items-center gap-1 ml-auto shrink-0" @click.stop>
-            <button
-              @click="viewUser(user)"
-              title="View"
-              class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-blue-400 hover:bg-blue-950/30 transition-all cursor-pointer"
-            >
-              <Eye :size="15" />
-            </button>
-            <button
-              @click="openEdit(user)"
-              title="Edit"
-              class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-slate-300 hover:bg-[#252f42] transition-all cursor-pointer"
-            >
-              <PenSquare :size="15" />
-            </button>
-            <button
-              @click="promptDelete(user)"
-              title="Delete"
-              class="flex items-center justify-center p-1.5 rounded-md bg-transparent border-none text-slate-600 hover:text-red-400 hover:bg-red-950/30 transition-all cursor-pointer"
-            >
-              <Trash2 :size="15" />
-            </button>
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[11px] text-slate-500 font-medium">Branch</span>
+              <span class="text-[13px] font-medium text-slate-200 truncate">{{ user.branch?.name }}</span>
+            </div>
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[11px] text-slate-500 font-medium">Status</span>
+              <span
+                class="inline-flex self-start items-center uppercase px-2 py-0.5 rounded-md text-[10.5px] font-bold tracking-wide mt-0.5"
+                :class="getStatusClass(user.status)"
+              >
+                {{ user.status }}
+              </span>
+            </div>
           </div>
         </div>
 
