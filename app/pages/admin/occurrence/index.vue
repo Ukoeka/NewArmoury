@@ -20,7 +20,7 @@
     </div>
 
     <!-- Stats -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-5">
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl p-5 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
           <span class="text-xs text-slate-500 font-medium">Total Occurrences</span>
@@ -101,7 +101,7 @@
               <span class="text-[12.5px] text-emerald-300/80 leading-snug">{{ occ.bisoResponse }}</span>
             </div>
 
-            <button class="self-start bg-blue-500/10 border-none text-blue-400 text-[12.5px] font-semibold cursor-pointer px-2.5 py-2 rounded-md hover:text-blue-300 transition-colors text-left">
+            <button class="w-full sm:self-start bg-blue-500/10 border-none text-blue-400 text-[12.5px] font-semibold cursor-pointer px-2.5 py-2 rounded-md hover:text-blue-300 transition-colors text-center sm:text-left">
               Add BISO Response
             </button>
           </div>
@@ -160,7 +160,7 @@
               <span class="text-[12.5px] text-blue-300/80 leading-snug">{{ insp.bisoInstructions }}</span>
             </div>
 
-            <button class="self-start bg-blue-500/10 border-none text-blue-400 text-[12.5px] font-semibold cursor-pointer px-2.5 py-2 rounded-md hover:text-blue-300 transition-colors text-left">
+            <button class="w-full sm:self-start bg-blue-500/10 border-none text-blue-400 text-[12.5px] font-semibold cursor-pointer px-2.5 py-2 rounded-md hover:text-blue-300 transition-colors text-center sm:text-left">
               Add BISO Instructions
             </button>
           </div>
