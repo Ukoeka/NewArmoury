@@ -41,8 +41,8 @@
     </div>
 
     <!-- Filter Bar -->
-    <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-4 py-3 flex gap-3 items-center mb-5">
-      <div class="relative flex-1">
+    <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-4 py-3 flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-5">
+      <div class="relative w-full sm:flex-1">
         <Search :size="14" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 pointer-events-none" />
         <input
           v-model="searchQuery"
@@ -53,7 +53,7 @@
       </div>
       <select
         v-model="categoryFilter"
-        class="bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-[13px] text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors appearance-none min-w-44"
+        class="w-full sm:w-auto bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-[13px] text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors appearance-none"
       >
         <option value="">All Categories</option>
         <option v-for="cat in categories" :key="cat" :value="cat">{{ cat.replace('_', ' ') }}</option>
@@ -88,16 +88,16 @@
           <div
             v-for="perm in group.permissions"
             :key="perm.id"
-            class="flex items-center gap-4 px-5 py-3.5 bg-[#1a2030] border border-[#1e2535] rounded-xl"
+            class="flex flex-col sm:flex-row items-start sm:items-center gap-4 px-5 py-3.5 bg-[#1a2030] border border-[#1e2535] rounded-xl"
           >
             <!-- Name + slug -->
-            <div class="flex flex-col gap-0.5" style="flex: 1.5; min-width: 0">
+            <div class="flex flex-col gap-0.5 sm:flex-1 sm:min-w-0">
               <span class="text-[13.5px] font-semibold text-slate-100">{{ perm.name }}</span>
               <span class="text-[11px] text-slate-500 font-mono">{{ perm.slug }}</span>
             </div>
 
             <!-- Roles that have this permission -->
-            <div class="flex items-center gap-1.5 flex-wrap" style="flex: 2">
+            <div class="flex items-center gap-1.5 flex-wrap sm:flex-1">
               <template v-if="rolesWithPerm(perm.id).length > 0">
                 <span
                   v-for="role in rolesWithPerm(perm.id)"

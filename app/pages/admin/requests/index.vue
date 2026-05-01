@@ -118,8 +118,8 @@
     </div>
 
     <!-- Filter Bar -->
-    <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-4 py-3 flex gap-3 items-center mb-5">
-      <select v-model="selectedStatus" class="flex-1 bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-[13px] text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors appearance-none">
+    <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-4 py-3 flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-5">
+      <select v-model="selectedStatus" class="w-full sm:flex-1 bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-[13px] text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors appearance-none">
         <option value="">All Statuses</option>
         <option value="NEW">New</option>
         <option value="APPROVED">Approved</option>
@@ -127,7 +127,7 @@
         <option value="IN_TRANSIT">In Transit</option>
         <option value="COMPLETED">Completed</option>
       </select>
-      <select v-model="selectedType" class="flex-1 bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-[13px] text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors appearance-none">
+      <select v-model="selectedType" class="w-full sm:flex-1 bg-[#0A0E1A] border border-[#1e2535] rounded-lg px-3 py-2 text-[13px] text-slate-300 outline-none cursor-pointer focus:border-blue-500 transition-colors appearance-none">
         <option value="">All Types</option>
         <option value="BRANCH_TO_BRANCH">Branch to Branch</option>
         <option value="BRANCH_TO_HQ">Branch to HQ</option>

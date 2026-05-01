@@ -80,7 +80,7 @@
     </div>
 
     <!-- View Filter Tabs -->
-    <div class="flex gap-2 mb-4">
+    <div class="flex flex-wrap gap-2 mb-4">
       <button
         v-for="vt in viewTabs"
         :key="vt.id"

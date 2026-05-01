@@ -70,65 +70,68 @@
         <div
           v-for="role in filteredRoles"
           :key="role.id"
-          class="flex items-center gap-4 px-5 py-4 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors"
+          class="flex flex-col gap-4 px-5 py-4 bg-[#1a2030] border border-[#1e2535] rounded-xl hover:border-slate-600/50 transition-colors"
         >
-          <!-- Abbreviation badge -->
-          <div class="shrink-0 w-20">
-            <span
-              class="inline-flex items-center px-2.5 py-1 uppercase rounded-md text-[10.5px] font-bold tracking-wide border"
-              :style="{
-              background:  getRoleStyle(role.abbreviation).background,
-              color:       getRoleStyle(role.abbreviation).color,
-              borderColor: getRoleStyle(role.abbreviation).borderColor,
-            }"
-            >
-              {{ role.abbreviation }}
-            </span>
+          <!-- Header row -->
+          <div class="flex items-center gap-3 min-w-0">
+            <!-- Abbreviation badge -->
+            <div class="shrink-0">
+              <span
+                class="inline-flex items-center px-2.5 py-1 uppercase rounded-md text-[10.5px] font-bold tracking-wide border"
+                :style="{
+                background:  getRoleStyle(role.abbreviation).background,
+                color:       getRoleStyle(role.abbreviation).color,
+                borderColor: getRoleStyle(role.abbreviation).borderColor,
+              }"
+              >
+                {{ role.abbreviation }}
+              </span>
+            </div>
+
+            <!-- Name + Description -->
+            <div class="flex flex-col gap-0.5 min-w-0">
+              <span class="text-[14px] font-semibold text-slate-100">{{ role.name }}</span>
+              <span class="text-[12px] text-slate-500 truncate">{{ role.description }}</span>
+            </div>
           </div>
 
-          <!-- Name + Description -->
-          <div class="flex flex-col ml-4 gap-0.5 min-w-0" style="flex: 1.5">
-            <span class="text-[14px] font-semibold text-slate-100">{{ role.name }}</span>
-            <span class="text-[12px] text-slate-500 truncate">{{ role.description }}</span>
-          </div>
-
-          <!-- Permissions count -->
-          <div class="flex flex-col gap-0.5" style="flex: 0.6">
-            <span class="text-[11px] text-slate-500 font-medium">Permissions</span>
-            <span class="text-[13px] font-semibold text-slate-200">{{ role.permissions?.length ?? 0 }}</span>
-          </div>
-
-          <!-- Type badge -->
-          <div class="flex flex-col gap-0.5" style="flex: 0.7">
-            <span class="text-[11px] text-slate-500 font-medium">Type</span>
-            <span
-              class="inline-flex self-start items-center px-2 py-0.5 rounded-md text-[10.5px] font-bold tracking-wide mt-0.5"
-              :class="role.is_system
-                ? 'bg-purple-950/60 text-purple-400 border border-purple-700/50'
-                : 'bg-[#1e2535] text-slate-400 border border-slate-700/60'"
-            >
-              {{ role.is_system ? 'SYSTEM' : 'CUSTOM' }}
-            </span>
-          </div>
-
-          <!-- Created -->
-          <div class="flex flex-col gap-0.5" style="flex: 0.8">
-            <span class="text-[11px] text-slate-500 font-medium">Created</span>
-            <span class="text-[12px] text-slate-400">{{ formatDate(role.created_at) }}</span>
-          </div>
-
-          <!-- Permission slugs preview -->
-          <div class="flex items-center gap-1 flex-wrap" style="flex: 1.5">
-            <span
-              v-for="perm in role.permissions?.slice(0, 3)"
-              :key="perm.id"
-              class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#0A0E1A] text-slate-500 border border-[#1e2535]"
-            >
-              {{ perm.slug }}
-            </span>
-            <span v-if="(role.permissions?.length ?? 0) > 3" class="text-[10px] text-slate-600">
-              +{{ (role.permissions?.length ?? 0) - 3 }} more
-            </span>
+          <!-- Details grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[11px] text-slate-500 font-medium">Permissions</span>
+              <span class="text-[13px] font-semibold text-slate-200">{{ role.permissions?.length ?? 0 }}</span>
+            </div>
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[11px] text-slate-500 font-medium">Type</span>
+              <span
+                class="inline-flex self-start items-center px-2 py-0.5 rounded-md text-[10.5px] font-bold tracking-wide mt-0.5"
+                :class="role.is_system
+                  ? 'bg-purple-950/60 text-purple-400 border border-purple-700/50'
+                  : 'bg-[#1e2535] text-slate-400 border border-slate-700/60'"
+              >
+                {{ role.is_system ? 'SYSTEM' : 'CUSTOM' }}
+              </span>
+            </div>
+            <div class="flex flex-col gap-0.5">
+              <span class="text-[11px] text-slate-500 font-medium">Created</span>
+              <span class="text-[12px] text-slate-400">{{ formatDate(role.created_at) }}</span>
+            </div>
+            <!-- Permission slugs preview -->
+            <div class="col-span-2 sm:col-span-1 lg:col-span-2 flex flex-col gap-0.5">
+              <span class="text-[11px] text-slate-500 font-medium">Permissions</span>
+              <div class="flex items-center gap-1 flex-wrap">
+                <span
+                  v-for="perm in role.permissions?.slice(0, 3)"
+                  :key="perm.id"
+                  class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#0A0E1A] text-slate-500 border border-[#1e2535]"
+                >
+                  {{ perm.slug }}
+                </span>
+                <span v-if="(role.permissions?.length ?? 0) > 3" class="text-[10px] text-slate-600">
+                  +{{ (role.permissions?.length ?? 0) - 3 }} more
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 

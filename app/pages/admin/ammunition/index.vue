@@ -24,7 +24,7 @@
     </div>
 
     <!-- Tabs -->
-    <div class="inline-flex bg-[#161b27] border border-[#1e2535] rounded-[10px] p-1 gap-1 mb-4 overflow-x-auto">
+    <div class="flex flex-wrap bg-[#161b27] border border-[#1e2535] rounded-[10px] p-1 gap-1 mb-4">
       <button
         v-for="tab in tabs"
         :key="tab.id"

@@ -10,7 +10,7 @@
     </div>
 
     <!-- Tabs -->
-    <div class="inline-flex bg-[#161b27] border border-[#1e2535] rounded-[10px] p-1 gap-0.5 mb-5 overflow-x-auto">
+    <div class="flex flex-wrap bg-[#161b27] border border-[#1e2535] rounded-[10px] p-1 gap-0.5 mb-5">
       <button
         v-for="tab in tabs"
         :key="tab.id"
