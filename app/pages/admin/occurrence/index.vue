@@ -60,7 +60,7 @@
     </div>
 
     <!-- Two-column layout -->
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 
       <!-- LEFT: Recent Occurrences -->
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl overflow-hidden flex flex-col">

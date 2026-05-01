@@ -61,7 +61,7 @@
       </div>
 
       <!-- Tabs -->
-      <div class="inline-flex bg-[#0A0E1A] border border-[#1e2535] rounded-lg p-1 gap-1 shrink-0 overflow-x-auto">
+      <div class="flex flex-wrap bg-[#0A0E1A] border border-[#1e2535] rounded-lg p-1 gap-1 shrink-0">
         <Button
           v-for="tab in tabs"
           :key="tab.value"
