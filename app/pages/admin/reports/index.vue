@@ -8,7 +8,7 @@
     </div>
 
     <!-- Stats — 5 cards -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 mb-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 mb-6">
       <div class="bg-[#161b27] border border-[#1e2535] rounded-xl px-5 py-4 flex items-center justify-between">
         <div class="flex flex-col gap-1.5">
           <span class="text-xs text-slate-500 font-medium">Total Firearms</span>
@@ -56,8 +56,8 @@
       </div>
     </div>
 
-    <!-- Report Cards Grid — 2×2 -->
-    <div class="grid grid-cols-2 gap-4">
+    <!-- Report Cards Grid — Responsive -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div
         v-for="report in reports"
         :key="report.id"
@@ -81,10 +81,10 @@
 
         <!-- Footer -->
         <div
-          class="flex items-center justify-between mt-5 pt-4 border-t border-[#1e2535]"
+          class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-5 pt-4 border-t border-[#1e2535]"
           style="grid-column: 1 / 3;"
         >
-          <div class="flex gap-2">
+          <div class="flex flex-wrap gap-2">
             <button v-if="report.hasDateRange" class="flex items-center gap-1.5 bg-transparent border border-slate-700 rounded-lg px-3 py-1.5 text-[12px] font-medium text-slate-400 cursor-pointer hover:border-blue-500 hover:text-slate-200 transition-all">
               <CalendarDays :size="12" />
               Date Range
@@ -94,7 +94,7 @@
               Branch Filter
             </button>
           </div>
-          <button class="flex items-center gap-1.5 bg-blue-600 text-white border-none rounded-lg px-4 py-2 text-[13px] font-semibold cursor-pointer hover:bg-blue-700 transition-colors">
+          <button class="w-full sm:w-auto flex items-center gap-1.5 bg-blue-600 text-white border-none rounded-lg px-4 py-2 text-[13px] font-semibold cursor-pointer hover:bg-blue-700 transition-colors justify-center">
             <Download :size="13" />
             Generate
           </button>
